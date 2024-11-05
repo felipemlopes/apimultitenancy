@@ -31,6 +31,8 @@ class BlackListTransformer extends Transformer
     {
         return [
             'id' => (int) $blackList->id,
+            'cusmoter_id' => (int) $blackList->cusmoter_id,
+            'ip_client' => (string) $blackList->ip_client,
         ];
     }
 }

@@ -31,6 +31,15 @@ class AffiliateTransactionTransformer extends Transformer
     {
         return [
             'id' => (int) $affiliateTransaction->id,
+            'affiliate_id' => (int) $affiliateTransaction->affiliate_id,
+            'type' => (string) $affiliateTransaction->type,
+            'amount' => (int) $affiliateTransaction->amount,
+            'subtotal' => (int) $affiliateTransaction->subtotal,
+            'total' => (int) $affiliateTransaction->total,
+            'status' => (string) $affiliateTransaction->status,
+            'order_token' => (string) $affiliateTransaction->order_token,
+            'date_added' => $affiliateTransaction->date_added,
+            'date_updated' => $affiliateTransaction->date_updated,
         ];
     }
 }

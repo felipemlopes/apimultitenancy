@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\OrderList\OrderListInterface;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
+    private $repository;
+    public function __construct(OrderListInterface $repository)
+    {
+        $this->repository = $repository;
+    }
     /**
      * Display a listing of the resource.
      */

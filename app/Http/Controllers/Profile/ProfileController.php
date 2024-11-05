@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Perfil\PerfilInterface;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -10,6 +11,11 @@ class ProfileController extends Controller
     /**
      * Display a listing of the resource.
      */
+    private $repository;
+    public function __construct(PerfilInterface $repository)
+    {
+        $this->repository = $repository;
+    }
     public function index()
     {
         //

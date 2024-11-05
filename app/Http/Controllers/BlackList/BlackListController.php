@@ -3,10 +3,18 @@
 namespace App\Http\Controllers\BlackList;
 
 use App\Http\Controllers\Controller;
+
+use App\Repositories\BlackList\BlackListInterface;
 use Illuminate\Http\Request;
 
 class BlackListController extends Controller
 {
+    private $repository;
+
+    public function __construct(BlackListInterface $repository)
+    {
+        $this->repository = $repository;
+    }
     /**
      * Display a listing of the resource.
      */

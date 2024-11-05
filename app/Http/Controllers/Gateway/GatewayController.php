@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class GatewayController extends Controller
 {
+    private $repository;
+    public function __construct(CustomerListInterface $repository)
+    {
+        $this->repository = $repository;
+    }
     /**
      * Display a listing of the resource.
      */

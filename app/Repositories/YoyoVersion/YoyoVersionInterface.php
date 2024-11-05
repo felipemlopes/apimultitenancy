@@ -1,5 +1,18 @@
 <?php
 
-namespace App\Repositories\app\YoyoVersion;
+namespace App\Repositories\YoyoVersion;
 
-interface YoyoVersionInterface {}
+use Illuminate\Http\Request;
+
+interface YoyoVersionInterface
+{
+    public function search($peer_page, $search, $status = null);
+
+    public function find($id);
+
+    public function create(Request $request);
+
+    public function update(Request $request, $id);
+
+    public function delete($id);
+}

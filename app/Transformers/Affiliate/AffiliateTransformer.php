@@ -30,7 +30,21 @@ class AffiliateTransformer extends Transformer
     public function transform(Affiliate $affiliate)
     {
         return [
-            'id' => (int) $affiliate->id,
+            'id' => (string) $affiliate->id,
+            'name' => (string) $affiliate->name,
+            'username' => (string) $affiliate->username,
+            'email' => (string) $affiliate->email,
+            'document' => (string) $affiliate->document,
+            'comission' => (string) $affiliate->comission,
+            'discount' => (string) $affiliate->discount,
+            'phone' => (string) $affiliate->phone,
+            'user_link' => (string) $affiliate->user_link,
+            'date_added' => $affiliate->date_added->format('Y-m-d H:i:s'),
+            'date_updated' => $affiliate->date_updated->format('Y-m-d H:i:s'),
+            'saldo' => (float) $affiliate->saldo,
+            'avatar' => (string) $affiliate->avatar,
+            'tipo_chave_pix' => (string) $affiliate->tipo_chave_pix,
+            'chave_pix' => (string) $affiliate->chave_pix,
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\Tenant;
+namespace App\Repositories\CartList;
 
 use Illuminate\Http\Request;
 
-interface TenantInterface
+interface CartListInterface
 {
     public function search($peer_page, $search, $status = null);
 

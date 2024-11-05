@@ -31,6 +31,9 @@ class CartListTransformer extends Transformer
     {
         return [
             'id' => (int) $cartList->id,
+            'cusmoter_id ' => (int) $cartList->cusmoter_id,
+            'product_id' => (int) $cartList->product_id,
+            'quanty' => (int) $cartList->quanty,
         ];
     }
 }

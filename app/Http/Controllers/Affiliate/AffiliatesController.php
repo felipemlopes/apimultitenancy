@@ -3,32 +3,39 @@
 namespace App\Http\Controllers\Affiliate;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Affiliate\AffiliateInterface;
+use App\Transformers\Affiliate\AffiliateTransformer;
 use Illuminate\Http\Request;
 
 class AffiliatesController extends Controller
 {
+    private $repository;
+
+    public function __construct(AffiliateInterface $repository)
+    {
+        $this->repository = $repository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $peer_page = 15;
+        $search = request()->get('search');
+        $status = request()->get('status');
+        $affiliates = $this->repository->search($peer_page, $search, $status);
+        return responder()->success($affiliates, AffiliateTransformer::class)->respond(200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $affiliate = $this->repository->create($request);
+        return responder()->success($affiliate, AffiliateTransformer::class)->respond(200);
     }
 
     /**
@@ -36,23 +43,19 @@ class AffiliatesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $affiliate = $this->repository->find($id);
+        return responder()->success($affiliate, AffiliateTransformer::class)->respond(200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $affiliate = $this->repository->update($request, $id);
+        return responder()->success($affiliate, AffiliateTransformer::class)->respond(200);
     }
 
     /**
@@ -60,6 +63,7 @@ class AffiliatesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $affiliate = $this->repository->delete($id);
+        return responder()->success($affiliate, AffiliateTransformer::class)->respond(200);
     }
 }

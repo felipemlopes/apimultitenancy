@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
+
     //usuários
     Route::get('/user', [UserController::class, 'index']);
     Route::post('/user', [UserController::class, 'store']);
@@ -64,7 +65,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/afiliados/{id}', [AffiliatesController::class, 'show']);
     Route::delete('/afiliados/{id}', [AffiliatesController::class, 'destroy']);
     // Route::get('/afiliados', [AffiliatesController::class, 'index']);
-    //  Route::get('/afiliados', [AffiliatesController::class, 'index']);
+    // Route::get('/afiliados', [AffiliatesController::class, 'index']);
 
 
 

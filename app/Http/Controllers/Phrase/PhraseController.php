@@ -3,10 +3,17 @@
 namespace App\Http\Controllers\Phrase;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\FrasePremiada\FrasePremiadaInterface;
 use Illuminate\Http\Request;
 
 class PhraseController extends Controller
 {
+
+    private $repository;
+    public function __construct(FrasePremiadaInterface $repository)
+    {
+        $this->repository = $repository;
+    }
     /**
      * Display a listing of the resource.
      */

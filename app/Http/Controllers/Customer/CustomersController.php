@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Customer\CustomerListInterface;
 use Illuminate\Http\Request;
 
 class CustomersController extends Controller
 {
+    private $repository;
+    public function __construct(CustomerListInterface $repository)
+    {
+        $this->repository = $repository;
+    }
     /**
      * Display a listing of the resource.
      */
