@@ -35,38 +35,43 @@ class FilaRepository implements FilaInterface
 
     public function create(Request $request)
     {
-        $customer = new Fila();
-        $customer->cota_Number = $request->cota_Number;
-        $customer->product_id = $request->product_id;
-        $customer->cota_limit = $request->cota_limit;
-        $customer->active = $request->active;
-        $customer->avalible = $request->avalible;
-        $customer->cota_price = $request->cota_price;
+        $fila = new Fila();
+        $fila->customer_id = $request->customer_id;
+        $fila->product_id = $request->product_id;
+        $fila->oid = $request->oid;
+        $fila->code = $request->code;
+        $fila->upersell = $request->upersell;
+        $fila->downsell = $request->downsell;
+        $fila->processado = $request->processado;
 
 
-        $customer->save();
+        $fila->save();
 
-        return $customer;
+        return $fila;
     }
+
 
 
     public function update(Request $request, $id)
     {
+        $fila = $this->find($id);
+        $fila->customer_id = $request->customer_id;
+        $fila->product_id = $request->product_id;
+        $fila->oid = $request->oid;
+        $fila->code = $request->code;
+        $fila->upersell = $request->upersell;
+        $fila->downsell = $request->downsell;
+        $fila->processado = $request->processado;
 
-        $customer = Fila::findOrFail($id);
-        $customer->cota_Number = $request->cota_Number;
-        $customer->cota_limit = $request->cota_limit;
-        $customer->active = $request->active;
-        $customer->avalible = $request->avalible;
-        $customer->cota_price = $request->cota_price;
-        $customer->save();
+        $fila->save();
 
-        return $customer;
+        return $fila;
     }
+
 
     public function delete($id)
     {
-        $customer = $this->find($id);
-        return $customer->delete();
+        $fila = $this->find($id);
+        return $fila->delete();
     }
 }

@@ -31,6 +31,12 @@ class CotasPremiadaTransformer extends Transformer
     {
         return [
             'id' => (int) $cotasPremiada->id,
+            'cota_number' => (int) $cotasPremiada->cota_number,
+            'product_id' => (int) $cotasPremiada->product_id,
+            'cota_limit' => (int) $cotasPremiada->cota_limit,
+            'active' => (int) $cotasPremiada->active,
+            'available' => (int) $cotasPremiada->available,
+            'cota_price' => (string) $cotasPremiada->cota_price,
         ];
     }
 }

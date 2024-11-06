@@ -31,6 +31,8 @@ class SystemInfoTransformer extends Transformer
     {
         return [
             'id' => (int) $systemInfo->id,
+            'meta_field' => (string) $systemInfo->meta_field,
+            'meta_value' => (string) $systemInfo->meta_value,
         ];
     }
 }

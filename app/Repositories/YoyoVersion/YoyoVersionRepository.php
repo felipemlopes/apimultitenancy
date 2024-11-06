@@ -37,13 +37,8 @@ class YoyoVersionRepository implements YoyoVersionInterface
     public function create(Request $request)
     {
         $yoyoVersion = new YoyoVersion();
-        $yoyoVersion->cota_Number = $request->cota_Number;
-        $yoyoVersion->product_id = $request->product_id;
-        $yoyoVersion->cota_limit = $request->cota_limit;
-        $yoyoVersion->active = $request->active;
-        $yoyoVersion->avalible = $request->avalible;
-        $yoyoVersion->cota_price = $request->cota_price;
-
+        $yoyoVersion->version = $request->version;
+        $yoyoVersion->installed_at_utc = $request->installed_at_utc;
 
         $yoyoVersion->save();
 
@@ -53,13 +48,10 @@ class YoyoVersionRepository implements YoyoVersionInterface
 
     public function update(Request $request, $id)
     {
+        $yoyoVersion = $this->find($id);
+        $yoyoVersion->version = $request->version;
+        $yoyoVersion->installed_at_utc = $request->installed_at_utc;
 
-        $yoyoVersion = YoyoVersion::findOrFail($id);
-        $yoyoVersion->cota_Number = $request->cota_Number;
-        $yoyoVersion->cota_limit = $request->cota_limit;
-        $yoyoVersion->active = $request->active;
-        $yoyoVersion->avalible = $request->avalible;
-        $yoyoVersion->cota_price = $request->cota_price;
         $yoyoVersion->save();
 
         return $yoyoVersion;

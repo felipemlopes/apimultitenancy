@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class RafflesController extends Controller
 {
+    private $repository;
+    public function __construct($repository)
+    {
+        $this->repository = $repository;
+    }
     /**
      * Display a listing of the resource.
      */

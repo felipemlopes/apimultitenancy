@@ -36,11 +36,11 @@ class CotasPremiadasRepository implements CotasPremiadasInterface
     public function create(Request $request)
     {
         $contasPremiada = new CotasPremiada();
-        $contasPremiada->cota_Number = $request->cota_Number;
+        $contasPremiada->cota_Number = $request->cota_number;
         $contasPremiada->product_id = $request->product_id;
         $contasPremiada->cota_limit = $request->cota_limit;
-        $contasPremiada->active = $request->active;
         $contasPremiada->avalible = $request->avalible;
+        $contasPremiada->active = $request->active;
         $contasPremiada->cota_price = $request->cota_price;
 
 
@@ -53,7 +53,7 @@ class CotasPremiadasRepository implements CotasPremiadasInterface
     public function update(Request $request, $id)
     {
 
-        $contasPremiada = CotasPremiada::findOrFail($id);
+        $contasPremiada = $this->find($id);
         $contasPremiada->cota_Number = $request->cota_Number;
         $contasPremiada->cota_limit = $request->cota_limit;
         $contasPremiada->active = $request->active;

@@ -36,7 +36,7 @@ class CotasPremiadasManuaisRepository implements CotasPremiadasManuaisInterface
     public function create(Request $request)
     {
         $contasPremiadaManual = new CotasPremiadaManuais();
-        $contasPremiadaManual->cota_Number = $request->cota_Number;
+        $contasPremiadaManual->cota_Number = $request->cota_number;
         $contasPremiadaManual->product_id = $request->product_id;
         $contasPremiadaManual->cota_limit = $request->cota_limit;
         $contasPremiadaManual->active = $request->active;

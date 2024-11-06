@@ -31,6 +31,13 @@ class YoyoLogTransformer extends Transformer
     {
         return [
             'id' => (int) $yoyoLog->id,
+            'migration_hash' => (string) $yoyoLog->migration_hash,
+            'migration_id' => (int) $yoyoLog->migration_id,
+            'operation' => (string) $yoyoLog->operation,
+            'username' => (string) $yoyoLog->username,
+            'hostname' => (string) $yoyoLog->hostname,
+            'comment' => (string) $yoyoLog->comment,
+            'created_at_utc' => (string) $yoyoLog->created_at_utc,
         ];
     }
 }

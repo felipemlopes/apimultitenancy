@@ -23,6 +23,12 @@ class Tenant extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'db_connection', 'db_name', 'db_user', 'db_password', 'db_host', 'db_port'
+        'name',
+        'db_connection',
+        'db_name',
+        'db_user',
+        'db_password',
+        'db_host',
+        'db_port'
     ];
 }

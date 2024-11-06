@@ -36,33 +36,65 @@ class CustomerListRepository implements CustomerListInterface
     public function create(Request $request)
     {
         $customer = new CustomerList();
-        $customer->cota_Number = $request->cota_Number;
-        $customer->product_id = $request->product_id;
-        $customer->cota_limit = $request->cota_limit;
-        $customer->active = $request->active;
-        $customer->avalible = $request->avalible;
-        $customer->cota_price = $request->cota_price;
 
+        $customer->firstname = $request->firstname;
+        $customer->lastname = $request->lastname;
+        $customer->phone = $request->phone;
+        $customer->email = $request->email;
+        $customer->password = $request->password;
+        $customer->avatar = $request->avatar;
+        $customer->date_created = now();
+        $customer->date_updated = now();
+        $customer->cpf = $request->cpf;
+        $customer->zipcode = $request->zipcode;
+        $customer->address = $request->address;
+        $customer->number = $request->number;
+        $customer->neighborhood = $request->neighborhood;
+        $customer->complement = $request->complement;
+        $customer->state = $request->state;
+        $customer->city = $request->city;
+        $customer->reference_point = $request->reference_point;
+        $customer->premiado = $request->premiado;
+        $customer->blocked = $request->blocked;
+        $customer->code_recover = $request->code_recover;
+        $customer->date_code_recover = $request->date_code_recover;
+        $customer->datanasc = $request->datanasc;
 
         $customer->save();
 
         return $customer;
     }
+
 
 
     public function update(Request $request, $id)
     {
+        $customer = $this->find($id);
 
-        $customer = CustomerList::findOrFail($id);
-        $customer->cota_Number = $request->cota_Number;
-        $customer->cota_limit = $request->cota_limit;
-        $customer->active = $request->active;
-        $customer->avalible = $request->avalible;
-        $customer->cota_price = $request->cota_price;
+        $customer->firstname = $request->firstname;
+        $customer->lastname = $request->lastname;
+        $customer->phone = $request->phone;
+        $customer->email = $request->email;
+        $customer->avatar = $request->avatar;
+        $customer->zipcode = $request->zipcode;
+        $customer->address = $request->address;
+        $customer->number = $request->number;
+        $customer->neighborhood = $request->neighborhood;
+        $customer->complement = $request->complement;
+        $customer->state = $request->state;
+        $customer->city = $request->city;
+        $customer->reference_point = $request->reference_point;
+        $customer->premiado = $request->premiado;
+        $customer->blocked = $request->blocked;
+        $customer->code_recover = $request->code_recover;
+        $customer->date_code_recover = $request->date_code_recover;
+        $customer->datanasc = $request->datanasc;
+
         $customer->save();
 
         return $customer;
     }
+
 
     public function delete($id)
     {

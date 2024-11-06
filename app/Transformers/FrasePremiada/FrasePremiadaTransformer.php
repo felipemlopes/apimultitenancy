@@ -31,6 +31,16 @@ class FrasePremiadaTransformer extends Transformer
     {
         return [
             'id' => (int) $frasePremiada->id,
+            'date_created' => (string) $frasePremiada->date_created,
+            'frase' => (string) $frasePremiada->frase,
+            'product_id' => (string) $frasePremiada->product_id,
+            'status' => (string) $frasePremiada->status,
+            'date_end' => (string) $frasePremiada->date_end,
+            'ganhador' => (string) $frasePremiada->ganhador,
+            'premio' => (string) $frasePremiada->premio,
+            'atividade' => (string) $frasePremiada->atividade,
+            'limite' => (string) $frasePremiada->limite,
+            'periodo' => (string) $frasePremiada->periodo,
         ];
     }
 }

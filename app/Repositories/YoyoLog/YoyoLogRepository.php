@@ -37,33 +37,37 @@ class YoyoLogRepository implements YoyoLogInterface
     public function create(Request $request)
     {
         $yoyoLog = new YoyoLog();
-        $yoyoLog->cota_Number = $request->cota_Number;
-        $yoyoLog->product_id = $request->product_id;
-        $yoyoLog->cota_limit = $request->cota_limit;
-        $yoyoLog->active = $request->active;
-        $yoyoLog->avalible = $request->avalible;
-        $yoyoLog->cota_price = $request->cota_price;
-
+        $yoyoLog->migration_hash = $request->migration_hash;
+        $yoyoLog->migration_id = $request->migration_id;
+        $yoyoLog->operation = $request->operation;
+        $yoyoLog->username = $request->username;
+        $yoyoLog->hostname = $request->hostname;
+        $yoyoLog->comment = $request->comment;
+        $yoyoLog->created_at_utc = $request->created_at_utc;
 
         $yoyoLog->save();
 
         return $yoyoLog;
     }
+
 
 
     public function update(Request $request, $id)
     {
+        $yoyoLog = $this->find($id);
+        $yoyoLog->migration_hash = $request->migration_hash;
+        $yoyoLog->migration_id = $request->migration_id;
+        $yoyoLog->operation = $request->operation;
+        $yoyoLog->username = $request->username;
+        $yoyoLog->hostname = $request->hostname;
+        $yoyoLog->comment = $request->comment;
+        $yoyoLog->created_at_utc = $request->created_at_utc;
 
-        $yoyoLog = YoyoLog::findOrFail($id);
-        $yoyoLog->cota_Number = $request->cota_Number;
-        $yoyoLog->cota_limit = $request->cota_limit;
-        $yoyoLog->active = $request->active;
-        $yoyoLog->avalible = $request->avalible;
-        $yoyoLog->cota_price = $request->cota_price;
         $yoyoLog->save();
 
         return $yoyoLog;
     }
+
 
     public function delete($id)
     {

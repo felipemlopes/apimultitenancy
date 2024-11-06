@@ -36,13 +36,8 @@ class SystemInfoRepository implements SystemInfoInterface
     public function create(Request $request)
     {
         $systemInfo = new SystemInfo();
-        $systemInfo->cota_Number = $request->cota_Number;
-        $systemInfo->product_id = $request->product_id;
-        $systemInfo->cota_limit = $request->cota_limit;
-        $systemInfo->active = $request->active;
-        $systemInfo->avalible = $request->avalible;
-        $systemInfo->cota_price = $request->cota_price;
-
+        $systemInfo->meta_field = $request->meta_field;
+        $systemInfo->meta_value = $request->meta_value;
 
         $systemInfo->save();
 
@@ -52,17 +47,15 @@ class SystemInfoRepository implements SystemInfoInterface
 
     public function update(Request $request, $id)
     {
+        $systemInfo = $this->find($id);
+        $systemInfo->meta_field = $request->meta_field;
+        $systemInfo->meta_value = $request->meta_value;
 
-        $systemInfo = SystemInfo::findOrFail($id);
-        $systemInfo->cota_Number = $request->cota_Number;
-        $systemInfo->cota_limit = $request->cota_limit;
-        $systemInfo->active = $request->active;
-        $systemInfo->avalible = $request->avalible;
-        $systemInfo->cota_price = $request->cota_price;
         $systemInfo->save();
 
         return $systemInfo;
     }
+
 
     public function delete($id)
     {

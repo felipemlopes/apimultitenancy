@@ -31,6 +31,13 @@ class FilaTransformer extends Transformer
     {
         return [
             'id' => (int) $fila->id,
+            'customer_id' => (string) $fila->customer_id,
+            'product_id' => (string) $fila->product_id,
+            'oid' => (string) $fila->oid,
+            'code' => (string) $fila->code,
+            'upersell' => (string) $fila->upersell,
+            'downsell' => (string) $fila->downsell,
+            'processado' => (string) $fila->processado,
         ];
     }
 }

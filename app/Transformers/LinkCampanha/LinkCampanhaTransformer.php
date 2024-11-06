@@ -31,6 +31,11 @@ class LinkCampanhaTransformer extends Transformer
     {
         return [
             'id' => (int) $linkCampanha->id,
+            'link_campanha' => (string) $linkCampanha->link_campanha,
+            'link_descricao' => (string) $linkCampanha->link_descricao,
+            'link_product' => (string) $linkCampanha->link_product,
+            'date_created' => (string) $linkCampanha->date_created,
+            'date_updated' => (string) $linkCampanha->date_updated,
         ];
     }
 }

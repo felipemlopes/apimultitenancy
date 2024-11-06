@@ -36,33 +36,33 @@ class LinkCampanhaRepository implements LinkCampanhaInterface
     public function create(Request $request)
     {
         $linkCampanha = new LinkCampanha();
-        $linkCampanha->cota_Number = $request->cota_Number;
-        $linkCampanha->product_id = $request->product_id;
-        $linkCampanha->cota_limit = $request->cota_limit;
-        $linkCampanha->active = $request->active;
-        $linkCampanha->avalible = $request->avalible;
-        $linkCampanha->cota_price = $request->cota_price;
-
+        $linkCampanha->link_campanha = $request->link_campanha;
+        $linkCampanha->link_descricao = $request->link_descricao;
+        $linkCampanha->link_product = $request->link_product;
+        $linkCampanha->date_created = $request->date_created;
+        $linkCampanha->date_updated = $request->date_updated;
 
         $linkCampanha->save();
 
         return $linkCampanha;
     }
+
 
 
     public function update(Request $request, $id)
     {
+        $linkCampanha = $this->find($id);
+        $linkCampanha->link_campanha = $request->link_campanha;
+        $linkCampanha->link_descricao = $request->link_descricao;
+        $linkCampanha->link_product = $request->link_product;
+        $linkCampanha->date_created = $request->date_created;
+        $linkCampanha->date_updated = $request->date_updated;
 
-        $linkCampanha = LinkCampanha::findOrFail($id);
-        $linkCampanha->cota_Number = $request->cota_Number;
-        $linkCampanha->cota_limit = $request->cota_limit;
-        $linkCampanha->active = $request->active;
-        $linkCampanha->avalible = $request->avalible;
-        $linkCampanha->cota_price = $request->cota_price;
         $linkCampanha->save();
 
         return $linkCampanha;
     }
+
 
     public function delete($id)
     {

@@ -51,7 +51,7 @@ class CartListRepository implements CartListInterface
     public function update(Request $request, $id)
     {
 
-        $cartList = CartList::findOrFail($id);
+        $cartList = $this->find($id);
         $cartList->cusmoter_id = $request->cusmoter_id;
         $cartList->product_id = $request->ip_client;
         $cartList->quanty = $request->quanty;

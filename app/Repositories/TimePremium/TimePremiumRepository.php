@@ -36,13 +36,16 @@ class TimePremiumRepository implements TimePremiumInterface
     public function create(Request $request)
     {
         $timePremium = new TimePremium();
-        $timePremium->cota_Number = $request->cota_Number;
+        $timePremium->date_start = $request->date_start;
+        $timePremium->date_end = $request->date_end;
+        $timePremium->qtd_customer = $request->qtd_customer;
+        $timePremium->qtd_quotas_sold = $request->qtd_quotas_sold;
+        $timePremium->amount_premium = $request->amount_premium;
+        $timePremium->customers_id = $request->customers_id;
+        $timePremium->orders_id = $request->orders_id;
         $timePremium->product_id = $request->product_id;
-        $timePremium->cota_limit = $request->cota_limit;
-        $timePremium->active = $request->active;
-        $timePremium->avalible = $request->avalible;
-        $timePremium->cota_price = $request->cota_price;
-
+        $timePremium->quotas_premium = $request->quotas_premium;
+        $timePremium->type_search = $request->type_search;
 
         $timePremium->save();
 
@@ -50,15 +53,21 @@ class TimePremiumRepository implements TimePremiumInterface
     }
 
 
+
     public function update(Request $request, $id)
     {
+        $timePremium = $this->find($id);
+        $timePremium->date_start = $request->date_start;
+        $timePremium->date_end = $request->date_end;
+        $timePremium->qtd_customer = $request->qtd_customer;
+        $timePremium->qtd_quotas_sold = $request->qtd_quotas_sold;
+        $timePremium->amount_premium = $request->amount_premium;
+        $timePremium->customers_id = $request->customers_id;
+        $timePremium->orders_id = $request->orders_id;
+        $timePremium->product_id = $request->product_id;
+        $timePremium->quotas_premium = $request->quotas_premium;
+        $timePremium->type_search = $request->type_search;
 
-        $timePremium = TimePremium::findOrFail($id);
-        $timePremium->cota_Number = $request->cota_Number;
-        $timePremium->cota_limit = $request->cota_limit;
-        $timePremium->active = $request->active;
-        $timePremium->avalible = $request->avalible;
-        $timePremium->cota_price = $request->cota_price;
         $timePremium->save();
 
         return $timePremium;

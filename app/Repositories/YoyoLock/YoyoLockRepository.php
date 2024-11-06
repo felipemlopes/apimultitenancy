@@ -37,33 +37,31 @@ class YoyoLockRepository implements YoyoLockInterface
     public function create(Request $request)
     {
         $yoyoLock = new YoyoLock();
-        $yoyoLock->cota_Number = $request->cota_Number;
-        $yoyoLock->product_id = $request->product_id;
-        $yoyoLock->cota_limit = $request->cota_limit;
-        $yoyoLock->active = $request->active;
-        $yoyoLock->avalible = $request->avalible;
-        $yoyoLock->cota_price = $request->cota_price;
-
+        $yoyoLock->locked = $request->locked;
+        $yoyoLock->ctime = $request->ctime;
+        $yoyoLock->pid = $request->pid;
+        $yoyoLock->amount = $request->amount;
 
         $yoyoLock->save();
 
         return $yoyoLock;
     }
+
 
 
     public function update(Request $request, $id)
     {
+        $yoyoLock = $this->find($id);
+        $yoyoLock->locked = $request->locked;
+        $yoyoLock->ctime = $request->ctime;
+        $yoyoLock->pid = $request->pid;
+        $yoyoLock->amount = $request->amount;
 
-        $yoyoLock = YoyoLock::findOrFail($id);
-        $yoyoLock->cota_Number = $request->cota_Number;
-        $yoyoLock->cota_limit = $request->cota_limit;
-        $yoyoLock->active = $request->active;
-        $yoyoLock->avalible = $request->avalible;
-        $yoyoLock->cota_price = $request->cota_price;
         $yoyoLock->save();
 
         return $yoyoLock;
     }
+
 
     public function delete($id)
     {

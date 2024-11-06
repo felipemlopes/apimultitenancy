@@ -41,7 +41,7 @@ class AffiliateRepository implements AffiliateInterface
         $affiliate->username = $request->username;
         $affiliate->email = $request->email;
         $affiliate->document = $request->document;
-        $affiliate->password = bcrypt($request->password);
+        $affiliate->password = $request->password;
         $affiliate->comission = $request->comission;
         $affiliate->discount = $request->discount;
         $affiliate->phone = $request->phone;
@@ -62,7 +62,7 @@ class AffiliateRepository implements AffiliateInterface
     public function update(Request $request, $id)
     {
 
-        $affiliate = Affiliate::findOrFail($id);
+        $affiliate = $this->find($id);
 
 
         $affiliate->name = $request->name;

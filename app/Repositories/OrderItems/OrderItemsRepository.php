@@ -37,13 +37,10 @@ class OrderItemsRepository implements OrderListInterface
     public function create(Request $request)
     {
         $orderItems = new OrderItems();
-        $orderItems->cota_Number = $request->cota_Number;
+        $orderItems->order_id = $request->order_id;
         $orderItems->product_id = $request->product_id;
-        $orderItems->cota_limit = $request->cota_limit;
-        $orderItems->active = $request->active;
-        $orderItems->avalible = $request->avalible;
-        $orderItems->cota_price = $request->cota_price;
-
+        $orderItems->quantify = $request->quantify;
+        $orderItems->price = $request->price;
 
         $orderItems->save();
 
@@ -53,13 +50,12 @@ class OrderItemsRepository implements OrderListInterface
 
     public function update(Request $request, $id)
     {
+        $orderItems = $this->find($id);
+        $orderItems->order_id = $request->order_id;
+        $orderItems->product_id = $request->product_id;
+        $orderItems->quantify = $request->quantify;
+        $orderItems->price = $request->price;
 
-        $orderItems = OrderItems::findOrFail($id);
-        $orderItems->cota_Number = $request->cota_Number;
-        $orderItems->cota_limit = $request->cota_limit;
-        $orderItems->active = $request->active;
-        $orderItems->avalible = $request->avalible;
-        $orderItems->cota_price = $request->cota_price;
         $orderItems->save();
 
         return $orderItems;

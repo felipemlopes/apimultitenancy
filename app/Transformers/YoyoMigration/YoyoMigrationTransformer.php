@@ -31,6 +31,9 @@ class YoyoMigrationTransformer extends Transformer
     {
         return [
             'id' => (int) $yoyoMigration->id,
+            'migration_hash' => (string) $yoyoMigration->migration_hash,
+            'migration_id' => (int) $yoyoMigration->migration_id,
+            'applied_at_utc' => (string) $yoyoMigration->applied_at_utc,
         ];
     }
 }

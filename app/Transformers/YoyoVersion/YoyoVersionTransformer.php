@@ -31,6 +31,8 @@ class YoyoVersionTransformer extends Transformer
     {
         return [
             'id' => (int) $yoyoVersion->id,
+            'version' => (string) $yoyoVersion->version,
+            'installed_at_utc' => (string) $yoyoVersion->installed_at_utc,
         ];
     }
 }

@@ -36,13 +36,12 @@ class RecuperacaoVendasRepository implements RecuperacaoVendasInterface
     public function create(Request $request)
     {
         $recuperacaoVenda = new RecuperacaoVenda();
-        $recuperacaoVenda->cota_Number = $request->cota_Number;
-        $recuperacaoVenda->product_id = $request->product_id;
-        $recuperacaoVenda->cota_limit = $request->cota_limit;
-        $recuperacaoVenda->active = $request->active;
-        $recuperacaoVenda->avalible = $request->avalible;
-        $recuperacaoVenda->cota_price = $request->cota_price;
-
+        $recuperacaoVenda->data_inicio_recuperacao = $request->data_inicio_recuperacao;
+        $recuperacaoVenda->data_final_recuperacao = $request->data_final_recuperacao;
+        $recuperacaoVenda->intervalo = $request->intervalo;
+        $recuperacaoVenda->status = $request->status;
+        $recuperacaoVenda->envios = $request->envios;
+        $recuperacaoVenda->date_created = $request->date_created;
 
         $recuperacaoVenda->save();
 
@@ -52,17 +51,18 @@ class RecuperacaoVendasRepository implements RecuperacaoVendasInterface
 
     public function update(Request $request, $id)
     {
-
-        $recuperacaoVenda = RecuperacaoVenda::findOrFail($id);
-        $recuperacaoVenda->cota_Number = $request->cota_Number;
-        $recuperacaoVenda->cota_limit = $request->cota_limit;
-        $recuperacaoVenda->active = $request->active;
-        $recuperacaoVenda->avalible = $request->avalible;
-        $recuperacaoVenda->cota_price = $request->cota_price;
+        $recuperacaoVenda = $this->find($id);
+        $recuperacaoVenda->data_inicio_recuperacao = $request->data_inicio_recuperacao;
+        $recuperacaoVenda->data_final_recuperacao = $request->data_final_recuperacao;
+        $recuperacaoVenda->intervalo = $request->intervalo;
+        $recuperacaoVenda->status = $request->status;
+        $recuperacaoVenda->envios = $request->envios;
+        $recuperacaoVenda->date_created = $request->date_created;
         $recuperacaoVenda->save();
 
         return $recuperacaoVenda;
     }
+
 
     public function delete($id)
     {

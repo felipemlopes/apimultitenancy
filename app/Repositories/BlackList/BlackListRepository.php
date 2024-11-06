@@ -49,7 +49,7 @@ class BlackListRepository implements BlackListInterface
     public function update(Request $request, $id)
     {
 
-        $blackList = BlackList::findOrFail($id);
+        $blackList = $this->find($id);
         $blackList->cusmoter_id = $request->cusmoter_id;
         $blackList->ip_client = $request->ip_client;
         $blackList->save();

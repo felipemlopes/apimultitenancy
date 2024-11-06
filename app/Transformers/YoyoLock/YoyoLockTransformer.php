@@ -31,6 +31,10 @@ class YoyoLockTransformer extends Transformer
     {
         return [
             'id' => (int) $yoyoLock->id,
+            'locked' => (bool) $yoyoLock->locked,
+            'ctime' => (string) $yoyoLock->ctime,
+            'pid' => (int) $yoyoLock->pid,
+            'amount' => (float) $yoyoLock->amount,
         ];
     }
 }

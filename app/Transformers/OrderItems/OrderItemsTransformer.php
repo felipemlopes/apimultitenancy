@@ -31,6 +31,10 @@ class OrderItemsTransformer extends Transformer
     {
         return [
             'id' => (int) $orderItems->id,
+            'order_id' => (string) $orderItems->order_id,
+            'product_id' => (string) $orderItems->product_id,
+            'quantify' => (string) $orderItems->quantify,
+            'price' => (string) $orderItems->price,
         ];
     }
 }

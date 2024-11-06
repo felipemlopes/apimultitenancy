@@ -37,13 +37,9 @@ class YoyoMigrationRepository implements YoyoMigrationInterface
     public function create(Request $request)
     {
         $yoyoMigration = new YoyoMigration();
-        $yoyoMigration->cota_Number = $request->cota_Number;
-        $yoyoMigration->product_id = $request->product_id;
-        $yoyoMigration->cota_limit = $request->cota_limit;
-        $yoyoMigration->active = $request->active;
-        $yoyoMigration->avalible = $request->avalible;
-        $yoyoMigration->cota_price = $request->cota_price;
-
+        $yoyoMigration->migration_hash = $request->migration_hash;
+        $yoyoMigration->migration_id = $request->migration_id;
+        $yoyoMigration->applied_at_utc = $request->applied_at_utc;
 
         $yoyoMigration->save();
 
@@ -51,15 +47,14 @@ class YoyoMigrationRepository implements YoyoMigrationInterface
     }
 
 
+
     public function update(Request $request, $id)
     {
+        $yoyoMigration = $this->find($id);
+        $yoyoMigration->migration_hash = $request->migration_hash;
+        $yoyoMigration->migration_id = $request->migration_id;
+        $yoyoMigration->applied_at_utc = $request->applied_at_utc;
 
-        $yoyoMigration = YoyoMigration::findOrFail($id);
-        $yoyoMigration->cota_Number = $request->cota_Number;
-        $yoyoMigration->cota_limit = $request->cota_limit;
-        $yoyoMigration->active = $request->active;
-        $yoyoMigration->avalible = $request->avalible;
-        $yoyoMigration->cota_price = $request->cota_price;
         $yoyoMigration->save();
 
         return $yoyoMigration;

@@ -36,33 +36,39 @@ class TenantRepository implements TenantInterface
     public function create(Request $request)
     {
         $tenant = new Tenant();
-        $tenant->cota_Number = $request->cota_Number;
-        $tenant->product_id = $request->product_id;
-        $tenant->cota_limit = $request->cota_limit;
-        $tenant->active = $request->active;
-        $tenant->avalible = $request->avalible;
-        $tenant->cota_price = $request->cota_price;
-
+        $tenant->name = $request->name;
+        $tenant->db_connection = $request->db_connection;
+        $tenant->db_name = $request->db_name;
+        $tenant->db_user = $request->db_user;
+        $tenant->db_password = $request->db_password;
+        $tenant->db_host = $request->db_host;
+        $tenant->db_port = $request->db_port;
 
         $tenant->save();
 
         return $tenant;
     }
+
+
 
 
     public function update(Request $request, $id)
     {
+        $tenant = $this->find($id);
+        $tenant->name = $request->name;
+        $tenant->db_connection = $request->db_connection;
+        $tenant->db_name = $request->db_name;
+        $tenant->db_user = $request->db_user;
+        $tenant->db_password = $request->db_password;
+        $tenant->db_host = $request->db_host;
+        $tenant->db_port = $request->db_port;
 
-        $tenant = Tenant::findOrFail($id);
-        $tenant->cota_Number = $request->cota_Number;
-        $tenant->cota_limit = $request->cota_limit;
-        $tenant->active = $request->active;
-        $tenant->avalible = $request->avalible;
-        $tenant->cota_price = $request->cota_price;
         $tenant->save();
 
         return $tenant;
     }
+
+
 
     public function delete($id)
     {

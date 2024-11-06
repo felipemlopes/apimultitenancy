@@ -36,33 +36,67 @@ class PerfilRepository implements PerfilInterface
     public function create(Request $request)
     {
         $perfil = new Perfil();
-        $perfil->cota_Number = $request->cota_Number;
-        $perfil->product_id = $request->product_id;
-        $perfil->cota_limit = $request->cota_limit;
-        $perfil->active = $request->active;
-        $perfil->avalible = $request->avalible;
-        $perfil->cota_price = $request->cota_price;
-
+        $perfil->nome_perfil = $request->nome_perfil;
+        $perfil->id_perfil = $request->id_perfil;
+        $perfil->mod_sorteio = $request->mod_sorteio;
+        $perfil->perm_sorteio = $request->perm_sorteio;
+        $perfil->mod_pedidos = $request->mod_pedidos;
+        $perfil->perm_pedidos = $request->perm_pedidos;
+        $perfil->mod_config = $request->mod_config;
+        $perfil->perm_config = $request->perm_config;
+        $perfil->mod_gateway = $request->mod_gateway;
+        $perfil->mod_seguranca = $request->mod_seguranca;
+        $perfil->mod_blacklist = $request->mod_blacklist;
+        $perfil->mod_usuario = $request->mod_usuario;
+        $perfil->mod_sorteador = $request->mod_sorteador;
+        $perfil->mod_roleta = $request->mod_roleta;
+        $perfil->mod_logs = $request->mod_logs;
+        $perfil->mod_perfil = $request->mod_perfil;
+        $perfil->mod_afiliados = $request->mod_afiliados;
+        $perfil->mod_clientes = $request->mod_clientes;
+        $perfil->date_created = $request->date_created;
+        $perfil->date_updated = $request->date_updated;
+        $perfil->id_creator = $request->id_creator;
+        $perfil->tipo_perfil = $request->tipo_perfil;
 
         $perfil->save();
 
         return $perfil;
     }
+
 
 
     public function update(Request $request, $id)
     {
+        $perfil = $this->find($id);
+        $perfil->nome_perfil = $request->nome_perfil;
+        $perfil->id_perfil = $request->id_perfil;
+        $perfil->mod_sorteio = $request->mod_sorteio;
+        $perfil->perm_sorteio = $request->perm_sorteio;
+        $perfil->mod_pedidos = $request->mod_pedidos;
+        $perfil->perm_pedidos = $request->perm_pedidos;
+        $perfil->mod_config = $request->mod_config;
+        $perfil->perm_config = $request->perm_config;
+        $perfil->mod_gateway = $request->mod_gateway;
+        $perfil->mod_seguranca = $request->mod_seguranca;
+        $perfil->mod_blacklist = $request->mod_blacklist;
+        $perfil->mod_usuario = $request->mod_usuario;
+        $perfil->mod_sorteador = $request->mod_sorteador;
+        $perfil->mod_roleta = $request->mod_roleta;
+        $perfil->mod_logs = $request->mod_logs;
+        $perfil->mod_perfil = $request->mod_perfil;
+        $perfil->mod_afiliados = $request->mod_afiliados;
+        $perfil->mod_clientes = $request->mod_clientes;
+        $perfil->date_created = $request->date_created;
+        $perfil->date_updated = $request->date_updated;
+        $perfil->id_creator = $request->id_creator;
+        $perfil->tipo_perfil = $request->tipo_perfil;
 
-        $perfil = Perfil::findOrFail($id);
-        $perfil->cota_Number = $request->cota_Number;
-        $perfil->cota_limit = $request->cota_limit;
-        $perfil->active = $request->active;
-        $perfil->avalible = $request->avalible;
-        $perfil->cota_price = $request->cota_price;
         $perfil->save();
 
         return $perfil;
     }
+
 
     public function delete($id)
     {

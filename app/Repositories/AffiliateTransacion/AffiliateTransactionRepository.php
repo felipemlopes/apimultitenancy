@@ -57,7 +57,7 @@ class AffiliateTransactionRepository implements AffiliateInterface
     public function update(Request $request, $id)
     {
 
-        $affiliateTransaction = AffiliateTransaction::findOrFail($id);
+        $affiliateTransaction = $this->find($id);
         $affiliateTransaction->affiliate_id = $request->affiliate_id;
         $affiliateTransaction->type = $request->type;
         $affiliateTransaction->amount = $request->amount;

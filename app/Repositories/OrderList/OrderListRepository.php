@@ -36,13 +36,40 @@ class OrderListRepository implements OrderListInterface
     public function create(Request $request)
     {
         $orderList = new OrderList();
-        $orderList->cota_Number = $request->cota_Number;
+        $orderList->code = $request->code;
+        $orderList->customer_id = $request->customer_id;
+        $orderList->quantity = $request->quantity;
+        $orderList->total_amount = $request->total_amount;
+        $orderList->status = $request->status;
+        $orderList->date_created = $request->date_created;
+        $orderList->date_updated = $request->date_updated;
+        $orderList->product_name = $request->product_name;
+        $orderList->order_token = $request->order_token;
+        $orderList->order_numbers = $request->order_numbers;
         $orderList->product_id = $request->product_id;
-        $orderList->cota_limit = $request->cota_limit;
-        $orderList->active = $request->active;
-        $orderList->avalible = $request->avalible;
-        $orderList->cota_price = $request->cota_price;
-
+        $orderList->payment_method = $request->payment_method;
+        $orderList->order_expiration = $request->order_expiration;
+        $orderList->pix_code = $request->pix_code;
+        $orderList->txid = $request->txid;
+        $orderList->discount_amount = $request->discount_amount;
+        $orderList->whatsapp_status = $request->whatsapp_status;
+        $orderList->affiliate_id = $request->affiliate_id;
+        $orderList->awarded_shares = $request->awarded_shares;
+        $orderList->has_quotas_awarded = $request->has_quotas_awarded;
+        $orderList->order_upersell = $request->order_upersell;
+        $orderList->order_discount = $request->order_discount;
+        $orderList->ip_client = $request->ip_client;
+        $orderList->order_downsell = $request->order_downsell;
+        $orderList->aceito_termo = $request->aceito_termo;
+        $orderList->recover_purchase = $request->recover_purchase;
+        $orderList->id_afiliado = $request->id_afiliado;
+        $orderList->venda_afiliado = $request->venda_afiliado;
+        $orderList->afiliado_comissao = $request->afiliado_comissao;
+        $orderList->afiliado_order = $request->afiliado_order;
+        $orderList->porcentagem_afiliado = $request->porcentagem_afiliado;
+        $orderList->send_for_whatsapp = $request->send_for_whatsapp;
+        $orderList->link_campanha = $request->link_campanha;
+        $orderList->venda_link_campanha = $request->venda_link_campanha;
 
         $orderList->save();
 
@@ -50,15 +77,45 @@ class OrderListRepository implements OrderListInterface
     }
 
 
+
     public function update(Request $request, $id)
     {
+        $orderList = $this->find($id);
+        $orderList->code = $request->code;
+        $orderList->customer_id = $request->customer_id;
+        $orderList->quantity = $request->quantity;
+        $orderList->total_amount = $request->total_amount;
+        $orderList->status = $request->status;
+        $orderList->date_created = $request->date_created;
+        $orderList->date_updated = $request->date_updated;
+        $orderList->product_name = $request->product_name;
+        $orderList->order_token = $request->order_token;
+        $orderList->order_numbers = $request->order_numbers;
+        $orderList->product_id = $request->product_id;
+        $orderList->payment_method = $request->payment_method;
+        $orderList->order_expiration = $request->order_expiration;
+        $orderList->pix_code = $request->pix_code;
+        $orderList->txid = $request->txid;
+        $orderList->discount_amount = $request->discount_amount;
+        $orderList->whatsapp_status = $request->whatsapp_status;
+        $orderList->affiliate_id = $request->affiliate_id;
+        $orderList->awarded_shares = $request->awarded_shares;
+        $orderList->has_quotas_awarded = $request->has_quotas_awarded;
+        $orderList->order_upersell = $request->order_upersell;
+        $orderList->order_discount = $request->order_discount;
+        $orderList->ip_client = $request->ip_client;
+        $orderList->order_downsell = $request->order_downsell;
+        $orderList->aceito_termo = $request->aceito_termo;
+        $orderList->recover_purchase = $request->recover_purchase;
+        $orderList->id_afiliado = $request->id_afiliado;
+        $orderList->venda_afiliado = $request->venda_afiliado;
+        $orderList->afiliado_comissao = $request->afiliado_comissao;
+        $orderList->afiliado_order = $request->afiliado_order;
+        $orderList->porcentagem_afiliado = $request->porcentagem_afiliado;
+        $orderList->send_for_whatsapp = $request->send_for_whatsapp;
+        $orderList->link_campanha = $request->link_campanha;
+        $orderList->venda_link_campanha = $request->venda_link_campanha;
 
-        $orderList = OrderList::findOrFail($id);
-        $orderList->cota_Number = $request->cota_Number;
-        $orderList->cota_limit = $request->cota_limit;
-        $orderList->active = $request->active;
-        $orderList->avalible = $request->avalible;
-        $orderList->cota_price = $request->cota_price;
         $orderList->save();
 
         return $orderList;

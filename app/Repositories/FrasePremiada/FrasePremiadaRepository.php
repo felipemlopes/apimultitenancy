@@ -36,13 +36,16 @@ class FrasePremiadaRepository implements FrasePremiadaInterface
     public function create(Request $request)
     {
         $frasePremiada = new FrasePremiada();
-        $frasePremiada->cota_Number = $request->cota_Number;
+        $frasePremiada->date_created = $request->date_created;
+        $frasePremiada->frase = $request->frase;
         $frasePremiada->product_id = $request->product_id;
-        $frasePremiada->cota_limit = $request->cota_limit;
-        $frasePremiada->active = $request->active;
-        $frasePremiada->avalible = $request->avalible;
-        $frasePremiada->cota_price = $request->cota_price;
-
+        $frasePremiada->status = $request->status;
+        $frasePremiada->date_end = $request->date_end;
+        $frasePremiada->ganhador = $request->ganhador;
+        $frasePremiada->premio = $request->premio;
+        $frasePremiada->atividade = $request->atividade;
+        $frasePremiada->limite = $request->limite;
+        $frasePremiada->periodo = $request->periodo;
 
         $frasePremiada->save();
 
@@ -52,13 +55,18 @@ class FrasePremiadaRepository implements FrasePremiadaInterface
 
     public function update(Request $request, $id)
     {
+        $frasePremiada = $this->find($id);
+        $frasePremiada->date_created = $request->date_created;
+        $frasePremiada->frase = $request->frase;
+        $frasePremiada->product_id = $request->product_id;
+        $frasePremiada->status = $request->status;
+        $frasePremiada->date_end = $request->date_end;
+        $frasePremiada->ganhador = $request->ganhador;
+        $frasePremiada->premio = $request->premio;
+        $frasePremiada->atividade = $request->atividade;
+        $frasePremiada->limite = $request->limite;
+        $frasePremiada->periodo = $request->periodo;
 
-        $frasePremiada = FrasePremiada::findOrFail($id);
-        $frasePremiada->cota_Number = $request->cota_Number;
-        $frasePremiada->cota_limit = $request->cota_limit;
-        $frasePremiada->active = $request->active;
-        $frasePremiada->avalible = $request->avalible;
-        $frasePremiada->cota_price = $request->cota_price;
         $frasePremiada->save();
 
         return $frasePremiada;
