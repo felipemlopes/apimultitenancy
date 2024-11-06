@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class YoyoLock extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTenant;
     protected $table = 'yoyo_lock';
 
     protected $fillable = [

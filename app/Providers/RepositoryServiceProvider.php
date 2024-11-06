@@ -101,6 +101,11 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Repositories\YoyoLock\YoyoLockRepository'
         );
         $this->app->bind(
+            'App\Repositories\ProductList\ProductListInterface',
+            'App\Repositories\ProductList\ProductListRepository'
+
+        );
+        $this->app->bind(
             'App\Repositories\YoyoLog\YoyoLogInterface',
             'App\Repositories\YoyoLog\YoyoLogRepository'
         );

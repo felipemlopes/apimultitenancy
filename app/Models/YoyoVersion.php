@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class YoyoVersion extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTenant;
 
     protected $table = '_yoyo_version';
 

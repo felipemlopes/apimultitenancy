@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Raffles;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\ProductList\ProductListInterface;
+use App\Transformers\ProductList\ProductListTransformer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RafflesController extends Controller
 {
     private $repository;
-    public function __construct($repository)
+    public function __construct(ProductListInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -17,7 +20,13 @@ class RafflesController extends Controller
      */
     public function index()
     {
-        //
+        dd(Auth::user());
+        $peer_page = 15;
+        $search = request()->get('search');
+        $status = request()->get('status');
+        $products = $this->repository->search($peer_page, $search, $status);
+
+        return responder()->success($products, ProductListTransformer::class)->respond(200);
     }
 
     /**

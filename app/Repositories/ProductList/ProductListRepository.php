@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class ProductListRepository implements ProductListInterface
 {
-    public function search($peer_page, $search, $status = null)
+    public function search($peer_page, $search, $status = null, $tenant = null)
     {
-        $productList = ProductList::Query();
+        $productList = ProductList::query();
         if ($search <> "") {
             $productList->where(function ($q) use ($search) {
                 $q->orwhere('name', "like", "%{$search}%");

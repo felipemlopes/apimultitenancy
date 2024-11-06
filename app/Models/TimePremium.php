@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TimePremium extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTenant;
     protected $table = 'time_premium';
 
     protected $fillable = [
