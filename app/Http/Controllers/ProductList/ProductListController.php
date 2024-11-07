@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Raffles;
+namespace App\Http\Controllers\ProductList;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\ProductList\ProductListInterface;
@@ -8,7 +8,7 @@ use App\Transformers\ProductList\ProductListTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RafflesController extends Controller
+class ProductListController extends Controller
 {
     private $repository;
     public function __construct(ProductListInterface $repository)
@@ -20,7 +20,7 @@ class RafflesController extends Controller
      */
     public function index()
     {
-        dd(Auth::user());
+
         $peer_page = 15;
         $search = request()->get('search');
         $status = request()->get('status');
@@ -29,20 +29,10 @@ class RafflesController extends Controller
         return responder()->success($products, ProductListTransformer::class)->respond(200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $product = $this->repository->create($request);
+        return responder()->success($product, ProductListTransformer::class)->respond(200);
     }
 
     /**
@@ -50,23 +40,19 @@ class RafflesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = $this->repository->find($id);
+        return responder()->success($product, ProductListTransformer::class)->respond(200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $products = $this->repository->update($request, $id);
+        return responder()->success($products, ProductListTransformer::class)->respond(200);
     }
 
     /**
@@ -74,6 +60,7 @@ class RafflesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $products = $this->repository->delete($id);
+        return responder()->success($products, ProductListTransformer::class)->respond(200);
     }
 }

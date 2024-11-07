@@ -11,7 +11,7 @@ class AffiliatesUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,18 @@ class AffiliatesUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:191',
+            'username' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:users,email',
+            'document' => 'required|string|max:191|unique:users,document',
+            'comission' => 'nullable|string',
+            'discount' => 'nullable|string',
+            'phone' => 'nullable|string',
+            'user_link' => 'nullable|string',
+            'saldo' => 'nullable|numeric|min:0',
+            'avatar' => 'nullable|string',
+            'tipo_chave_pix' => 'nullable|string',
+            'chave_pix' => 'nullable|string',
         ];
     }
 }

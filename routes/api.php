@@ -7,8 +7,8 @@ use App\Http\Controllers\Gateway\GatewayController;
 use App\Http\Controllers\Log\LogController;
 use App\Http\Controllers\Order\OrdersController;
 use App\Http\Controllers\Phrase\PhraseController;
+use App\Http\Controllers\ProductList\ProductListController;
 use App\Http\Controllers\Profile\ProfileController;
-use App\Http\Controllers\Raffles\RafflesController;
 use App\Http\Controllers\Ranking\RankingsController;
 use App\Http\Controllers\Security\SecurityController;
 use App\Http\Controllers\Settings\SettingsController;
@@ -35,11 +35,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     //sorteios
-    Route::get('/sorteios', [RafflesController::class, 'index']);
-    Route::post('/sorteios', [RafflesController::class, 'store']);
-    Route::put('/sorteios/{id}', [RafflesController::class, 'update']);
-    Route::get('/sorteios/{id}', [RafflesController::class, 'show']);
-    Route::delete('/sorteios/{id}', [RafflesController::class, 'destroy']);
+    Route::get('/sorteios', [ProductListController::class, 'index']);
+    Route::post('/sorteios', [ProductListController::class, 'store']);
+    Route::put('/sorteios/{id}', [ProductListController::class, 'update']);
+    Route::get('/sorteios/{id}', [ProductListController::class, 'show']);
+    Route::delete('/sorteios/{id}', [ProductListController::class, 'destroy']);
 
     //pedidos
 

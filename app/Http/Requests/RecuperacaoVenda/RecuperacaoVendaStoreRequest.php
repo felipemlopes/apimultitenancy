@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\RecuperacaoVenda;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserUpdateRequest extends FormRequest
+class RecuperacaoVendaStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,11 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstname' => 'nullable|string|max:250',
-            'middlename' => 'nullable|string',
-            'lastname' => 'nullable|string|max:250',
-            'username' => 'nullable|string',
-            'avatar' => 'nullable|string',
-            'last_login' => 'nullable|date',
-            'type' => 'nullable|boolean',
-            'perfil' => 'nullable|integer',
+            'data_inicio_recuperacao' => 'nullable|date',
+            'data_final_recuperacao' => 'nullable|date',
+            'intervalo' => 'nullable|integer',
+            'status' => 'nullable|string',
+            'envios' => 'nullable|string',
         ];
     }
 }

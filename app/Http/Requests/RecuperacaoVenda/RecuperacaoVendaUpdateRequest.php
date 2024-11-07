@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Raffles;
+namespace App\Http\Requests\RecuperacaoVenda;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RafflesDeleteRequest extends FormRequest
+class RecuperacaoVendaUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class RafflesDeleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'data_inicio_recuperacao' => 'nullable|date',
+            'data_final_recuperacao' => 'nullable|date',
+            'intervalo' => 'nullable|integer',
+            'status' => 'nullable|string',
+            'envios' => 'nullable|string',
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Perfil\PerfilInterface;
+use App\Transformers\Perfil\PerfilTransformer;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -18,23 +19,19 @@ class ProfileController extends Controller
     }
     public function index()
     {
-        //
+
+        $peer_page = 15;
+        $search = request()->get('search');
+        $status = request()->get('status');
+        $perfis = $this->repository->search($peer_page, $search, $status);
+
+        return responder()->success($perfis, PerfilTransformer::class)->respond(200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $perfil = $this->repository->create($request);
+        return responder()->success($perfil, PerfilTransformer::class)->respond(200);
     }
 
     /**
@@ -42,23 +39,19 @@ class ProfileController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $perfil = $this->repository->find($id);
+        return responder()->success($perfil, PerfilTransformer::class)->respond(200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $perfis = $this->repository->update($request, $id);
+        return responder()->success($perfis, PerfilTransformer::class)->respond(200);
     }
 
     /**
@@ -66,6 +59,7 @@ class ProfileController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $perfis = $this->repository->delete($id);
+        return responder()->success($perfis, PerfilTransformer::class)->respond(200);
     }
 }

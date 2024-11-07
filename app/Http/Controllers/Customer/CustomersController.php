@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Customer\CustomerListInterface;
+use App\Transformers\User\UserTransformer;
 use Illuminate\Http\Request;
 
 class CustomersController extends Controller
@@ -13,28 +14,21 @@ class CustomersController extends Controller
     {
         $this->repository = $repository;
     }
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+
+        $peer_page = 15;
+        $search = request()->get('search');
+        $status = request()->get('status');
+        $customers = $this->repository->search($peer_page, $search, $status);
+
+        return responder()->success($customers, UserTransformer::class)->respond(200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $customer = $this->repository->create($request);
+        return responder()->success($customer, UserTransformer::class)->respond(200);
     }
 
     /**
@@ -42,36 +36,30 @@ class CustomersController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    public function  exportCustomers(string $id)
-    {
-        //
+        $customer = $this->repository->find($id);
+        return responder()->success($customer, UserTransformer::class)->respond(200);
     }
 
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $customers = $this->repository->update($request, $id);
+        return responder()->success($customers, UserTransformer::class)->respond(200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
+    {
+        $customers = $this->repository->delete($id);
+        return responder()->success($customers, UserTransformer::class)->respond(200);
+    }
+    public function  exportCustomers(string $id)
     {
         //
     }

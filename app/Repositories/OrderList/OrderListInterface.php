@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 
 interface OrderListInterface
 {
-    public function search($peer_page, $search, $status = null, $tenant = null);
+    public function search($peer_page, $search, $status = null);
 
-    public function find($id, $tenant = null);
+    public function find($id);
 
-    public function create(Request $request, $tenant = null);
+    public function create(Request $request);
 
-    public function update(Request $request, $id, $tenant = null);
+    public function update(Request $request, $id);
 
-    public function delete($id, $tenant = null);
+    public function delete($id);
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Raffles;
+namespace App\Http\Requests\CotasPremiada;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RafflesStoreRequest extends FormRequest
+class CotasPremiadaStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,12 @@ class RafflesStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cota_number' => 'required|integer',
+            'product_id' => 'required|integer',
+            'cota_limit' => 'nullable|integer',
+            'active' => 'nullable|boolean',
+            'available' => 'nullable|boolean',
+            'cota_price' => 'nullable|string',
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\OrderList\OrderListInterface;
+use App\Transformers\OrderList\OrderListTransformer;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -18,7 +19,13 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        //
+
+        $peer_page = 15;
+        $search = request()->get('search');
+        $status = request()->get('status');
+        $orders = $this->repository->search($peer_page, $search, $status);
+
+        return responder()->success($orders, OrderListTransformer::class)->respond(200);
     }
 
     /**
@@ -42,7 +49,8 @@ class OrdersController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $order = $this->repository->find($id);
+        return responder()->success($order, OrderListTransformer::class)->respond(200);
     }
 
     /**

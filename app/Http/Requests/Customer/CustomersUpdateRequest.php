@@ -11,7 +11,7 @@ class CustomersUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,25 @@ class CustomersUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'firstname' => 'required|string|max:191',
+            'lastname' => 'nullable|string|max:191',
+            'phone' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:customers,email',
+            'avatar' => 'nullable|string|max:191',
+            'cpf' => 'nullable|string|max:191|unique:customers,cpf',
+            'zipcode' => 'nullable|string|max:191',
+            'address' => 'nullable|string|max:191',
+            'number' => 'nullable|string|max:191',
+            'neighborhood' => 'nullable|string|max:191',
+            'complement' => 'nullable|string|max:191',
+            'state' => 'nullable|string|max:191',
+            'city' => 'nullable|string|max:191',
+            'reference_point' => 'nullable|string|max:191',
+            'premiado' => 'nullable|boolean',
+            'blocked' => 'nullable|boolean',
+            'code_recover' => 'nullable|string|max:10',
+            'date_code_recover' => 'nullable|date',
+            'datanasc' => 'nullable|date',
         ];
     }
 }

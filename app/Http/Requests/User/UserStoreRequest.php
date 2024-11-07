@@ -11,7 +11,7 @@ class UserStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'firstname' => 'nullable|string|max:250',
+            'middlename' => 'nullable|string',
+            'lastname' => 'nullable|string|max:250',
+            'username' => 'nullable|string',
+            'password' => 'nullable|string|min:8',
+            'avatar' => 'nullable|string',
+            'last_login' => 'nullable|date',
+            'type' => 'nullable|boolean',
+            'perfil' => 'nullable|integer',
         ];
     }
 }

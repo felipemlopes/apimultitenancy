@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\CotasPremiada;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserUpdateRequest extends FormRequest
+class CotasPremiadaUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,12 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstname' => 'nullable|string|max:250',
-            'middlename' => 'nullable|string',
-            'lastname' => 'nullable|string|max:250',
-            'username' => 'nullable|string',
-            'avatar' => 'nullable|string',
-            'last_login' => 'nullable|date',
-            'type' => 'nullable|boolean',
-            'perfil' => 'nullable|integer',
+            'cota_number' => 'required|integer',
+            'product_id' => 'required|integer',
+            'cota_limit' => 'nullable|integer',
+            'active' => 'nullable|boolean',
+            'available' => 'nullable|boolean',
+            'cota_price' => 'nullable|string',
         ];
     }
 }

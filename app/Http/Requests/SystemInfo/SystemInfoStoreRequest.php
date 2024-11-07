@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\SystemInfo;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserDeleteRequest extends FormRequest
+class SystemInfoStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UserDeleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'meta_field' => 'required|string',
+            'meta_value' => 'required|string',
         ];
     }
 }

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Raffles;
+namespace App\Http\Requests\YoyoLock;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RafflesUpdateRequest extends FormRequest
+class YoyoLockUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class RafflesUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'locked' => 'required|integer',
+            'ctime' => 'nullable|date',
+            'pid' => 'required|integer',
         ];
     }
 }
