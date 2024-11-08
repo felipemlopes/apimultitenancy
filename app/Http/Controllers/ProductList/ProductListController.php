@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ProductList;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProductList;
 use App\Repositories\ProductList\ProductListInterface;
 use App\Transformers\ProductList\ProductListTransformer;
 use Illuminate\Http\Request;
@@ -61,6 +62,34 @@ class ProductListController extends Controller
     public function destroy(string $id)
     {
         $products = $this->repository->delete($id);
+        return responder()->success($products, ProductListTransformer::class)->respond(200);
+    }
+
+    //sorteios listar
+
+    public function all()
+    {
+
+        $products = $this->repository->all();
+
+        return responder()->success($products, ProductListTransformer::class)->respond(200);
+    }
+
+    public function participant($id)
+    {
+        $products = $this->repository->participant($id);
+        return responder()->success($products, ProductListTransformer::class)->respond(200);
+    }
+
+    public function geralRepor($id)
+    {
+        $products = $this->repository->geralReport($id);
+        return responder()->success($products)->respond(200);
+    }
+
+    public function dailyRepor($id)
+    {
+        $products = $this->repository->dailyReport($id);
         return responder()->success($products, ProductListTransformer::class)->respond(200);
     }
 }

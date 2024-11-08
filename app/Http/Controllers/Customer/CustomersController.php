@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Customer\CustomerListInterface;
-use App\Transformers\User\UserTransformer;
+use App\Transformers\CustomerList\CustomerListTransformer;
+
 use Illuminate\Http\Request;
 
 class CustomersController extends Controller
@@ -22,13 +23,13 @@ class CustomersController extends Controller
         $status = request()->get('status');
         $customers = $this->repository->search($peer_page, $search, $status);
 
-        return responder()->success($customers, UserTransformer::class)->respond(200);
+        return responder()->success($customers, CustomerListTransformer::class)->respond(200);
     }
 
     public function store(Request $request)
     {
         $customer = $this->repository->create($request);
-        return responder()->success($customer, UserTransformer::class)->respond(200);
+        return responder()->success($customer, CustomerListTransformer::class)->respond(200);
     }
 
     /**
@@ -37,7 +38,7 @@ class CustomersController extends Controller
     public function show(string $id)
     {
         $customer = $this->repository->find($id);
-        return responder()->success($customer, UserTransformer::class)->respond(200);
+        return responder()->success($customer, CustomerListTransformer::class)->respond(200);
     }
 
 
@@ -48,7 +49,7 @@ class CustomersController extends Controller
     public function update(Request $request, string $id)
     {
         $customers = $this->repository->update($request, $id);
-        return responder()->success($customers, UserTransformer::class)->respond(200);
+        return responder()->success($customers, CustomerListTransformer::class)->respond(200);
     }
 
     /**
@@ -57,7 +58,7 @@ class CustomersController extends Controller
     public function destroy(string $id)
     {
         $customers = $this->repository->delete($id);
-        return responder()->success($customers, UserTransformer::class)->respond(200);
+        return responder()->success($customers, CustomerListTransformer::class)->respond(200);
     }
     public function  exportCustomers(string $id)
     {

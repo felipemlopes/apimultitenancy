@@ -15,4 +15,6 @@ interface OrderListInterface
     public function update(Request $request, $id);
 
     public function delete($id);
+
+    public function Export(string $id);
 }

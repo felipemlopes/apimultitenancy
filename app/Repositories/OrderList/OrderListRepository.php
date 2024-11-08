@@ -126,4 +126,6 @@ class OrderListRepository implements OrderListInterface
         $orderList = $this->find($id);
         return $orderList->delete();
     }
+
+    public function Export(string $id) {}
 }

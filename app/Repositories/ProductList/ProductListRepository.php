@@ -2,6 +2,8 @@
 
 namespace App\Repositories\ProductList;
 
+use App\Models\CustomerList;
+use App\Models\OrderList;
 use App\Models\ProductList;
 use Illuminate\Http\Request;
 
@@ -31,6 +33,71 @@ class ProductListRepository implements ProductListInterface
     public function find($id)
     {
         return ProductList::findOrFail($id);
+    }
+
+    public function all()
+    {
+
+        $products = ProductList::all();
+
+        return $products;
+    }
+
+
+    public function participant($id)
+    {
+        $product = $this->find($id);
+        $orderList = OrderList::where('product_id', $id)->get()->pluck('customer_id');
+        $customers = CustomerList::whereIn('id', $orderList)->get();
+        return $customers;
+    }
+    public function dailyReport($id)
+    {
+        $product = $this->find($id);
+
+        $product = OrderList::where('product_id', $id)
+            ->whereDate('date_created', '=', now()->toDateString())
+            ->get();
+
+
+        $somaTotal = $product->sum('total_amount'); // Soma todos os valores de 'total_amount'
+        $quantidade = $product->count(); // Conta quantos produtos/vendas existem
+        $ticketMedio = $quantidade > 0 ? $somaTotal / $quantidade : 0; // Se não houver produtos, retorna 0
+
+        $productListFormatted =
+            [
+                'data' => now()->format('d/m/Y'),
+                'ticket_medio' =>  $ticketMedio,
+                'vendas' => $quantidade,
+                'total' => $somaTotal,
+
+            ];
+
+        return $productListFormatted;
+    }
+
+    public function geralReport($id)
+    {
+
+        $product = $this->find($id);
+        $product = ProductList::where('id', $id)->get();
+
+        $total = $product->sum('qty_numbers');
+        $totalPagos = $product->sum('paid_numbers');
+
+        $numerosLivres = $total - $totalPagos;
+
+        $quantidadeLivre = $product->count();
+
+        $resultados =
+            [
+                'total' => $total,
+                'totalPagos' => $totalPagos,
+                'numerosLivres' => $numerosLivres,
+
+            ];
+
+        return $resultados;
     }
 
     public function create(Request $request)

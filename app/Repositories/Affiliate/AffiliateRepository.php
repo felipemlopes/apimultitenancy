@@ -3,6 +3,7 @@
 namespace App\Repositories\Affiliate;
 
 use App\Models\Affiliate;
+use App\Models\OrderList;
 use Illuminate\Http\Request;
 
 class AffiliateRepository implements AffiliateInterface
@@ -90,5 +91,20 @@ class AffiliateRepository implements AffiliateInterface
     {
         $affiliate = $this->find($id);
         return $affiliate->delete();
+    }
+
+
+    public function wallet($id)
+    {
+        $affiliate = $this->find($id);
+    }
+
+
+    public function order($id, $peer_page)
+    {
+        $affiliate = $this->find($id);
+        $orderList = OrderList::where('affiliate_id', $id)->paginate($peer_page);
+
+        return $orderList;
     }
 }

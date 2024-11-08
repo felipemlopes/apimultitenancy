@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Affiliate;
 use App\Http\Controllers\Controller;
 use App\Repositories\Affiliate\AffiliateInterface;
 use App\Transformers\Affiliate\AffiliateTransformer;
+use App\Transformers\OrderList\OrderListTransformer;
 use Illuminate\Http\Request;
 
 class AffiliatesController extends Controller
@@ -35,7 +36,7 @@ class AffiliatesController extends Controller
     public function store(Request $request)
     {
         $affiliate = $this->repository->create($request);
-        return responder()->success($affiliate, AffiliateTransformer::class)->respond(200);
+        return responder()->success($affiliate, AffiliateTransformer::class)->respond(201);
     }
 
     /**
@@ -64,6 +65,20 @@ class AffiliatesController extends Controller
     public function destroy(string $id)
     {
         $affiliate = $this->repository->delete($id);
+        return responder()->success()->respond(200);
+    }
+
+    public function wallet(string $id)
+    {
+        $affiliate = $this->repository->wallet($id);
         return responder()->success($affiliate, AffiliateTransformer::class)->respond(200);
+    }
+
+    public function order($id)
+
+    {
+        $peer_page = 15;
+        $affiliate = $this->repository->order($id, $peer_page);
+        return responder()->success($affiliate, OrderListTransformer::class)->respond(200);
     }
 }

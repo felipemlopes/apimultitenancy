@@ -31,26 +31,31 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/sorteios/{id}', [ProductListController::class, 'show']);
     Route::delete('/sorteios/{id}', [ProductListController::class, 'destroy']);
 
-    //[get] /sorteios/listar/todos
-    //[get] /sorteios/{id}/participantes
-    //[get] /sorteios/{id}/relatorio/diario
-    //[get] /sorteios/{id}/relatorio/geral
-    //[get] /sorteios/{id}/pedidos
-    //[get] /sorteios/{id}/bilhetes-premiados
+    Route::get('/sorteios/listar/todos', [ProductListController::class, 'all']);
+    Route::get('/sorteios/{id}/participantes', [ProductListController::class, 'participant']);
+    Route::get('/sorteios/{id}/relatorio/diario', [ProductListController::class, 'dailyReport']);
+    Route::get('/sorteios/{id}/relatorio/geral', [ProductListController::class, 'geralRepor']);
+    Route::get('/sorteios/{id}/pedidos', [ProductListController::class, 'participant']);
+    Route::get('/sorteios/{id}/bilhetes-premiados', [ProductListController::class, 'participant']);
 
-    //[get] /sorteios/{id}/links-campanhas
-    //[post] /sorteios/{id}/links-campanhas
-    //[get] /sorteios/{id}/links-campanhas/{link_id}
-    //[put] /sorteios/{id}/links-campanhas/{link_id}
-    //[delete] /sorteios/{id}/links-campanhas/{link_id}
+    Route::get('/sorteios/{id}/links', [ProductListController::class, 'participant']);
+    Route::post('/sorteios/{id}/links', [ProductListController::class, 'participant']);
+    Route::get('/sorteios/{id}/links', [ProductListController::class, 'participant']);
+    Route::post('/sorteios/{id}/links', [ProductListController::class, 'participant']);
+
+    Route::get('/sorteios/{id}/links-campanhas', [ProductListController::class, 'participant']);
+    Route::post('/sorteios/{id}/links-campanhas', [ProductListController::class, 'participant']);
+    Route::get('/sorteios/{id}/links-campanhas/{link_id}', [ProductListController::class, 'participant']);
+    Route::put('/sorteios/{id}/links-campanhas/{link_id}', [ProductListController::class, 'participant']);
+    Route::delete('/sorteios/{id}/links-campanhas/{link_id}', [ProductListController::class, 'participant']);
 
 
     //pedidos
 
     Route::get('/pedidos', [OrdersController::class, 'index']);
     Route::get('/pedidos/{id}', [OrdersController::class, 'show']);
-    //[delete] /pedidos/{id}
-    //[get] /pedidos/{id}/exportar
+    Route::delete('/pedidos/{id}', [OrdersController::class, 'destroy']);
+    Route::delete('/pedidos/{id}/exportar', [OrdersController::class, 'exportar']);
 
 
     //rankings
@@ -76,13 +81,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/afiliados/{id}', [AffiliatesController::class, 'update']);
     Route::get('/afiliados/{id}', [AffiliatesController::class, 'show']);
     Route::delete('/afiliados/{id}', [AffiliatesController::class, 'destroy']);
-    // Route::get('/afiliados/carteira', [AffiliatesController::class, 'index']);
-    // Route::get('/afiliados/pedidos', [AffiliatesController::class, 'index']);
+    Route::get('/afiliados/{id}/carteira', [AffiliatesController::class, 'wallet']);
+    Route::get('/afiliados/{id}/pedidos', [AffiliatesController::class, 'order']);
 
     //gateway
     Route::get('/gateway', [GatewayController::class, 'index']);
-    //Route::get('/gateway/{id}', [GatewayController::class, 'show']);
-    //Route::put('/gateway/{id}', [GatewayController::class, 'show']);
+    Route::get('/gateway/{id}', [GatewayController::class, 'show']);
+    Route::put('/gateway/{id}', [GatewayController::class, 'update']);
 
     //configurações
     //Route::get('/configuracoes', [SettingsController::class, 'index']);
@@ -121,5 +126,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/perfil/{id}', [ProfileController::class, 'update']);
     Route::get('/perfil/{id}', [ProfileController::class, 'show']);
     Route::delete('/perfil/{id}', [ProfileController::class, 'destroy']);
-
 });
