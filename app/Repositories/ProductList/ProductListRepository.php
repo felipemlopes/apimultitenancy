@@ -87,10 +87,45 @@ class ProductListRepository implements ProductListInterface
 
         $numerosLivres = $total - $totalPagos;
         $numerosReservados = $product->sum('pending_numbers');
+        $pedidos = OrderList::where('product_id', $id)->get();
+        $pedidos = $pedidos->count();
+
+        //participantes
+        $orderList = OrderList::where('product_id', $id)->get()->pluck('customer_id');
+        $participantes = CustomerList::whereIn('id', $orderList)->get();
+        $participantes = $participantes->count();
+
+        //faturamento
+        $faturamento = OrderList::where('status', 2)->where('product_id', $id)->get();
+        $faturamento = $faturamento->sum('total_amount');
+
+        //cancelados
+        $cancelados = OrderList::where('status', 3)->where('product_id', $id)->get();
+        $cancelados = $cancelados->sum('quanty');
+
+        //upsell
+        $upsell = OrderList::where('order_upersell', '<>', null)->where('product_id', $id)->get();
+        $upsell = $upsell->sum('order_upersell');
+
+        //desconto
+        $promocao = OrderList::where('order_discount', '<>', null)->where('product_id', $id)->get();
+        $promocao = $promocao->sum('order_discount');
+
+        //oferta
+        $oferta = OrderList::where('order_offer', '<>', null)->where('product_id', $id)->get();
+        $oferta = $oferta->sum('order_offer');
+
+        //venda manual
+        $venda_manual = OrderList::where('payment_method',  'Manual')->where('product_id', $id)->get();
+        $venda_manual = $venda_manual->count();
+
+        //venda normal
+        $venda_normal = OrderList::where('payment_method',  '<>', 'Manual')->where('product_id', $id)->get();
+        $venda_normal = $venda_normal->count();
 
         $quantidadeLivre = $product->count();
 
-        $percentualPago = ($totalPagos/$total) * 100;
+        $percentualPago = ($totalPagos / $total) * 100;
 
         $resultados =
             [
@@ -98,11 +133,35 @@ class ProductListRepository implements ProductListInterface
                 'numeros_reservados' => $numerosReservados,
                 'total_pagos' => $totalPagos,
                 'percentual_pago' => $percentualPago,
-
+                'cancelados' => $cancelados,
+                'pedidos' => $pedidos,
+                'participantes' => $participantes,
+                'faturamento' => $faturamento,
+                'upsell' => $upsell,
+                'oferta' => $oferta,
+                'promocao' => $promocao,
+                'venda_manual' => $venda_manual,
+                'venda_normal' => $venda_normal,
                 'total' => $total,
+
             ];
 
         return $resultados;
+    }
+
+
+    public function order($id)
+    {
+        $product = $this->find($id);
+        $orderList = OrderList::where('product_id', $id)->get();
+
+
+        return $orderList;
+    }
+
+    public function winningTicket($id)
+    {
+        $product = $this->find($id);
     }
 
     public function create(Request $request)

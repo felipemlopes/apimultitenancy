@@ -5,6 +5,7 @@ use App\Http\Controllers\BlackList\BlackListController;
 use App\Http\Controllers\Customer\CustomersController;
 use App\Http\Controllers\Gateway\GatewayController;
 use App\Http\Controllers\Log\LogController;
+use App\Http\Controllers\Login\LoginController;
 use App\Http\Controllers\Order\OrdersController;
 use App\Http\Controllers\Phrase\PhraseController;
 use App\Http\Controllers\ProductList\ProductListController;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //login de usuário
+    Route::post('/login', [LoginController::class, 'login']);
     //compra (retorna qrcode)
 
 
@@ -38,7 +40,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/sorteios/{id}/participantes', [ProductListController::class, 'participant']);
     Route::get('/sorteios/{id}/relatorio/diario', [ProductListController::class, 'dailyReport']);
     Route::get('/sorteios/{id}/relatorio/geral', [ProductListController::class, 'geralRepor']);
-    Route::get('/sorteios/{id}/pedidos', [ProductListController::class, 'participant']);
+    Route::get('/sorteios/{id}/pedidos', [ProductListController::class, 'order']);
     Route::get('/sorteios/{id}/bilhetes-premiados', [ProductListController::class, 'participant']);
 
     Route::get('/sorteios/{id}/links', [ProductListController::class, 'participant']);
@@ -109,16 +111,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Route::get('/configuracoes/cotas-premiadas', [SettingsController::class, 'show']);
     //Route::put('/configuracoes/cotas-premiadas', [SettingsController::class, 'show']);
 
-    //segurança
+
     //Route::get('/segurança', [SecurityController::class, 'index']);
     //Route::put('/segurança', [SecurityController::class, 'index']);
     //Route::get('/segurança/cadastro', [SecurityController::class, 'show']);
     //Route::put('/segurança/cadastro', [SecurityController::class, 'show']);
 
-    //blackList
-    //Route::get('/blackList', [BlackListController::class, 'index']);
-    //Route::get('/blackList/{id}', [BlackListController::class, 'show']);
-    //Route::delete('/blackList/{id}', [BlackListController::class, 'destroy']);
+
+    Route::get('/blackList', [BlackListController::class, 'index']);
+    Route::get('/blackList/{id}', [BlackListController::class, 'show']);
+    Route::delete('/blackList/{id}', [BlackListController::class, 'destroy']);
 
     //Log
     Route::get('/logs', [LogController::class, 'index']);

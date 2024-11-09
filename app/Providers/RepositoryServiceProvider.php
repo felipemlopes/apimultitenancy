@@ -117,6 +117,11 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Repositories\YoyoVersion\YoyoVersionInterface',
             'App\Repositories\YoyoVersion\YoyoVersionRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Login\LoginInterface',
+            'App\Repositories\Login\LoginRepository'
+        );
     }
 
     /**

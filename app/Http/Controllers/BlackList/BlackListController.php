@@ -5,6 +5,7 @@ namespace App\Http\Controllers\BlackList;
 use App\Http\Controllers\Controller;
 
 use App\Repositories\BlackList\BlackListInterface;
+use App\Transformers\BlackList\BlackListTransformer;
 use Illuminate\Http\Request;
 
 class BlackListController extends Controller
@@ -20,20 +21,15 @@ class BlackListController extends Controller
      */
     public function index()
     {
-        //
+        $peer_page = 15;
+        $search = request()->get('search');
+        $status = request()->get('status');
+        $blackLists = $this->repository->search($peer_page, $search, $status);
+
+        return responder()->success($blackLists, BlackListTransformer::class)->respond(200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
@@ -44,7 +40,9 @@ class BlackListController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $blackLists = $this->repository->find($id);
+
+        return responder()->success($blackLists, BlackListTransformer::class)->respond(200);
     }
 
     /**
@@ -68,6 +66,8 @@ class BlackListController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $blackLists = $this->repository->delete($id);
+
+        return responder()->success()->respond(200);
     }
 }

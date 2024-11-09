@@ -20,6 +20,10 @@ interface ProductListInterface
 
     public function geralReport($id);
 
+    public function order($id);
+
+    public function winningTicket($id);
+
     public function update(Request $request, $id);
 
     public function delete($id);
