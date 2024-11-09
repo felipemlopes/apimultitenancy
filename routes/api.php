@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
+    //login de usuário
+    //compra (retorna qrcode)
+
 
     //Estatisticas
     //[get]/dashboard

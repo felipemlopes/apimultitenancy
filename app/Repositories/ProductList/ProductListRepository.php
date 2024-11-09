@@ -86,15 +86,20 @@ class ProductListRepository implements ProductListInterface
         $totalPagos = $product->sum('paid_numbers');
 
         $numerosLivres = $total - $totalPagos;
+        $numerosReservados = $product->sum('pending_numbers');
 
         $quantidadeLivre = $product->count();
 
+        $percentualPago = ($totalPagos/$total) * 100;
+
         $resultados =
             [
-                'total' => $total,
-                'totalPagos' => $totalPagos,
-                'numerosLivres' => $numerosLivres,
+                'numeros_livres' => $numerosLivres,
+                'numeros_reservados' => $numerosReservados,
+                'total_pagos' => $totalPagos,
+                'percentual_pago' => $percentualPago,
 
+                'total' => $total,
             ];
 
         return $resultados;
