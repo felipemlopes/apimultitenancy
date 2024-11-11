@@ -75,7 +75,7 @@ class OrdersController extends Controller
     public function destroy(string $id)
     {
         $order = $this->repository->delete($id);
-        return responder()->success($order, OrderListTransformer::class)->respond(200);
+        return responder()->success()->respond(200);
     }
 
 

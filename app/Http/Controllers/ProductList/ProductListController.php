@@ -5,6 +5,8 @@ namespace App\Http\Controllers\ProductList;
 use App\Http\Controllers\Controller;
 use App\Models\ProductList;
 use App\Repositories\ProductList\ProductListInterface;
+use App\Transformers\CustomerList\CustomerListTransformer;
+use App\Transformers\OrderList\OrderListTransformer;
 use App\Transformers\ProductList\ProductListTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +64,7 @@ class ProductListController extends Controller
     public function destroy(string $id)
     {
         $products = $this->repository->delete($id);
-        return responder()->success($products, ProductListTransformer::class)->respond(200);
+        return responder()->success()->respond(200);
     }
 
     //sorteios listar
@@ -78,7 +80,7 @@ class ProductListController extends Controller
     public function participant($id)
     {
         $products = $this->repository->participant($id);
-        return responder()->success($products, ProductListTransformer::class)->respond(200);
+        return responder()->success($products, CustomerListTransformer::class)->respond(200);
     }
 
     public function geralRepor($id)
@@ -87,9 +89,15 @@ class ProductListController extends Controller
         return responder()->success($products)->respond(200);
     }
 
-    public function dailyRepor($id)
+    public function dailyReport($id)
     {
         $products = $this->repository->dailyReport($id);
-        return responder()->success($products, ProductListTransformer::class)->respond(200);
+        return responder()->success($products)->respond(200);
+    }
+
+    public function order($id)
+    {
+        $products = $this->repository->order($id);
+        return responder()->success($products)->respond(200);
     }
 }

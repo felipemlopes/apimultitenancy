@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/afiliados/{id}', [AffiliatesController::class, 'update']);
     Route::get('/afiliados/{id}', [AffiliatesController::class, 'show']);
     Route::delete('/afiliados/{id}', [AffiliatesController::class, 'destroy']);
-    Route::get('/afiliados/{id}/carteira', [AffiliatesController::class, 'wallet']);
+    //Route::get('/afiliados/{id}/carteira', [AffiliatesController::class, 'wallet']);
     Route::get('/afiliados/{id}/pedidos', [AffiliatesController::class, 'order']);
 
     //gateway

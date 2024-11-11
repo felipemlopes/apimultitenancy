@@ -58,7 +58,7 @@ class CustomersController extends Controller
     public function destroy(string $id)
     {
         $customers = $this->repository->delete($id);
-        return responder()->success($customers, CustomerListTransformer::class)->respond(200);
+        return responder()->success()->respond(200);
     }
     public function  exportCustomers(string $id)
     {

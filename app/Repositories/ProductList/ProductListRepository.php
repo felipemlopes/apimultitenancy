@@ -6,6 +6,8 @@ use App\Models\CustomerList;
 use App\Models\OrderList;
 use App\Models\ProductList;
 use Illuminate\Http\Request;
+use App\Services\UploadManager;
+use UConverter;
 
 class ProductListRepository implements ProductListInterface
 {
@@ -166,12 +168,17 @@ class ProductListRepository implements ProductListInterface
 
     public function create(Request $request)
     {
+
+        $uploadManager = new UploadManager($request);
+        $path = $uploadManager->upload('image_path', 'images/product');
+
         $productList = new ProductList();
         $productList->name = $request->name;
         $productList->description = $request->description;
+        $productList->image_path = $path;
         $productList->description_meta = $request->description_meta;
         $productList->price = $request->price;
-        $productList->image_path = $request->image_path;
+        $productList->image_gallery = json_encode($request->image_gallery);
         $productList->status = $request->status;
         $productList->delete_flag = $request->delete_flag;
         $productList->date_created = $request->date_created;
@@ -185,7 +192,7 @@ class ProductListRepository implements ProductListInterface
         $productList->paid_numbers = $request->paid_numbers;
         $productList->ranking_qty = $request->ranking_qty;
         $productList->enable_ranking = $request->enable_ranking;
-        $productList->image_gallery = $request->image_gallery;
+        $productList->image_gallery = json_encode($request->image_gallery);
         $productList->enable_progress_bar = $request->enable_progress_bar;
         $productList->draw_number = $request->draw_number;
         $productList->status_display = $request->status_display;
@@ -227,7 +234,12 @@ class ProductListRepository implements ProductListInterface
         $productList->facebook_pixel_id = $request->facebook_pixel_id;
         $productList->facebook_access_token = $request->facebook_access_token;
         $productList->descricao_promocao = $request->descricao_promocao;
-        $productList->expandir_descricao = $request->expandir_descricao;
+
+        // $productList->expandir_descricao = mb_convert_encoding($request->expandir_descricao, 'UTF-8', 'ISO-8859-1');
+
+
+
+
         $productList->enable_downsell = $request->enable_downsell;
         $productList->text_downsell = $request->text_downsell;
         $productList->link_downsell = $request->link_downsell;
@@ -267,7 +279,7 @@ class ProductListRepository implements ProductListInterface
         $productList->description_meta = $request->description_meta;
         $productList->price = $request->price;
         $productList->image_path = $request->image_path;
-        $productList->status = $request->status;
+        $productList->status = ($request->status == 'ativo') ? 1 : 0;
         $productList->delete_flag = $request->delete_flag;
         $productList->date_created = $request->date_created;
         $productList->date_updated = $request->date_updated;

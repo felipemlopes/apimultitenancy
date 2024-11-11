@@ -108,4 +108,6 @@ class ProductList extends Model
         'botao_aceitar_oferta',
         'botao_rejeitar_oferta'
     ];
+
+    public $timestamps = false;
 }

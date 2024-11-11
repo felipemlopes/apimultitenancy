@@ -46,4 +46,6 @@ class CustomerList extends Model
         'date_code_recover',
         'datanasc'
     ];
+
+    public $timestamps = false;
 }

@@ -60,6 +60,6 @@ class ProfileController extends Controller
     public function destroy(string $id)
     {
         $perfis = $this->repository->delete($id);
-        return responder()->success($perfis, PerfilTransformer::class)->respond(200);
+        return responder()->success()->respond(200);
     }
 }

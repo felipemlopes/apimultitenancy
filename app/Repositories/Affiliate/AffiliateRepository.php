@@ -4,6 +4,7 @@ namespace App\Repositories\Affiliate;
 
 use App\Models\Affiliate;
 use App\Models\OrderList;
+use App\Services\UploadManager;
 use Illuminate\Http\Request;
 
 class AffiliateRepository implements AffiliateInterface
@@ -37,6 +38,8 @@ class AffiliateRepository implements AffiliateInterface
     public function create(Request $request)
     {
         $affiliate = new Affiliate();
+        $uploadManager = new UploadManager($request);
+        $path = $uploadManager->upload('avatar', 'images/affiliates');
 
         $affiliate->name = $request->name;
         $affiliate->username = $request->username;
@@ -46,11 +49,10 @@ class AffiliateRepository implements AffiliateInterface
         $affiliate->comission = $request->comission;
         $affiliate->discount = $request->discount;
         $affiliate->phone = $request->phone;
-        $affiliate->user_link = $request->user_link;
         $affiliate->date_added = $request->date_added;
         $affiliate->date_updated = $request->date_updated;
         $affiliate->saldo = $request->saldo;
-        $affiliate->avatar = $request->avatar;
+        $affiliate->avatar = $path;
         $affiliate->tipo_chave_pix = $request->tipo_chave_pix;
         $affiliate->chave_pix = $request->chave_pix;
 
@@ -66,6 +68,7 @@ class AffiliateRepository implements AffiliateInterface
         $affiliate = $this->find($id);
 
 
+
         $affiliate->name = $request->name;
         $affiliate->username = $request->username;
         $affiliate->email = $request->email;
@@ -74,8 +77,6 @@ class AffiliateRepository implements AffiliateInterface
         $affiliate->discount = $request->discount;
         $affiliate->phone = $request->phone;
         $affiliate->user_link = $request->user_link;
-        $affiliate->date_added = $request->date_added;
-        $affiliate->date_updated = $request->date_updated;
         $affiliate->saldo = $request->saldo;
         $affiliate->avatar = $request->avatar;
         $affiliate->tipo_chave_pix = $request->tipo_chave_pix;
@@ -97,13 +98,15 @@ class AffiliateRepository implements AffiliateInterface
     public function wallet($id)
     {
         $affiliate = $this->find($id);
+        return $affiliate;
     }
 
 
     public function order($id, $peer_page)
     {
         $affiliate = $this->find($id);
-        $orderList = OrderList::where('affiliate_id', $id)->paginate($peer_page);
+
+        $orderList = OrderList::where('affiliate_id', $id)->paginate($peer_page)->get();
 
         return $orderList;
     }

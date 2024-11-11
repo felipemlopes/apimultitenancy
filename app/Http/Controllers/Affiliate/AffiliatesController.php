@@ -78,7 +78,7 @@ class AffiliatesController extends Controller
 
     {
         $peer_page = 15;
-        $affiliate = $this->repository->order($id, $peer_page);
-        return responder()->success($affiliate, OrderListTransformer::class)->respond(200);
+        $orderList = $this->repository->order($id, $peer_page);
+        return responder()->success($orderList, OrderListTransformer::class)->respond(200);
     }
 }

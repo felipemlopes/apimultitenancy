@@ -66,6 +66,6 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = $this->repository->delete($id);
-        return responder()->success($user, UserTransformer::class)->respond(200);
+        return responder()->success()->respond(200);
     }
 }

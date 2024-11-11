@@ -37,8 +37,8 @@ class RepositoryServiceProvider extends ServiceProvider
 
         );
         $this->app->bind(
-            'App\Repositories\Customer\CustomerInterface',
-            'App\Repositories\Customer\CustomerRepository'
+            'App\Repositories\Customer\CustomerListInterface',
+            'App\Repositories\Customer\CustomerListRepository'
 
         );
 
@@ -121,6 +121,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             'App\Repositories\Login\LoginInterface',
             'App\Repositories\Login\LoginRepository'
+        );
+
+        $this->app->bind(
+            'App\Repositories\Perfil\PerfilInterface',
+            'App\Repositories\Perfil\PerfilRepository'
         );
     }
 

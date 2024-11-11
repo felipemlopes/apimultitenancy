@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasTenant;
 
     /**
      * The table associated with the model.
@@ -26,9 +26,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'firstname',
+        'lastname',
+        'username',
+        'avatar',
+        'last_login',
+        'type',
+        'perfil',
     ];
 
     /**
@@ -53,4 +57,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public $timestamps = false;
 }
