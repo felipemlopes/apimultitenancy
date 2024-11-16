@@ -5,7 +5,9 @@ namespace App\Http\Controllers\ProductList;
 use App\Http\Controllers\Controller;
 use App\Models\ProductList;
 use App\Repositories\ProductList\ProductListInterface;
+use App\Transformers\CotasPremiada\CotasPremiadaTransformer;
 use App\Transformers\CustomerList\CustomerListTransformer;
+use App\Transformers\LinkCampanha\LinkCampanhaTransformer;
 use App\Transformers\OrderList\OrderListTransformer;
 use App\Transformers\ProductList\ProductListTransformer;
 use Illuminate\Http\Request;
@@ -99,5 +101,42 @@ class ProductListController extends Controller
     {
         $products = $this->repository->order($id);
         return responder()->success($products)->respond(200);
+    }
+
+    public function cotasPremiadas($id)
+    {
+        $cotasPremiadas = $this->repository->cotasPremiadas($id);
+        return responder()->success($cotasPremiadas, CotasPremiadaTransformer::class)->respond(200);
+    }
+
+    public function linkCampanha($id)
+    {
+        $linksCampanha = $this->repository->linkCampanha($id);
+        return responder()->success($linksCampanha, LinkCampanhaTransformer::class)->respond(200);
+    }
+
+    public function FindLinkCampanha($id, $link_id)
+    {
+        $linksCampanhaFind = $this->repository->FindLinkCampanha($id, $link_id);
+        return responder()->success($linksCampanhaFind, LinkCampanhaTransformer::class)->respond(200);
+    }
+
+    public function StoreLinkCampanha(Request $request, $id)
+    {
+        $linksCampanhaFind = $this->repository->StoreLinkCampanha($request, $id);
+        return responder()->success($linksCampanhaFind, LinkCampanhaTransformer::class)->respond(200);
+    }
+
+    public function UpdateLinkCampanha(Request $request, $id, $link_id)
+    {
+        $updateLinksCampanha = $this->repository->UpdateLinkCampanha($request, $id, $link_id);
+        return responder()->success($updateLinksCampanha, LinkCampanhaTransformer::class)->respond(200);
+    }
+
+
+    public function DeleteLinkCampanha($id, $link_id)
+    {
+        $updateLinksCampanha = $this->repository->DeleteLinkCampanha($id, $link_id);
+        return responder()->success()->respond(200);
     }
 }

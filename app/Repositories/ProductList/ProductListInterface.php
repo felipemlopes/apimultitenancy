@@ -27,4 +27,16 @@ interface ProductListInterface
     public function update(Request $request, $id);
 
     public function delete($id);
+
+    public function cotasPremiadas($id);
+
+    public function linkCampanha($id);
+
+    public function FindLinkCampanha($id, $link_id);
+
+    public function StoreLinkCampanha(Request $request, $id);
+
+    public function UpdateLinkCampanha(Request $request, $id, $link_id);
+
+    public function DeleteLinkCampanha($id, $link_id);
 }

@@ -3,6 +3,7 @@
 namespace App\Repositories\Affiliate;
 
 use App\Models\Affiliate;
+use App\Models\AffiliateTransaction;
 use App\Models\OrderList;
 use App\Services\UploadManager;
 use Illuminate\Http\Request;
@@ -81,6 +82,7 @@ class AffiliateRepository implements AffiliateInterface
         $affiliate->avatar = $request->avatar;
         $affiliate->tipo_chave_pix = $request->tipo_chave_pix;
         $affiliate->chave_pix = $request->chave_pix;
+        $affiliate->date_added = now();
 
 
         $affiliate->save();
@@ -98,7 +100,9 @@ class AffiliateRepository implements AffiliateInterface
     public function wallet($id)
     {
         $affiliate = $this->find($id);
-        return $affiliate;
+        $affiliateTransaction = AffiliateTransaction::where('affiliate_id', $id)->get();
+
+        return $affiliateTransaction;
     }
 
 

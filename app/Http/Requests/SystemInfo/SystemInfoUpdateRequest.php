@@ -22,8 +22,7 @@ class SystemInfoUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'meta_field' => 'required|string',
-            'meta_value' => 'required|string',
+            'enable_chat' => 'required',
         ];
     }
 }

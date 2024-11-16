@@ -3,21 +3,32 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SystemInfo\SystemInfoUpdateRequest;
+use App\Repositories\SystemInfo\SystemInfoInterface;
+use App\Transformers\SystemInfo\SystemInfoTransformer;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    private $repository;
+    public function __construct(SystemInfoInterface $repository)
     {
-        //
+        $this->repository = $repository;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function index()
+    {
+
+        $peer_page = 15;
+        $search = request()->get('search');
+        $status = request()->get('status');
+        $orders = $this->repository->search($peer_page, $search, $status);
+
+        return responder()->success($orders, SystemInfoTransformer::class)->respond(200);
+    }
+
+
     public function create()
     {
         //
@@ -36,7 +47,8 @@ class SettingsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $order = $this->repository->find($id);
+        return responder()->success($order, SystemInfoTransformer::class)->respond(200);
     }
 
     /**
@@ -60,6 +72,100 @@ class SettingsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order = $this->repository->delete($id);
+        return responder()->success()->respond(200);
+    }
+
+
+    public function Export(string $id)
+    {
+        $order = $this->repository->delete($id);
+        return responder()->success($order, SystemInfoTransformer::class)->respond(200);
+    }
+
+    public function GetConfigSite()
+    {
+        $getConfigSite = $this->repository->GetConfigSite();
+        return responder()->success($getConfigSite)->respond(200);
+    }
+
+    public function UpdateConfigSite(SystemInfoUpdateRequest $request)
+    {
+        $updatedConfig = $this->repository->UpdateConfigSite($request);
+        return responder()->success($updatedConfig)->respond(200);
+    }
+
+    public function FormConfig()
+    {
+        $formConfig = $this->repository->FormConfig();
+        return responder()->success($formConfig)->respond(200);
+    }
+    public function FormConfigUpdate(Request $request)
+    {
+        $updateFormConfig = $this->repository->FormConfigUpdate($request);
+        return responder()->success($updateFormConfig)->respond(200);
+    }
+
+
+    public function RodapeConfig()
+    {
+        $rodapeConfig = $this->repository->RodapeConfig();
+        return responder()->success($rodapeConfig)->respond(200);
+    }
+
+    public function RodapeConfigUpdate(Request $request)
+    {
+        $updateRodape = $this->repository->RodapeConfigUpdate($request);
+        return responder()->success($updateRodape)->respond(200);
+    }
+
+
+    public function PixelConfig()
+    {
+        $pixelConfig = $this->repository->PixelConfig();
+        return responder()->success($pixelConfig)->respond(200);
+    }
+
+    public function PixelConfigUpdate(Request $request)
+    {
+        $pixelConfigUpdate = $this->repository->PixelConfigUpdate($request);
+        return responder()->success($pixelConfigUpdate)->respond(200);
+    }
+
+    public function RedeSocialConfig()
+    {
+        $redeSocialConfig = $this->repository->RedeSocialConfig();
+        return responder()->success($redeSocialConfig)->respond(200);
+    }
+    public function RedeSocialConfigUpdate(Request $request)
+    {
+        $redeSocialConfigUpdate = $this->repository->RedeSocialConfigUpdate($request);
+        return responder()->success($redeSocialConfigUpdate)->respond(200);
+    }
+
+
+
+    public function DadosConfig()
+    {
+        $getDados = $this->repository->DadosConfig();
+        return responder()->success($getDados)->respond(200);
+    }
+
+    public function DadosConfigUpdate(Request $request)
+    {
+        $updateDadosConfig = $this->repository->DadosConfigUpdate($request);
+        return responder()->success($updateDadosConfig)->respond(200);
+    }
+
+    public function CotasConfig()
+    {
+        $cotasConfig = $this->repository->CotasConfig();
+        return responder()->success($cotasConfig)->respond(200);
+    }
+
+    public function CotasConfigUpdate(Request $request)
+    {
+        $cotasConfigUpdate = $this->repository->CotasConfigUpdate($request);
+        return responder()->success($cotasConfigUpdate)->respond(200);
     }
 }

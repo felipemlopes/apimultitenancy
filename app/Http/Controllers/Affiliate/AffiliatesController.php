@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Affiliate;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Affiliate\AffiliatesStoreRequest;
 use App\Repositories\Affiliate\AffiliateInterface;
 use App\Transformers\Affiliate\AffiliateTransformer;
+use App\Transformers\AffiliateTransaction\AffiliateTransactionTransformer;
 use App\Transformers\OrderList\OrderListTransformer;
 use Illuminate\Http\Request;
 
@@ -33,7 +35,7 @@ class AffiliatesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AffiliatesStoreRequest $request)
     {
         $affiliate = $this->repository->create($request);
         return responder()->success($affiliate, AffiliateTransformer::class)->respond(201);
@@ -70,8 +72,8 @@ class AffiliatesController extends Controller
 
     public function wallet(string $id)
     {
-        $affiliate = $this->repository->wallet($id);
-        return responder()->success($affiliate, AffiliateTransformer::class)->respond(200);
+        $affiliateTransaction = $this->repository->wallet($id);
+        return responder()->success($affiliateTransaction, AffiliateTransactionTransformer::class)->respond(200);
     }
 
     public function order($id)

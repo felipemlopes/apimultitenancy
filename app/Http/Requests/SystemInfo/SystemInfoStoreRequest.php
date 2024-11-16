@@ -22,7 +22,7 @@ class SystemInfoStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'meta_field' => 'required|string',
+            'meta_field' => 'required|string|max:255',
             'meta_value' => 'required|string',
         ];
     }

@@ -2,7 +2,9 @@
 
 namespace App\Repositories\ProductList;
 
+use App\Models\CotasPremiada;
 use App\Models\CustomerList;
+use App\Models\LinkCampanha;
 use App\Models\OrderList;
 use App\Models\ProductList;
 use Illuminate\Http\Request;
@@ -35,6 +37,11 @@ class ProductListRepository implements ProductListInterface
     public function find($id)
     {
         return ProductList::findOrFail($id);
+    }
+
+    public function findCampanha($id)
+    {
+        return LinkCampanha::findOrFail($id);
     }
 
     public function all()
@@ -369,5 +376,70 @@ class ProductListRepository implements ProductListInterface
     {
         $productList = $this->find($id);
         return $productList->delete();
+    }
+
+    public function cotasPremiadas($id)
+    {
+        $productList = $this->find($id);
+        $cotasPremiadas = CotasPremiada::where('product_id', $id)->get();
+        return $cotasPremiadas;
+    }
+
+
+    public function linkCampanha($id)
+    {
+        $productList = $this->find($id);
+        $linksCampanha = LinkCampanha::where('link_product', $id)->get();
+        return $linksCampanha;
+    }
+
+    public function FindLinkCampanha($id, $link_id)
+    {
+        $productList = $this->find($id);
+        $linksCampanhaFind = LinkCampanha::where('link_product', $id)->where('id', $link_id)->get();
+
+        return $linksCampanhaFind;
+    }
+
+    public function StoreLinkCampanha($request, $id)
+    {
+        $productList = $this->find($id);
+
+        $storeLinksCampanha = new LinkCampanha();
+        $storeLinksCampanha->link_campanha = $request->link_campanha;
+        $storeLinksCampanha->link_descricao = $request->link_descricao;
+        $storeLinksCampanha->link_product = $productList->id;
+        $storeLinksCampanha->date_created = now();
+        $storeLinksCampanha->date_updated = now();
+
+        $storeLinksCampanha->save();
+
+        return $storeLinksCampanha;
+    }
+
+
+    public function UpdateLinkCampanha(Request $request, $id, $link_id)
+    {
+        $productList = $this->find($id);
+
+        $updateLinksCampanha = $this->findCampanha($link_id);
+        $updateLinksCampanha->link_campanha = $request->link_campanha;
+        $updateLinksCampanha->link_descricao = $request->link_descricao;
+
+        $updateLinksCampanha->date_created = now();
+        $updateLinksCampanha->date_updated = now();
+        $updateLinksCampanha->save();
+
+        return $updateLinksCampanha;
+    }
+
+    public function DeleteLinkCampanha($id, $link_id)
+    {
+        $productList = $this->find($id);
+
+        $deleteLinksCampanha = $this->findCampanha($link_id);
+
+
+        return $deleteLinksCampanha->delete();
     }
 }

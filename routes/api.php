@@ -3,6 +3,7 @@
 use App\Http\Controllers\Affiliate\AffiliatesController;
 use App\Http\Controllers\BlackList\BlackListController;
 use App\Http\Controllers\Customer\CustomersController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Gateway\GatewayController;
 use App\Http\Controllers\Log\LogController;
 use App\Http\Controllers\Login\LoginController;
@@ -25,6 +26,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     //Estatisticas
+    Route::get('/dashboard', [DashboardController::class, 'index']);
     //[get]/dashboard
 
 
@@ -41,18 +43,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/sorteios/{id}/relatorio/diario', [ProductListController::class, 'dailyReport']);
     Route::get('/sorteios/{id}/relatorio/geral', [ProductListController::class, 'geralRepor']);
     Route::get('/sorteios/{id}/pedidos', [ProductListController::class, 'order']);
-    Route::get('/sorteios/{id}/bilhetes-premiados', [ProductListController::class, 'participant']);
+    Route::get('/sorteios/{id}/bilhetes-premiados', [ProductListController::class, 'cotasPremiadas']);
 
-    Route::get('/sorteios/{id}/links', [ProductListController::class, 'participant']);
-    Route::post('/sorteios/{id}/links', [ProductListController::class, 'participant']);
-    Route::get('/sorteios/{id}/links', [ProductListController::class, 'participant']);
-    Route::post('/sorteios/{id}/links', [ProductListController::class, 'participant']);
-
-    Route::get('/sorteios/{id}/links-campanhas', [ProductListController::class, 'participant']);
-    Route::post('/sorteios/{id}/links-campanhas', [ProductListController::class, 'participant']);
-    Route::get('/sorteios/{id}/links-campanhas/{link_id}', [ProductListController::class, 'participant']);
-    Route::put('/sorteios/{id}/links-campanhas/{link_id}', [ProductListController::class, 'participant']);
-    Route::delete('/sorteios/{id}/links-campanhas/{link_id}', [ProductListController::class, 'participant']);
+    Route::get('/sorteios/{id}/links-campanhas', [ProductListController::class, 'linkCampanha']);
+    Route::post('/sorteios/{id}/links-campanhas', [ProductListController::class, 'StoreLinkCampanha']);
+    Route::get('/sorteios/{id}/links-campanhas/{link_id}', [ProductListController::class, 'FindLinkCampanha']);
+    Route::put('/sorteios/{id}/links-campanhas/{link_id}', [ProductListController::class, 'UpdateLinkCampanha']);
+    Route::delete('/sorteios/{id}/links-campanhas/{link_id}', [ProductListController::class, 'DeleteLinkCampanha']);
 
 
     //pedidos
@@ -60,7 +57,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/pedidos', [OrdersController::class, 'index']);
     Route::get('/pedidos/{id}', [OrdersController::class, 'show']);
     Route::delete('/pedidos/{id}', [OrdersController::class, 'destroy']);
-    Route::delete('/pedidos/{id}/exportar', [OrdersController::class, 'exportar']);
+    // Route::delete('/pedidos/{id}/exportar', [OrdersController::class, 'exportar']);
 
 
     //rankings
@@ -70,7 +67,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/clientes', [CustomersController::class, 'index']);
     Route::put('/clientes/{id}', [CustomersController::class, 'update']);
     Route::get('/clientes/{id}', [CustomersController::class, 'show']);
-    Route::get('/clientes/{id}/exportar', [CustomersController::class, 'exportCustomers']);
+    //Route::get('/clientes/{id}/exportar', [CustomersController::class, 'exportCustomers']);
     Route::delete('/clientes/{id}', [CustomersController::class, 'destroy']);
 
     //usuários
@@ -86,7 +83,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/afiliados/{id}', [AffiliatesController::class, 'update']);
     Route::get('/afiliados/{id}', [AffiliatesController::class, 'show']);
     Route::delete('/afiliados/{id}', [AffiliatesController::class, 'destroy']);
-    //Route::get('/afiliados/{id}/carteira', [AffiliatesController::class, 'wallet']);
+    Route::get('/afiliados/{id}/carteira', [AffiliatesController::class, 'wallet']);
     Route::get('/afiliados/{id}/pedidos', [AffiliatesController::class, 'order']);
 
     //gateway
@@ -95,21 +92,21 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/gateway/{id}', [GatewayController::class, 'update']);
 
     //configurações
-    //Route::get('/configuracoes', [SettingsController::class, 'index']);
-    //Route::get('/configuracoes/site', [SettingsController::class, 'show']);
-    //Route::put('/configuracoes/site', [SettingsController::class, 'show']);
-    //Route::get('/configuracoes/cadastro', [SettingsController::class, 'show']);
-    //Route::put('/configuracoes/cadastro', [SettingsController::class, 'show']);
-    //Route::get('/configuracoes/redes-sociais', [SettingsController::class, 'show']);
-    //Route::put('/configuracoes/redes-sociais', [SettingsController::class, 'show']);
-    //Route::get('/configuracoes/rodape', [SettingsController::class, 'show']);
-    //Route::put('/configuracoes/rodape', [SettingsController::class, 'show']);
-    //Route::get('/configuracoes/pixel', [SettingsController::class, 'show']);
-    //Route::put('/configuracoes/pixel', [SettingsController::class, 'show']);
-    //Route::get('/configuracoes/dados-envio', [SettingsController::class, 'show']);
-    //Route::put('/configuracoes/dados-envio', [SettingsController::class, 'show']);
-    //Route::get('/configuracoes/cotas-premiadas', [SettingsController::class, 'show']);
-    //Route::put('/configuracoes/cotas-premiadas', [SettingsController::class, 'show']);
+
+    Route::get('/configuracoes/site', [SettingsController::class, 'GetConfigSite']);
+    Route::put('/configuracoes/site', [SettingsController::class, 'UpdateConfigSite']);
+    Route::get('/configuracoes/cadastro', [SettingsController::class, 'FormConfig']);
+    Route::put('/configuracoes/cadastro', [SettingsController::class, 'FormConfigUpdate']);
+    Route::get('/configuracoes/redes-sociais', [SettingsController::class, 'RedeSocialConfig']);
+    Route::put('/configuracoes/redes-sociais', [SettingsController::class, 'RedeSocialConfigUpdate']);
+    Route::get('/configuracoes/rodape', [SettingsController::class, 'RodapeConfig']);
+    Route::put('/configuracoes/rodape', [SettingsController::class, 'RodapeConfigUpdate']);
+    Route::get('/configuracoes/pixel', [SettingsController::class, 'PixelConfig']);
+    Route::put('/configuracoes/pixel', [SettingsController::class, 'PixelConfigUpdate']);
+    Route::get('/configuracoes/dados-envio', [SettingsController::class, 'DadosConfig']);
+    Route::put('/configuracoes/dados-envio', [SettingsController::class, 'DadosConfigUpdate']);
+    Route::get('/configuracoes/cotas-premiadas', [SettingsController::class, 'CotasConfig']);
+    Route::put('/configuracoes/cotas-premiadas', [SettingsController::class, 'CotasConfigUpdate']);
 
 
     //Route::get('/segurança', [SecurityController::class, 'index']);

@@ -25,7 +25,7 @@ class AffiliatesStoreRequest extends FormRequest
             'name' => 'required|string|max:191',
             'username' => 'required|string|max:191',
             'email' => 'required|string|email|max:191|unique:users,email',
-            'document' => 'required|string|max:191|unique:users,document',
+            'document' => 'required|string|max:191|unique:affiliates,document',
             'password' => 'required|string|min:8|max:191',
             'comission' => 'nullable|string',
             'discount' => 'nullable|string',
