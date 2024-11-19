@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Profile\ProfileStoreRequest;
+use App\Http\Requests\Profile\ProfileUpdateRequest;
 use App\Repositories\Perfil\PerfilInterface;
 use App\Transformers\Perfil\PerfilTransformer;
 use Illuminate\Http\Request;
@@ -28,7 +30,7 @@ class ProfileController extends Controller
         return responder()->success($perfis, PerfilTransformer::class)->respond(200);
     }
 
-    public function store(Request $request)
+    public function store(ProfileStoreRequest $request)
     {
         $perfil = $this->repository->create($request);
         return responder()->success($perfil, PerfilTransformer::class)->respond(200);
@@ -48,7 +50,7 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProfileUpdateRequest $request, string $id)
     {
         $perfis = $this->repository->update($request, $id);
         return responder()->success($perfis, PerfilTransformer::class)->respond(200);

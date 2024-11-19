@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Affiliate;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Affiliate\AffiliatesStoreRequest;
+use App\Http\Requests\Affiliate\AffiliatesUpdateRequest;
 use App\Repositories\Affiliate\AffiliateInterface;
 use App\Transformers\Affiliate\AffiliateTransformer;
 use App\Transformers\AffiliateTransaction\AffiliateTransactionTransformer;
@@ -55,7 +56,7 @@ class AffiliatesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AffiliatesUpdateRequest $request, string $id)
     {
         $affiliate = $this->repository->update($request, $id);
         return responder()->success($affiliate, AffiliateTransformer::class)->respond(200);

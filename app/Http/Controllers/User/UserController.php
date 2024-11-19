@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Repositories\User\UserInterface;
 use App\Transformers\User\UserTransformer;
 use Illuminate\Http\Request;
@@ -34,7 +36,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
         $user = $this->repository->create($request);
         return responder()->success($user, UserTransformer::class)->respond(200);
@@ -54,7 +56,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserUpdateRequest $request, string $id)
     {
         $user = $this->repository->update($request, $id);
         return responder()->success($user, UserTransformer::class)->respond(200);

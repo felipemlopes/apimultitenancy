@@ -38,7 +38,12 @@ class UserRepository implements UserInterface
     public function create(Request $request)
     {
         $uploadManager = new UploadManager($request);
-        $path = $uploadManager->upload('avatar', 'images/users');
+        if ($request->hasFile('image_path')) {
+            $path = $uploadManager->upload('avatar', 'images/users');
+        } else {
+            $path = null;
+        }
+
 
         $user = new User();
         $user->firstname = $request->firstname;

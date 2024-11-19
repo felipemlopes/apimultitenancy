@@ -4,7 +4,7 @@ namespace App\Http\Requests\SystemInfo;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SystemInfoUpdateRequest extends FormRequest
+class pixelUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,10 @@ class SystemInfoUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'enable_chat' => 'required|integer|min:1|max:2',
+            'enable_pixel' => 'required|integer|min:1|max:2',
+            'facebook_access_token' => 'required|string|max:255',
+            'facebook_pixel_id' => 'required|string|max:255',
+            'pixel_test_events' => 'required|string|max:255',
         ];
     }
 }

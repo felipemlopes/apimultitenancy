@@ -3,6 +3,13 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SystemInfo\cadastroUpdateRequest;
+use App\Http\Requests\SystemInfo\cotasPremiadasUpdateRequest;
+use App\Http\Requests\SystemInfo\dadosEnvioUpdateRequest;
+use App\Http\Requests\SystemInfo\pixelUpdateRequest;
+use App\Http\Requests\SystemInfo\redesSociaisUpdateRequest;
+use App\Http\Requests\SystemInfo\RodapeUpdateRequest;
+use App\Http\Requests\SystemInfo\SiteUpdateRequest;
 use App\Http\Requests\SystemInfo\SystemInfoUpdateRequest;
 use App\Repositories\SystemInfo\SystemInfoInterface;
 use App\Transformers\SystemInfo\SystemInfoTransformer;
@@ -89,7 +96,7 @@ class SettingsController extends Controller
         return responder()->success($getConfigSite)->respond(200);
     }
 
-    public function UpdateConfigSite(SystemInfoUpdateRequest $request)
+    public function UpdateConfigSite(SiteUpdateRequest $request)
     {
         $updatedConfig = $this->repository->UpdateConfigSite($request);
         return responder()->success($updatedConfig)->respond(200);
@@ -100,7 +107,7 @@ class SettingsController extends Controller
         $formConfig = $this->repository->FormConfig();
         return responder()->success($formConfig)->respond(200);
     }
-    public function FormConfigUpdate(Request $request)
+    public function FormConfigUpdate(cadastroUpdateRequest $request)
     {
         $updateFormConfig = $this->repository->FormConfigUpdate($request);
         return responder()->success($updateFormConfig)->respond(200);
@@ -113,7 +120,7 @@ class SettingsController extends Controller
         return responder()->success($rodapeConfig)->respond(200);
     }
 
-    public function RodapeConfigUpdate(Request $request)
+    public function RodapeConfigUpdate(RodapeUpdateRequest $request)
     {
         $updateRodape = $this->repository->RodapeConfigUpdate($request);
         return responder()->success($updateRodape)->respond(200);
@@ -126,7 +133,7 @@ class SettingsController extends Controller
         return responder()->success($pixelConfig)->respond(200);
     }
 
-    public function PixelConfigUpdate(Request $request)
+    public function PixelConfigUpdate(pixelUpdateRequest $request)
     {
         $pixelConfigUpdate = $this->repository->PixelConfigUpdate($request);
         return responder()->success($pixelConfigUpdate)->respond(200);
@@ -137,7 +144,7 @@ class SettingsController extends Controller
         $redeSocialConfig = $this->repository->RedeSocialConfig();
         return responder()->success($redeSocialConfig)->respond(200);
     }
-    public function RedeSocialConfigUpdate(Request $request)
+    public function RedeSocialConfigUpdate(redesSociaisUpdateRequest $request)
     {
         $redeSocialConfigUpdate = $this->repository->RedeSocialConfigUpdate($request);
         return responder()->success($redeSocialConfigUpdate)->respond(200);
@@ -151,7 +158,7 @@ class SettingsController extends Controller
         return responder()->success($getDados)->respond(200);
     }
 
-    public function DadosConfigUpdate(Request $request)
+    public function DadosConfigUpdate(dadosEnvioUpdateRequest $request)
     {
         $updateDadosConfig = $this->repository->DadosConfigUpdate($request);
         return responder()->success($updateDadosConfig)->respond(200);
@@ -163,7 +170,7 @@ class SettingsController extends Controller
         return responder()->success($cotasConfig)->respond(200);
     }
 
-    public function CotasConfigUpdate(Request $request)
+    public function CotasConfigUpdate(cotasPremiadasUpdateRequest $request)
     {
         $cotasConfigUpdate = $this->repository->CotasConfigUpdate($request);
         return responder()->success($cotasConfigUpdate)->respond(200);

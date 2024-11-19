@@ -4,7 +4,7 @@ namespace App\Http\Requests\SystemInfo;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SystemInfoUpdateRequest extends FormRequest
+class cotasPremiadasUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class SystemInfoUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'enable_chat' => 'required|integer|min:1|max:2',
+            'enable_cotas_premiada_auto' => 'required|integer|min:1|max:2',
+            'enable_bloqueio_automatico' => 'required|integer|min:1|max:2',
         ];
     }
 }

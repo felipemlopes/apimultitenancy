@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\CustomersUpdateRequest;
 use App\Repositories\Customer\CustomerListInterface;
 use App\Transformers\CustomerList\CustomerListTransformer;
 
@@ -46,7 +47,7 @@ class CustomersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CustomersUpdateRequest $request, string $id)
     {
         $customers = $this->repository->update($request, $id);
         return responder()->success($customers, CustomerListTransformer::class)->respond(200);

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Affiliate;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AffiliatesUpdateRequest extends FormRequest
 {
@@ -21,11 +22,18 @@ class AffiliatesUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+
+        if (get_class(Auth::User()) == "App\Models\Tenant") {
+            $db = Auth::User()->db_connection;
+        } else {
+            $db = config('database.default');
+        }
+
         return [
             'name' => 'required|string|max:191',
             'username' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191|unique:users,email',
-            'document' => 'required|string|max:191|unique:users,document',
+            'email' => 'required|string|email|max:191|unique:' . $db . '.affiliates,email, ' . $this->route()->parameter('id'),
+            'document' => 'required|string|max:191|unique:' . $db . '.affiliates,document,' . $this->route()->parameter('id'),
             'comission' => 'nullable|string',
             'discount' => 'nullable|string',
             'phone' => 'nullable|string',

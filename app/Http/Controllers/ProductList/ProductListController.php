@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\ProductList;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LinkCampanha\LinkCampanhaStoreRequest;
+use App\Http\Requests\LinkCampanha\LinkCampanhaUpdateRequest;
+use App\Http\Requests\ProductList\ProductListStoreRequest;
+use App\Http\Requests\ProductList\ProductListUpdateRequest;
 use App\Models\ProductList;
 use App\Repositories\ProductList\ProductListInterface;
 use App\Transformers\CotasPremiada\CotasPremiadaTransformer;
@@ -34,7 +38,7 @@ class ProductListController extends Controller
         return responder()->success($products, ProductListTransformer::class)->respond(200);
     }
 
-    public function store(Request $request)
+    public function store(ProductListStoreRequest $request)
     {
         $product = $this->repository->create($request);
         return responder()->success($product, ProductListTransformer::class)->respond(200);
@@ -54,7 +58,7 @@ class ProductListController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductListUpdateRequest $request, string $id)
     {
         $products = $this->repository->update($request, $id);
         return responder()->success($products, ProductListTransformer::class)->respond(200);
@@ -121,13 +125,13 @@ class ProductListController extends Controller
         return responder()->success($linksCampanhaFind, LinkCampanhaTransformer::class)->respond(200);
     }
 
-    public function StoreLinkCampanha(Request $request, $id)
+    public function StoreLinkCampanha(LinkCampanhaStoreRequest $request, $id)
     {
         $linksCampanhaFind = $this->repository->StoreLinkCampanha($request, $id);
         return responder()->success($linksCampanhaFind, LinkCampanhaTransformer::class)->respond(200);
     }
 
-    public function UpdateLinkCampanha(Request $request, $id, $link_id)
+    public function UpdateLinkCampanha(LinkCampanhaUpdateRequest $request, $id, $link_id)
     {
         $updateLinksCampanha = $this->repository->UpdateLinkCampanha($request, $id, $link_id);
         return responder()->success($updateLinksCampanha, LinkCampanhaTransformer::class)->respond(200);

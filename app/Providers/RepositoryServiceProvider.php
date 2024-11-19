@@ -127,6 +127,11 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Repositories\Perfil\PerfilInterface',
             'App\Repositories\Perfil\PerfilRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Security\SecurityInterface',
+            'App\Repositories\Security\SecurityRepository'
+        );
     }
 
     /**

@@ -177,7 +177,11 @@ class ProductListRepository implements ProductListInterface
     {
 
         $uploadManager = new UploadManager($request);
-        $path = $uploadManager->upload('image_path', 'images/product');
+        if ($request->hasFile('image_path')) {
+            $path = $uploadManager->upload('image_path', 'images/product');
+        } else {
+            $path = null;
+        }
 
         $productList = new ProductList();
         $productList->name = $request->name;

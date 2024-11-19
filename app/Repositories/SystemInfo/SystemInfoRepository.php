@@ -2,6 +2,7 @@
 
 namespace App\Repositories\SystemInfo;
 
+
 use App\Models\SystemInfo;
 use Illuminate\Http\Request;
 

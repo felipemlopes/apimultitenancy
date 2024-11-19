@@ -4,7 +4,7 @@ namespace App\Http\Requests\SystemInfo;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SystemInfoUpdateRequest extends FormRequest
+class cadastroUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,11 @@ class SystemInfoUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'enable_chat' => 'required|integer|min:1|max:2',
+            'enable_password' => 'required|integer|min:1|max:2',
+            'enable_cpf' => 'required|integer|min:1|max:2',
+            'enable_email' => 'required|integer|min:1|max:2',
+            'enable_address' => 'required|integer|min:1|max:2',
+            'enable_data_nasc' => 'required|integer|min:1|max:2',
         ];
     }
 }

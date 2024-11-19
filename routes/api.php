@@ -109,10 +109,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/configuracoes/cotas-premiadas', [SettingsController::class, 'CotasConfigUpdate']);
 
 
-    //Route::get('/segurança', [SecurityController::class, 'index']);
-    //Route::put('/segurança', [SecurityController::class, 'index']);
-    //Route::get('/segurança/cadastro', [SecurityController::class, 'show']);
-    //Route::put('/segurança/cadastro', [SecurityController::class, 'show']);
+    Route::get('/segurança', [SecurityController::class, 'security']);
+    Route::put('/segurança', [SecurityController::class, 'securityUpdate']);
+    Route::get('/segurança/cadastro', [SecurityController::class, 'FormSecurity']);
+    Route::put('/segurança/cadastro', [SecurityController::class, 'FormSecurityUpdate']);
 
 
     Route::get('/blackList', [BlackListController::class, 'index']);

@@ -50,8 +50,8 @@ class AffiliateRepository implements AffiliateInterface
         $affiliate->comission = $request->comission;
         $affiliate->discount = $request->discount;
         $affiliate->phone = $request->phone;
-        $affiliate->date_added = $request->date_added;
-        $affiliate->date_updated = $request->date_updated;
+        $affiliate->date_added = now();
+        $affiliate->date_updated = now();
         $affiliate->saldo = $request->saldo;
         $affiliate->avatar = $path;
         $affiliate->tipo_chave_pix = $request->tipo_chave_pix;
