@@ -1,0 +1,25 @@
+
+    :root {
+      --primary-50: #eef2ff;
+      --primary-700: #d97782;
+    }
+
+    .bg-primary-50 {
+      background-color: var(--primary-50);
+    }
+
+    .text-primary-700 {
+      color: var(--primary-700);
+    }
+
+    .dropdown-menu {
+      display: none;
+    }
+
+    .dropdown-menu.active {
+      display: block;
+    }
+
+    .group {
+      transition: all 0.2s ease-in-out;
+    }
