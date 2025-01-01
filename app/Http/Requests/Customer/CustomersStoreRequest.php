@@ -25,7 +25,7 @@ class CustomersStoreRequest extends FormRequest
             'firstname' => 'required|string|max:191',
             'lastname' => 'nullable|string|max:191',
             'phone' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191|unique:users,email',
+            'email' => 'required|string|email|max:191|unique:customers,email',
             'password' => 'nullable|string|min:6',
             'avatar' => 'nullable|string|max:191',
             'cpf' => 'nullable|string|max:191|unique:users,cpf',

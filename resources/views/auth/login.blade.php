@@ -1,48 +1,61 @@
 @extends('layout.auth')
 
 @section('content')
-    <!--
-  This example requires updating your template:
+    <div class="bg-gray-50 font-[sans-serif]">
+        <div class="min-h-screen flex flex-col items-center justify-center py-6 px-4">
+            <div class="max-w-md w-full">
 
-  ```
-  <html class="h-full bg-white">
-  <body class="h-full">
-  ```
--->
 
-    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-            <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Login</h2>
-        </div>
-
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form class="space-y-6" action="{{route('login.post')}}" method="POST">
-                @csrf
-                <div>
-                    <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
-                    <div class="mt-2">
-                        <input type="email" name="email" id="email" autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-                    </div>
-                </div>
-
-                <div>
-                    <div class="flex items-center justify-between">
-                        <label for="password" class="block text-sm/6 font-medium text-gray-900">Senha</label>
-                        <div class="text-sm">
-                            {{--<a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>--}}
+                <div class="p-8 rounded-2xl bg-white shadow">
+                    <a href="{{route('index')}}">
+                        <h2 class="text-gray-800 text-center text-2xl font-bold">Entrar</h2>
+                    </a>
+                    <form class="mt-8 space-y-4" action="{{route('login.post')}}" method="post">
+                        @csrf
+                        <div>
+                            <label class="text-gray-800 text-sm mb-2 block">E-mail</label>
+                            <div class="relative flex items-center">
+                                <input name="email" type="text" required class="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="" />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" class="w-4 h-4 absolute right-4" viewBox="0 0 24 24">
+                                    <circle cx="10" cy="7" r="6" data-original="#000000"></circle>
+                                    <path d="M14 15H6a5 5 0 0 0-5 5 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 5 5 0 0 0-5-5zm8-4h-2.59l.3-.29a1 1 0 0 0-1.42-1.42l-2 2a1 1 0 0 0 0 1.42l2 2a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42l-.3-.29H22a1 1 0 0 0 0-2z" data-original="#000000"></path>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mt-2">
-                        <input type="password" name="password" id="password" autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-                    </div>
-                </div>
 
-                <div>
-                    <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Entrar</button>
-                </div>
-            </form>
+                        <div>
+                            <label class="text-gray-800 text-sm mb-2 block">Senha</label>
+                            <div class="relative flex items-center">
+                                <input name="password" type="password" required class="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="" />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" class="w-4 h-4 absolute right-4 cursor-pointer" viewBox="0 0 128 128">
+                                    <path d="M64 104C22.127 104 1.367 67.496.504 65.943a4 4 0 0 1 0-3.887C1.367 60.504 22.127 24 64 24s62.633 36.504 63.496 38.057a4 4 0 0 1 0 3.887C126.633 67.496 105.873 104 64 104zM8.707 63.994C13.465 71.205 32.146 96 64 96c31.955 0 50.553-24.775 55.293-31.994C114.535 56.795 95.854 32 64 32 32.045 32 13.447 56.775 8.707 63.994zM64 88c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm0-40c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16z" data-original="#000000"></path>
+                                </svg>
+                            </div>
+                        </div>
 
+                        {{--<div class="flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex items-center">
+                                <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                                <label for="remember-me" class="ml-3 block text-sm text-gray-800">
+                                    Remember me
+                                </label>
+                            </div>
+                            <div class="text-sm">
+                                <a href="jajvascript:void(0);" class="text-blue-600 hover:underline font-semibold">
+                                    Forgot your password?
+                                </a>
+                            </div>
+                        </div>--}}
+
+                        <div class="!mt-8">
+                            <button type="submit" class="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                                Entrar
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

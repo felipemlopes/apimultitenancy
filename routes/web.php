@@ -3,25 +3,35 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
 
 
 Route::middleware('auth')->group(function () {
 
     Route::name('dashboard.')->prefix('dashboard')->group(function () {
-        Route::get('/', [\App\Http\Controllers\Dashboard\DashboardControler::class, 'index'])
-            ->name('index');
-        Route::get('/contas', [\App\Http\Controllers\Dashboard\DashboardControler::class, 'accounts'])
-            ->name('accounts.index');
-      });
+        Route::get('/', [\App\Http\Controllers\Dashboard\DashboardController::class, 'index'])->name('index');
+        //Route::get('/contas', [\App\Http\Controllers\Dashboard\DashboardController::class, 'accounts'])->name('accounts.index');
 
+        Route::get('/usuarios', [\App\Http\Controllers\Dashboard\UserController::class, 'index'])->name('user.index');
+        Route::get('/usuarios/criar', [\App\Http\Controllers\Dashboard\UserController::class, 'create'])->name('user.create');
+        Route::post('/usuarios/criar', [\App\Http\Controllers\Dashboard\UserController::class, 'store'])->name('user.store');
+        Route::get('/usuarios/{id}/editar', [\App\Http\Controllers\Dashboard\UserController::class, 'edit'])->name('user.edit');
+        Route::post('/usuarios/{id}/editar', [\App\Http\Controllers\Dashboard\UserController::class, 'update'])->name('user.update');
+        Route::get('/usuarios/{id}/excluir', [\App\Http\Controllers\Dashboard\UserController::class, 'destroy'])->name('user.destroy');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/sites', [\App\Http\Controllers\Dashboard\SiteController::class, 'index'])->name('site.index');
+        Route::get('/sites/criar', [\App\Http\Controllers\Dashboard\SiteController::class, 'create'])->name('site.create');
+        Route::post('/sites/criar', [\App\Http\Controllers\Dashboard\SiteController::class, 'store'])->name('site.store');
+        Route::get('/sites/{id}/editar', [\App\Http\Controllers\Dashboard\SiteController::class, 'edit'])->name('site.edit');
+        Route::post('/sites/{id}/editar', [\App\Http\Controllers\Dashboard\SiteController::class, 'update'])->name('site.update');
+        Route::get('/sites/{id}/excluir', [\App\Http\Controllers\Dashboard\SiteController::class, 'destroy'])->name('site.destroy');
+
+        Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/perfil', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/perfil/senha', [ProfileController::class, 'edit'])->name('profile.edit.password');
+        Route::patch('/perfil/senha', [ProfileController::class, 'update'])->name('profile.update.password');
+    });
+
 });
 
 require __DIR__.'/auth.php';

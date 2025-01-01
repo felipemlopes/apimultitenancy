@@ -132,6 +132,11 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Repositories\Security\SecurityInterface',
             'App\Repositories\Security\SecurityRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Tenant\TenantInterface',
+            'App\Repositories\Tenant\TenantRepository'
+        );
     }
 
     /**
