@@ -43,7 +43,7 @@
             Dashboard
           </a>
           <a
-            href="{{route('dashboard.accounts')}}"
+            href="{{route('dashboard.accounts.index')}}"
             class="flex items-center px-6 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
           >
             <svg
@@ -63,7 +63,7 @@
             Accounts
           </a>
           <a
-            href="{{route ('dashboard.accounts') }}"
+            href="{{route ('dashboard.accounts.index') }}"
             class="flex items-center px-6 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
           >
             <svg
@@ -203,6 +203,7 @@
         </header>
 
         @yield('content')
+
 
         <script>
             // Mobile menu toggle
