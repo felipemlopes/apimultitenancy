@@ -12,11 +12,13 @@ class UserRepository implements UserInterface
     {
 
         $users = User::Query();
-        if ($search <> "") {
-            $users->where(function ($q) use ($search) {
-                $q->orwhere('name', "like", "%{$search}%");
+        if (!empty($search)) {
+            $users->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%");
             });
         }
+
         if ($status) {
             $users = $users->where('status', $status);
         }
@@ -46,14 +48,11 @@ class UserRepository implements UserInterface
 
 
         $user = new User();
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->username = $request->username;
+        $user->name = $request->name;
         $user->password = $request->password;
-        $user->avatar = $path;
-        $user->last_login = $request->last_login;
-        $user->type = $request->type;
-        $user->perfil = $request->perfil;
+        $user->email = $request->email;
+      //  $user->avatar = $path;
+
 
         $user->save();
 
@@ -63,10 +62,9 @@ class UserRepository implements UserInterface
     public function update(Request $request, $id)
     {
         $user = $this->find($id);
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->username = $request->username;
-        $user->type = $request->type;
+        $user->name = $request->name;
+        $user->email = $request->email;
+     //   $user->avatar = $path;
         $user->save();
 
         return $user;

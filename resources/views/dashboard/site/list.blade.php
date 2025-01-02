@@ -23,25 +23,37 @@
           <!-- Search and Table -->
           <div class="bg-white rounded-lg shadow">
             <div class="p-4 border-b text-right">
+                <form>
+
+
               <input
                 type="text"
                 name="search"
+                value="{{request('search')}}"
                 placeholder="Busque por sites ..."
                 class="w-30 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
+              <button
+              type="submit"
+              class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600"
+          >
+              Buscar
+          </button>
+            </form>
             </div>
 
             <table class="w-full">
               <thead class="bg-gray-50">
                 <tr>
-                  <th class="w-8 p-4">
-                    <input type="checkbox" class="rounded" />
-                  </th>
+
                   <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">
                     Nome
                   </th>
-                  <th class="px-6 py-3 text-right text-sm font-medium text-gray-500">
-                    Actions
+
+
+
+                  <th class="px-6 py-3 text-right text-sm font-medium text-gray-500 ">
+                    <span class="mr-5">Ações</span>
                   </th>
                 </tr>
               </thead>
@@ -49,16 +61,31 @@
                 @if(count($sites))
                     @foreach($sites as $site)
                         <tr class="hover:bg-gray-50">
-                            <td class="p-4">
-                                <input type="checkbox" class="rounded" />
-                            </td>
+
                             <td class="px-6 py-4 text-sm text-gray-900">
                                 {{$site->name}}
                             </td>
+
                             <td class="px-6 py-4 text-right">
+                                <div class="flex space-x-4 justify-end">
+                                    <form action="{{ route('dashboard.site.destroy', $site->id) }}" method="POST" >
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button onclick="confirmDelete(event)"  type="submit" class="text-red-500 hover:text-red-600 flex items-center" aria-label="Excluir Usuário">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 3.75H15M12 6.75V19.5M9.75 6.75H14.25M6.75 6.75H17.25M7.5 10.5V16.5M16.5 10.5V16.5M3.75 6.75H20.25M6 6.75H18M6 6.75V18.75A2.25 2.25 0 008.25 21H15.75A2.25 2.25 0 0018 18.75V6.75H6Z" />
+                                            </svg>
+                                        </button>
+                                    </form>
                                 <a href="{{ route('dashboard.site.edit',$site->id) }}" class="text-orange-500 hover:text-orange-600">
-                                    Edit
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 ">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 3.487a2.25 2.25 0 113.182 3.182l-12 12a4.5 4.5 0 01-2.12 1.178l-4.5 1 1-4.5a4.5 4.5 0 011.178-2.12l12-12z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 7.5l6 6" />
+                                    </svg>
                                 </a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -82,6 +109,32 @@
 
 
 <script>
+
+
+function confirmDelete(event) {
+  event.preventDefault();  // Previne o envio automático do formulário
+
+  Swal.fire({
+    title: "Você tem certeza?",
+    text: "Você não poderá reverter isso!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sim, excluir!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Submete o formulário se o usuário confirmar
+      event.target.closest('form').submit();
+      Swal.fire({
+        title: "Excluído!",
+        text: "O site foi excluído.",
+        icon: "success"
+      });
+    }
+  });
+}
+
 // Mobile menu toggle
 document
   .querySelector("button.lg\\:hidden")

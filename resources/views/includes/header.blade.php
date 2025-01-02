@@ -15,7 +15,7 @@
         <div class="relative">
             <button id="userMenuButton" class="flex items-center space-x-3 focus:outline-none">
                 <div class="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white font-semibold">
-                    F
+                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                 </div>
             </button>
             <!-- Dropdown Menu -->
@@ -25,15 +25,18 @@
                     <div class="text-sm text-gray-500">{{Auth::User()->name}}</div>
                 </div>
                 <a href="{{route('dashboard.profile.edit')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
-                    <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 me-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15a6 6 0 01-7.5 0M12 3.75a3 3 0 100 6 3 3 0 000-6zm0 18.75a9.75 9.75 0 01-8.25-4.5 9.75 9.75 0 0116.5 0 9.75 9.75 0 01-8.25 4.5z" />
+                      </svg>
+
+
                     Perfil
                 </a>
-                <a href="{{route('dashboard.profile.edit.password')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
-                    <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                    </svg>
+                <a href="{{route('dashboard.profile.showChangePasswordForm')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 me-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6a4.5 4.5 0 00-9 0v4.5M5.25 10.5h13.5A2.25 2.25 0 0121 12.75v6A2.25 2.25 0 0118.75 21H5.25A2.25 2.25 0 013 18.75v-6A2.25 2.25 0 015.25 10.5z" />
+                      </svg>
+
                     Alterar senha
                 </a>
                 <a href="{{route('logout')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">

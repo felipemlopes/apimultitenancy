@@ -17,7 +17,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/usuarios/criar', [\App\Http\Controllers\Dashboard\UserController::class, 'store'])->name('user.store');
         Route::get('/usuarios/{id}/editar', [\App\Http\Controllers\Dashboard\UserController::class, 'edit'])->name('user.edit');
         Route::post('/usuarios/{id}/editar', [\App\Http\Controllers\Dashboard\UserController::class, 'update'])->name('user.update');
-        Route::get('/usuarios/{id}/excluir', [\App\Http\Controllers\Dashboard\UserController::class, 'destroy'])->name('user.destroy');
+        Route::delete('/usuarios/{id}/excluir', [\App\Http\Controllers\Dashboard\UserController::class, 'destroy'])->name('user.destroy');
+        Route::get('/usuarios/{id}/alterar-senha', [\App\Http\Controllers\Dashboard\UserController::class, 'showChangePasswordForm'])->name('user.changePasswordForm');
+        Route::post('/usuarios/{id}/alterar-senha', [\App\Http\Controllers\Dashboard\UserController::class, 'changePassword'])->name('user.changePassword');
 
         Route::get('/sites', [\App\Http\Controllers\Dashboard\SiteController::class, 'index'])->name('site.index');
         Route::get('/sites/criar', [\App\Http\Controllers\Dashboard\SiteController::class, 'create'])->name('site.create');
@@ -26,10 +28,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/sites/{id}/editar', [\App\Http\Controllers\Dashboard\SiteController::class, 'update'])->name('site.update');
         Route::get('/sites/{id}/excluir', [\App\Http\Controllers\Dashboard\SiteController::class, 'destroy'])->name('site.destroy');
 
+
+
         Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/perfil', [ProfileController::class, 'update'])->name('profile.update');
-        Route::get('/perfil/senha', [ProfileController::class, 'edit'])->name('profile.edit.password');
-        Route::patch('/perfil/senha', [ProfileController::class, 'update'])->name('profile.update.password');
+        Route::post('/perfil', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/perfil/senha', [ProfileController::class, 'showChangePasswordForm'])->name('profile.showChangePasswordForm');
+        Route::patch('/perfil/senha', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
     });
 
 });

@@ -18,13 +18,13 @@
 
           <!-- Search and Table -->
           <div class="bg-white rounded-lg shadow w-full">
-              <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{route('dashboard.site.store')}}">
+              <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{route('dashboard.site.store')}}" method="POST">
                   @csrf
 
                   @include('dashboard.site.partials.details')
 
                   <div class="flex items-center justify-between">
-                      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" style="background: #F97316">
                           Enviar
                       </button>
                   </div>

@@ -18,13 +18,13 @@
 
           <!-- Search and Table -->
           <div class="bg-white rounded-lg shadow w-full">
-              <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{route('dashboard.user.store')}}">
+              <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{route('dashboard.user.store')}}" method="POST">
                   @csrf
 
                   @include('dashboard.user.partials.details')
 
                   <div class="flex items-center justify-between">
-                      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" style="background: #F97316">
                           Enviar
                       </button>
                   </div>
@@ -36,6 +36,29 @@
   </main>
 
 <script>
+
+function confirmDelete() {
+  Swal.fire({
+    title: "Você tem certeza?",
+    text: "Você não poderá reverter isso!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sim, excluir!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Excluído!",
+        text: "Seu arquivo foi excluído.",
+        icon: "success"
+      });
+    }
+  });
+}
+
+
+
 // Mobile menu toggle
 document
   .querySelector("button.lg\\:hidden")

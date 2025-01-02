@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tenant;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,7 +14,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.dashboard');
+        $users = User::all();
+        $sites = Tenant::all();
+        $recentSites = Tenant::OrderBy('created_at', 'desc')->take(5)->get();
+        return view('dashboard.dashboard', compact('users', 'sites', 'recentSites'));
     }
 
     /**

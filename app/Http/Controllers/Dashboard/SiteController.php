@@ -24,7 +24,8 @@ class SiteController extends Controller
     public function index()
     {
         $peer_page = 15;
-        $sites = $this->repository->search($peer_page,null,null);
+       $search = request()->get('search');
+        $sites = $this->repository->search($peer_page,$search,null);
 
         return view('dashboard.site.list', compact('sites'));
     }
@@ -87,6 +88,7 @@ class SiteController extends Controller
     public function destroy(string $id)
     {
         $site = $this->repository->find($id);
+        $site->delete();
 
         return redirect()->route('dashboard.site.index')->withSuccess('Excluído com sucesso!');
     }

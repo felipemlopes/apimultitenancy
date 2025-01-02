@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\User\UserStoreRequest;
 use App\Http\Requests\Dashboard\User\UserUpdateRequest;
+use App\Http\Requests\User\PasswordRequest;
+use App\Models\User;
 use App\Repositories\User\UserInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -23,7 +26,8 @@ class UserController extends Controller
     public function index()
     {
         $peer_page = 15;
-        $users = $this->repository->search($peer_page,null,null);
+        $search = request()->get('search');
+        $users = $this->repository->search($peer_page, $search, null);
 
         return view('dashboard.user.list', compact('users'));
     }
@@ -43,7 +47,9 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        $user = $this->repository->find($id);
+
+
+
         $user = $this->repository->create($request);
 
         return redirect()->route('dashboard.user.index')->withSuccess('Criado com sucesso!');
@@ -67,7 +73,7 @@ class UserController extends Controller
         $user = $this->repository->find($id);
         $edit = true;
 
-        return view('dashboard.user.edit', compact('user','edit'));
+        return view('dashboard.user.edit', compact('user', 'edit'));
     }
 
     /**
@@ -87,7 +93,33 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = $this->repository->find($id);
+        $user->delete();
 
         return redirect()->route('dashboard.user.index')->withSuccess('Excluído com sucesso!');
+    }
+
+    public function showChangePasswordForm($id)
+    {
+        $user = User::findOrFail($id);
+        return view('dashboard.site.changePassword.changePassword', compact('user'));
+    }
+
+    public function changePassword(PasswordRequest $request, $id)
+    {
+
+
+        $user = User::findOrFail($id);
+
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'A senha atual está incorreta.']);
+        }
+
+        // Atualizar a senha
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+
+        return redirect()->route('dashboard.user.index')->with('success', 'Senha alterada com sucesso!');
     }
 }
