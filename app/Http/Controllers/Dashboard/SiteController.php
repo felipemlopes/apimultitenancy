@@ -7,6 +7,7 @@ use App\Http\Requests\Dashboard\Site\SiteStoreRequest;
 use App\Http\Requests\Dashboard\Site\SiteUpdateRequest;
 use App\Repositories\Tenant\TenantInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SiteController extends Controller
 {
@@ -46,18 +47,35 @@ class SiteController extends Controller
     public function store(SiteStoreRequest $request)
     {
         //  $site = $this->repository->create($request);
-        $tenant1 = \App\Models\Tenant::create([
+        $tenant = \App\Models\Tenant::create([
             'name' =>  $request->name,
-            'db_connection'  => $request->db_connection,
-            'db_name' => $request->db_name,
-            'db_user' => $request->db_user,
-            'db_password' => $request->db_password,
-            'db_host' => $request->db_host,
-            'db_port' => $request->db_port,
-
+            '_tenancy_db_connection'  => Str::slug($request->name),
+            'tenancy_db_connection'  => Str::slug($request->name),
+            'tenancy_db_name' => $request->db_name,
+            'tenancy_db_user' => $request->db_user,
+            'tenancy_db_password' => $request->db_password,
+            'tenancy_db_host' => $request->db_host,
+            'tenancy_db_port' => $request->db_port,
         ]);
 
-        return redirect()->route('dashboard.site.index')->withSuccess('Criado com sucesso!');
+        $dbconnection = $tenant->tenancy_db_connection;
+        config(['database.connections.'.$dbconnection.'.name' => $tenant->tenancy_db_name]);
+        config(['database.connections.'.$dbconnection.'.user' => $tenant->tenancy_db_user]);
+        config(['database.connections.'.$dbconnection.'.password' => $tenant->tenancy_db_password]);
+        config(['database.connections.'.$dbconnection.'.host' => $tenant->tenancy_db_host]);
+        config(['database.connections.'.$dbconnection.'.port' => $tenant->tenancy_db_port]);
+
+        /*tenancy()->
+        tenancy()->hook('bootstrapping', function ($tenantManager,$dbconnection) {
+            dd($tenantManager,$dbconnection);
+            config(['database.connections.'.$dbconnection.'.name' => $tenantManager->getTenant('database_name')]);
+            config(['database.connections.'.$dbconnection.'.password' => $tenantManager->getTenant('database_password')]);
+            config(['database.connections.'.$dbconnection.'.host' => $tenantManager->getTenant('database_host')]);
+        });*/
+
+        $token = $tenant->createToken('apiteste')->plainTextToken;
+
+        return redirect()->route('dashboard.site.index')->withSuccess('Criado com sucesso! Api key: '.$token);
     }
 
     /**

@@ -13,9 +13,9 @@ use UConverter;
 
 class ProductListRepository implements ProductListInterface
 {
-    public function search($peer_page, $search, $status = null, $tenant = null)
+    public function search($peer_page, $search, $status = null, $connection = null)
     {
-        $productList = ProductList::query();
+        $productList = ProductList::on($connection);
         if ($search <> "") {
             $productList->where(function ($q) use ($search) {
                 $q->orwhere('name', "like", "%{$search}%");

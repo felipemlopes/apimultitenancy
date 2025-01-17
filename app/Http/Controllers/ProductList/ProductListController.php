@@ -8,6 +8,7 @@ use App\Http\Requests\LinkCampanha\LinkCampanhaUpdateRequest;
 use App\Http\Requests\ProductList\ProductListStoreRequest;
 use App\Http\Requests\ProductList\ProductListUpdateRequest;
 use App\Models\ProductList;
+use App\Models\Tenant;
 use App\Repositories\ProductList\ProductListInterface;
 use App\Transformers\CotasPremiada\CotasPremiadaTransformer;
 use App\Transformers\CustomerList\CustomerListTransformer;
@@ -16,6 +17,7 @@ use App\Transformers\OrderList\OrderListTransformer;
 use App\Transformers\ProductList\ProductListTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ProductListController extends Controller
 {
@@ -29,11 +31,27 @@ class ProductListController extends Controller
      */
     public function index()
     {
+        $token = request()->bearerToken();
+        $accessToken = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
+        $tenant = Tenant::find($accessToken->tokenable_id);
+        //dd($tenant);
+        $dbconnection = Str::slug($tenant->name);
+        //dd($dbconnection);
+        config(['database.connections.'.$dbconnection.'.driver' => "mysql"]);
+        config(['database.connections.'.$dbconnection.'.host' => $tenant->tenancy_db_host]);
+        config(['database.connections.'.$dbconnection.'.port' => $tenant->tenancy_db_port]);
+        config(['database.connections.'.$dbconnection.'.database' => (string)$tenant->tenancy_db_name]);
+        config(['database.connections.'.$dbconnection.'.username' => $tenant->tenancy_db_user]);
+        config(['database.connections.'.$dbconnection.'.password' => $tenant->tenancy_db_password]);
+        //dd(config('database.connections'));
+
+
+        $connection = Str::slug($tenant->name);
 
         $peer_page = 15;
         $search = request()->get('search');
         $status = request()->get('status');
-        $products = $this->repository->search($peer_page, $search, $status);
+        $products = $this->repository->search($peer_page, $search, $status, $connection);
 
         return responder()->success($products, ProductListTransformer::class)->respond(200);
     }

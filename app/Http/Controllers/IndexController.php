@@ -11,6 +11,7 @@ class IndexController extends Controller
      */
     public function index()
     {
+
         if(Auth::Check()){
             return redirect()->route('dashboard.index');
         }

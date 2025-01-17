@@ -7,7 +7,7 @@
 
 
                 <div class="p-8 rounded-2xl bg-white shadow">
-                    <a href="{{route('index')}}">
+                    <a href="">
                         <h2 class="text-gray-800 text-center text-2xl font-bold">Entrar</h2>
                     </a>
                     <form class="mt-8 space-y-4" action="{{route('login.post')}}" method="post">

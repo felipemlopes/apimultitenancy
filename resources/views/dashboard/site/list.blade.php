@@ -21,6 +21,8 @@
                         </a>
                     </div>
 
+                    @include("partials.messages")
+
                     <!-- Search and Table -->
                     <div class="bg-white rounded-lg shadow">
                         <div class="p-4 border-b text-right">
