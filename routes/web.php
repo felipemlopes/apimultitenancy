@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/sites/criar', [\App\Http\Controllers\Dashboard\SiteController::class, 'store'])->name('site.store');
         Route::get('/sites/{id}/editar', [\App\Http\Controllers\Dashboard\SiteController::class, 'edit'])->name('site.edit');
         Route::post('/sites/{id}/editar', [\App\Http\Controllers\Dashboard\SiteController::class, 'update'])->name('site.update');
-        Route::get('/sites/{id}/excluir', [\App\Http\Controllers\Dashboard\SiteController::class, 'destroy'])->name('site.destroy');
+        Route::delete('/sites/{id}/excluir', [\App\Http\Controllers\Dashboard\SiteController::class, 'destroy'])->name('site.destroy');
 
 
 
@@ -35,7 +35,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/perfil/senha', [ProfileController::class, 'showChangePasswordForm'])->name('profile.showChangePasswordForm');
         Route::patch('/perfil/senha', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
     });
-
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

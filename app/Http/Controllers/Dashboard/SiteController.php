@@ -24,8 +24,8 @@ class SiteController extends Controller
     public function index()
     {
         $peer_page = 15;
-       $search = request()->get('search');
-        $sites = $this->repository->search($peer_page,$search,null);
+        $search = request()->get('search');
+        $sites = $this->repository->search($peer_page, $search, null);
 
         return view('dashboard.site.list', compact('sites'));
     }
@@ -45,7 +45,17 @@ class SiteController extends Controller
      */
     public function store(SiteStoreRequest $request)
     {
-        $site = $this->repository->create($request);
+        //  $site = $this->repository->create($request);
+        $tenant1 = \App\Models\Tenant::create([
+            'name' =>  $request->name,
+            'db_connection'  => $request->db_connection,
+            'db_name' => $request->db_name,
+            'db_user' => $request->db_user,
+            'db_password' => $request->db_password,
+            'db_host' => $request->db_host,
+            'db_port' => $request->db_port,
+
+        ]);
 
         return redirect()->route('dashboard.site.index')->withSuccess('Criado com sucesso!');
     }
@@ -68,7 +78,7 @@ class SiteController extends Controller
         $site = $this->repository->find($id);
         $edit = true;
 
-        return view('dashboard.site.edit', compact('site','edit'));
+        return view('dashboard.site.edit', compact('site', 'edit'));
     }
 
     /**

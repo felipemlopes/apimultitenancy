@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductList extends Model
 {
-    use HasFactory, HasTenant;
+    use HasFactory; //HasTenant;
 
     /**
      * The table associated with the model.
