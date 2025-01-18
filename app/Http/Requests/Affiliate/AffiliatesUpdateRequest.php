@@ -24,6 +24,7 @@ class AffiliatesUpdateRequest extends FormRequest
     {
 
         if (get_class(Auth::User()) == "App\Models\Tenant") {
+            Auth::user()->setupConnection();
             $db = Auth::User()->db_connection;
         } else {
             $db = config('database.default');

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CustomersUpdateRequest extends FormRequest
 {
@@ -21,13 +22,19 @@ class CustomersUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        if (get_class(Auth::User()) == "App\Models\Tenant") {
+            Auth::user()->setupConnection();
+            $db = Auth::User()->db_connection;
+        } else {
+            $db = config('database.default');
+        }
         return [
             'firstname' => 'required|string|max:191',
             'lastname' => 'nullable|string|max:191',
             'phone' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191|unique:customers,email',
+            'email' => 'required|string|email|max:191|unique:'. $db .'customers,email',
             'avatar' => 'nullable|string|max:191',
-            'cpf' => 'nullable|string|max:191|unique:customers,cpf',
+            'cpf' => 'nullable|string|max:191|unique:'. $db .'customers,cpf',
             'zipcode' => 'nullable|string|max:191',
             'address' => 'nullable|string|max:191',
             'number' => 'nullable|string|max:191',

@@ -175,7 +175,6 @@ class ProductListRepository implements ProductListInterface
 
     public function create(Request $request)
     {
-
         $uploadManager = new UploadManager($request);
         if ($request->hasFile('image_path')) {
             $path = $uploadManager->upload('image_path', 'images/product');
@@ -274,7 +273,6 @@ class ProductListRepository implements ProductListInterface
         $productList->descricao_oferta = $request->descricao_oferta;
         $productList->botao_aceitar_oferta = $request->botao_aceitar_oferta;
         $productList->botao_rejeitar_oferta = $request->botao_rejeitar_oferta;
-
         $productList->save();
 
         return $productList;
