@@ -3,9 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
+
 Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
-
-
 Route::middleware('auth')->group(function () {
 
     Route::name('dashboard.')->prefix('dashboard')->group(function () {

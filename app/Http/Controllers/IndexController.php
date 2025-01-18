@@ -12,11 +12,10 @@ class IndexController extends Controller
     public function index()
     {
 
-        if(Auth::Check()){
+        if (Auth::Check()) {
             return redirect()->route('dashboard.index');
         }
 
         return redirect()->route('login');
     }
-
 }
