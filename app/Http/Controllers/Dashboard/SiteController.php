@@ -48,6 +48,7 @@ class SiteController extends Controller
     {
         $tenant = \App\Models\Tenant::create([
             'name' =>  $request->name,
+            'db_connection' => Str::slug($request->name),
             //'_tenancy_db_connection'  => Str::slug($request->name),
             //'tenancy_db_connection'  => Str::slug($request->name),
             'db_name' => $request->db_name,
@@ -61,7 +62,7 @@ class SiteController extends Controller
 
         $token = $tenant->createToken('api')->plainTextToken;
 
-        return redirect()->route('dashboard.site.index')->withSuccess('Criado com sucesso! Api key: '.$token);
+        return redirect()->route('dashboard.site.index')->withSuccess('Criado com sucesso! Api key: ' . $token);
     }
 
     /**

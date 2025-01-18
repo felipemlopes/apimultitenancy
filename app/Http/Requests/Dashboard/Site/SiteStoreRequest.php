@@ -22,7 +22,7 @@ class SiteStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:191',
+            'name' => 'required|string|unique:tenants,name|max:191',
             //'db_connection' => 'required|string|max:191',
             'db_name' => 'required|string|max:191',
             'db_user' => 'required|string',
@@ -42,5 +42,4 @@ class SiteStoreRequest extends FormRequest
             'db_host' => 'db host',
         ];
     }
-
 }
