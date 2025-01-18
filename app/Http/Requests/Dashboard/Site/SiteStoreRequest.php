@@ -23,7 +23,7 @@ class SiteStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:191',
-            'db_connection' => 'required|string|max:191',
+            //'db_connection' => 'required|string|max:191',
             'db_name' => 'required|string|max:191',
             'db_user' => 'required|string',
             'db_password' => 'nullable|string',

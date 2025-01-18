@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 interface ProductListInterface
 {
-    public function search($peer_page, $search, $status = null, $connection = null);
+    public function search($peer_page, $search, $status = null);
 
     public function find($id);
 

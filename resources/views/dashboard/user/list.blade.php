@@ -20,6 +20,8 @@
             </a>
           </div>
 
+            @include("partials.messages")
+
           <!-- Search and Table -->
           <div class="bg-white rounded-lg shadow">
             <form action="{{ route('dashboard.user.index') }}" method="GET" class="p-4 border-b text-right">

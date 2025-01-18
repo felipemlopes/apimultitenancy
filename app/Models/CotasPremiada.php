@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\HasTenant;
+use App\Traits\SwitchTenantConnection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class CotasPremiada extends Model
 {
-    use HasFactory, HasTenant;
+    use HasFactory, SwitchTenantConnection;
 
     protected $table = 'cotas_premiadas';
 
