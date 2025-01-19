@@ -41,8 +41,8 @@ class OrderListRepository implements OrderListInterface
         $orderList->quantity = $request->quantity;
         $orderList->total_amount = $request->total_amount;
         $orderList->status = $request->status;
-        $orderList->date_created = $request->date_created;
-        $orderList->date_updated = $request->date_updated;
+        $orderList->date_created = now();
+        $orderList->date_updated = now();
         $orderList->product_name = $request->product_name;
         $orderList->order_token = $request->order_token;
         $orderList->order_numbers = $request->order_numbers;
@@ -86,8 +86,8 @@ class OrderListRepository implements OrderListInterface
         $orderList->quantity = $request->quantity;
         $orderList->total_amount = $request->total_amount;
         $orderList->status = $request->status;
-        $orderList->date_created = $request->date_created;
-        $orderList->date_updated = $request->date_updated;
+
+        $orderList->date_updated = now();
         $orderList->product_name = $request->product_name;
         $orderList->order_token = $request->order_token;
         $orderList->order_numbers = $request->order_numbers;

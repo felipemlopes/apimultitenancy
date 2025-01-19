@@ -45,8 +45,8 @@ class AffiliateTransactionRepository implements AffiliateInterface
         $affiliateTransaction->total = $request->total;
         $affiliateTransaction->status = $request->status;
         $affiliateTransaction->order_token = $request->order_token;
-        $affiliateTransaction->date_added;
-        $affiliateTransaction->date_updated;
+        $affiliateTransaction->date_added = now();
+        $affiliateTransaction->date_updated = now();
 
         $affiliateTransaction->save();
 
@@ -66,6 +66,7 @@ class AffiliateTransactionRepository implements AffiliateInterface
         $affiliateTransaction->total = $request->total;
         $affiliateTransaction->status = $request->status;
         $affiliateTransaction->order_token = $request->order_token;
+        $affiliateTransaction->date_updated = now();
         $affiliateTransaction->save();
 
         return $affiliateTransaction;

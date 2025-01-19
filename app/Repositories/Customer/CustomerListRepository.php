@@ -90,6 +90,8 @@ class CustomerListRepository implements CustomerListInterface
         $customer->date_code_recover = $request->date_code_recover;
         $customer->datanasc = $request->datanasc;
 
+        $customer->date_updated = now();
+
         $customer->save();
 
         return $customer;

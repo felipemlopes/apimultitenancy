@@ -41,7 +41,7 @@ class RecuperacaoVendasRepository implements RecuperacaoVendasInterface
         $recuperacaoVenda->intervalo = $request->intervalo;
         $recuperacaoVenda->status = $request->status;
         $recuperacaoVenda->envios = $request->envios;
-        $recuperacaoVenda->date_created = $request->date_created;
+        $recuperacaoVenda->date_created = now();
 
         $recuperacaoVenda->save();
 
@@ -57,7 +57,7 @@ class RecuperacaoVendasRepository implements RecuperacaoVendasInterface
         $recuperacaoVenda->intervalo = $request->intervalo;
         $recuperacaoVenda->status = $request->status;
         $recuperacaoVenda->envios = $request->envios;
-        $recuperacaoVenda->date_created = $request->date_created;
+
         $recuperacaoVenda->save();
 
         return $recuperacaoVenda;

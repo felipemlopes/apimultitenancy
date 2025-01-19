@@ -191,8 +191,8 @@ class ProductListRepository implements ProductListInterface
         $productList->image_gallery = json_encode($request->image_gallery);
         $productList->status = $request->status;
         $productList->delete_flag = $request->delete_flag;
-        $productList->date_created = $request->date_created;
-        $productList->date_updated = $request->date_updated;
+        $productList->date_created = now();
+        $productList->date_updated = now();
         $productList->type_of_draw = $request->type_of_draw;
         $productList->qty_numbers = $request->qty_numbers;
         $productList->min_purchase = $request->min_purchase;
@@ -290,8 +290,8 @@ class ProductListRepository implements ProductListInterface
         $productList->image_path = $request->image_path;
         $productList->status = ($request->status == 'ativo') ? 1 : 0;
         $productList->delete_flag = $request->delete_flag;
-        $productList->date_created = $request->date_created;
-        $productList->date_updated = $request->date_updated;
+
+        $productList->date_updated = now();
         $productList->type_of_draw = $request->type_of_draw;
         $productList->qty_numbers = $request->qty_numbers;
         $productList->min_purchase = $request->min_purchase;

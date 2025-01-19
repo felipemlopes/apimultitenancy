@@ -15,7 +15,7 @@ class UserRepository implements UserInterface
         if (!empty($search)) {
             $users->where(function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%")
-                      ->orWhere('email', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%");
             });
         }
 
@@ -39,20 +39,25 @@ class UserRepository implements UserInterface
 
     public function create(Request $request)
     {
-        $uploadManager = new UploadManager($request);
+        /* $uploadManager = new UploadManager($request);
         if ($request->hasFile('image_path')) {
             $path = $uploadManager->upload('avatar', 'images/users');
         } else {
             $path = null;
-        }
+        } */
 
 
         $user = new User();
-        $user->name = $request->name;
+        $user->firstname = $request->firstname;
+        $user->middlename = $request->middlename;
+        $user->lastname = $request->lastname;
         $user->password = $request->password;
-        $user->email = $request->email;
-      //  $user->avatar = $path;
-
+        // $user->avatar = $path;
+        $user->last_login = now();
+        $user->type = $request->type;
+        $user->perfil = $request->perfil;
+        $user->date_added = now();
+        $user->date_updated = now();
 
         $user->save();
 
@@ -61,10 +66,24 @@ class UserRepository implements UserInterface
 
     public function update(Request $request, $id)
     {
+
+        /* $uploadManager = new UploadManager($request);
+        if ($request->hasFile('image_path')) {
+            $path = $uploadManager->upload('avatar', 'images/users');
+        } else {
+            $path = null;
+        } */
+
         $user = $this->find($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-     //   $user->avatar = $path;
+
+        $user->firstname = $request->firstname;
+        $user->middlename = $request->middlename;
+        $user->lastname = $request->lastname;
+        $user->password = $request->password;
+        //  $user->avatar = $path;
+        $user->type = $request->type;
+        $user->perfil = $request->perfil;
+        $user->date_updated = now();
         $user->save();
 
         return $user;

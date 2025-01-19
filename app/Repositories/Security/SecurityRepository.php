@@ -41,7 +41,7 @@ class SecurityRepository implements SecurityInterface
         $security->intervalo = $request->intervalo;
         $security->status = $request->status;
         $security->envios = $request->envios;
-        $security->date_created = $request->date_created;
+        $security->date_created = now();
 
         $security->save();
 
@@ -57,7 +57,7 @@ class SecurityRepository implements SecurityInterface
         $security->intervalo = $request->intervalo;
         $security->status = $request->status;
         $security->envios = $request->envios;
-        $security->date_created = $request->date_created;
+
         $security->save();
 
         return $security;

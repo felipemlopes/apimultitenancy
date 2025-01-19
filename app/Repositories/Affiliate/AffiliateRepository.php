@@ -110,7 +110,7 @@ class AffiliateRepository implements AffiliateInterface
     {
         $affiliate = $this->find($id);
 
-        $orderList = OrderList::where('affiliate_id', $id)->paginate($peer_page)->get();
+        $orderList = OrderList::where('affiliate_id', $id)->paginate($peer_page);
 
         return $orderList;
     }

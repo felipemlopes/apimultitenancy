@@ -39,8 +39,8 @@ class LinkCampanhaRepository implements LinkCampanhaInterface
         $linkCampanha->link_campanha = $request->link_campanha;
         $linkCampanha->link_descricao = $request->link_descricao;
         $linkCampanha->link_product = $request->link_product;
-        $linkCampanha->date_created = $request->date_created;
-        $linkCampanha->date_updated = $request->date_updated;
+        $linkCampanha->date_created = now();
+        $linkCampanha->date_updated = now();
 
         $linkCampanha->save();
 
@@ -55,8 +55,8 @@ class LinkCampanhaRepository implements LinkCampanhaInterface
         $linkCampanha->link_campanha = $request->link_campanha;
         $linkCampanha->link_descricao = $request->link_descricao;
         $linkCampanha->link_product = $request->link_product;
-        $linkCampanha->date_created = $request->date_created;
-        $linkCampanha->date_updated = $request->date_updated;
+
+        $linkCampanha->date_updated = now();
 
         $linkCampanha->save();
 

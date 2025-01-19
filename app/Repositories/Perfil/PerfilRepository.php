@@ -36,14 +36,15 @@ class PerfilRepository implements PerfilInterface
     public function create(Request $request)
     {
         $perfil = new Perfil();
+        $perfil->user_id = $request->user_id;
         $perfil->nome_perfil = $request->nome_perfil;
         $perfil->id_perfil = $request->id_perfil;
         $perfil->mod_sorteio = $request->mod_sorteio;
-        $perfil->perm_sorteio = $request->perm_sorteio;
+        //  $perfil->perm_sorteio = $request->perm_sorteio;
         $perfil->mod_pedidos = $request->mod_pedidos;
-        $perfil->perm_pedidos = $request->perm_pedidos;
+        //   $perfil->perm_pedidos = $request->perm_pedidos;
         $perfil->mod_config = $request->mod_config;
-        $perfil->perm_config = $request->perm_config;
+        //   $perfil->perm_config = $request->perm_config;
         $perfil->mod_gateway = $request->mod_gateway;
         $perfil->mod_seguranca = $request->mod_seguranca;
         $perfil->mod_blacklist = $request->mod_blacklist;
@@ -54,10 +55,10 @@ class PerfilRepository implements PerfilInterface
         $perfil->mod_perfil = $request->mod_perfil;
         $perfil->mod_afiliados = $request->mod_afiliados;
         $perfil->mod_clientes = $request->mod_clientes;
-        $perfil->date_created = $request->date_created;
-        $perfil->date_updated = $request->date_updated;
-        $perfil->id_creator = $request->id_creator;
-        $perfil->tipo_perfil = $request->tipo_perfil;
+        $perfil->date_created = now();
+        $perfil->date_updated = now();
+        //  $perfil->id_creator = $request->id_creator;
+
 
         $perfil->save();
 
@@ -69,14 +70,15 @@ class PerfilRepository implements PerfilInterface
     public function update(Request $request, $id)
     {
         $perfil = $this->find($id);
+        $perfil->user_id = $request->user_id;
         $perfil->nome_perfil = $request->nome_perfil;
         $perfil->id_perfil = $request->id_perfil;
         $perfil->mod_sorteio = $request->mod_sorteio;
-        $perfil->perm_sorteio = $request->perm_sorteio;
+        //  $perfil->perm_sorteio = $request->perm_sorteio;
         $perfil->mod_pedidos = $request->mod_pedidos;
-        $perfil->perm_pedidos = $request->perm_pedidos;
+        //   $perfil->perm_pedidos = $request->perm_pedidos;
         $perfil->mod_config = $request->mod_config;
-        $perfil->perm_config = $request->perm_config;
+        //   $perfil->perm_config = $request->perm_config;
         $perfil->mod_gateway = $request->mod_gateway;
         $perfil->mod_seguranca = $request->mod_seguranca;
         $perfil->mod_blacklist = $request->mod_blacklist;
@@ -87,12 +89,13 @@ class PerfilRepository implements PerfilInterface
         $perfil->mod_perfil = $request->mod_perfil;
         $perfil->mod_afiliados = $request->mod_afiliados;
         $perfil->mod_clientes = $request->mod_clientes;
-        $perfil->date_created = $request->date_created;
-        $perfil->date_updated = $request->date_updated;
-        $perfil->id_creator = $request->id_creator;
-        $perfil->tipo_perfil = $request->tipo_perfil;
+
+        $perfil->date_updated = now();
+        //  $perfil->id_creator = $request->id_creator;
+
 
         $perfil->save();
+
 
         return $perfil;
     }

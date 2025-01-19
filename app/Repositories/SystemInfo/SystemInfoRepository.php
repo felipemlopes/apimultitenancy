@@ -66,21 +66,23 @@ class SystemInfoRepository implements SystemInfoInterface
 
     public function GetConfigSite()
     {
-        $name = SystemInfo::where('meta_field', 'name')->first();
-        $email = SystemInfo::where('meta_field', 'email')->first();
-        $phone = SystemInfo::where('meta_field', 'phone')->first();
-        $logo = SystemInfo::where('meta_field', 'logo')->first();
-        $favicon = SystemInfo::where('meta_field', 'favicon')->first();
-        $termos_uso = SystemInfo::where('meta_field', 'termos_uso')->first();
-        $politica_privacidade = SystemInfo::where('meta_field', 'politica_privacidade')->first();
-        $enable_chat = SystemInfo::where('meta_field', 'enable_chat')->first();
-        $titulo_chat = SystemInfo::where('meta_field', 'titulo_chat')->first();
-        $rodape_chat = SystemInfo::where('meta_field', 'rodape_chat')->first();
-        $channel_chat = SystemInfo::where('meta_field', 'channel_chat')->first();
-        $company_chat = SystemInfo::where('meta_field', 'company_chat')->first();
-        $cor_chat = SystemInfo::where('meta_field', 'cor_chat')->first();
-        $som_chat = SystemInfo::where('meta_field', 'som_chat')->first();
-        $icon_chat = SystemInfo::where('meta_field', 'icon_chat')->first();
+
+        $name = SystemInfo::firstOrNew(['meta_field' => 'name']);
+        $email = SystemInfo::firstOrNew(['meta_field' => 'email']);
+        $phone = SystemInfo::firstOrNew(['meta_field' => 'phone']);
+        $logo = SystemInfo::firstOrNew(['meta_field' => 'logo']);
+        $favicon = SystemInfo::firstOrNew(['meta_field' => 'favicon']);
+        $termos_uso = SystemInfo::firstOrNew(['meta_field' => 'termos_uso']);
+        $politica_privacidade = SystemInfo::firstOrNew(['meta_field' => 'politica_privacidade']);
+        $enable_chat = SystemInfo::firstOrNew(['meta_field' => 'enable_chat']);
+        $titulo_chat = SystemInfo::firstOrNew(['meta_field' => 'titulo_chat']);
+        $rodape_chat = SystemInfo::firstOrNew(['meta_field' => 'rodape_chat']);
+        $channel_chat = SystemInfo::firstOrNew(['meta_field' => 'channel_chat']);
+        $company_chat = SystemInfo::firstOrNew(['meta_field' => 'company_chat']);
+        $cor_chat = SystemInfo::firstOrNew(['meta_field' => 'cor_chat']);
+        $som_chat = SystemInfo::firstOrNew(['meta_field' => 'som_chat']);
+        $icon_chat = SystemInfo::firstOrNew(['meta_field' => 'icon_chat']);
+
 
         $getConfigSite = [
             'name' => $name->meta_value,
@@ -113,6 +115,7 @@ class SystemInfoRepository implements SystemInfoInterface
         SystemInfo::where('meta_field', 'favicon')->update(['meta_value' => $request->favicon]);
         SystemInfo::where('meta_field', 'termos_uso')->update(['meta_value' => $request->termos_uso]);
         SystemInfo::where('meta_field', 'politica_privacidade')->update(['meta_value' => $request->politica_privacidade]);
+
         SystemInfo::where('meta_field', 'enable_chat')->update(['meta_value' => $request->enable_chat]);
         SystemInfo::where('meta_field', 'titulo_chat')->update(['meta_value' => $request->titulo_chat]);
         SystemInfo::where('meta_field', 'rodape_chat')->update(['meta_value' => $request->rodape_chat]);
@@ -121,6 +124,7 @@ class SystemInfoRepository implements SystemInfoInterface
         SystemInfo::where('meta_field', 'cor_chat')->update(['meta_value' => $request->cor_chat]);
         SystemInfo::where('meta_field', 'som_chat')->update(['meta_value' => $request->som_chat]);
         SystemInfo::where('meta_field', 'icon_chat')->update(['meta_value' => $request->icon_chat]);
+
         $updatedConfig = [
             'name' => $request->name,
             'email' => $request->email,
@@ -144,11 +148,11 @@ class SystemInfoRepository implements SystemInfoInterface
 
     public function FormConfig()
     {
-        $enable_password = SystemInfo::where('meta_field', 'enable_password')->first();
-        $enable_cpf = SystemInfo::where('meta_field', 'enable_cpf')->first();
-        $enable_email = SystemInfo::where('meta_field', 'enable_email')->first();
-        $enable_address = SystemInfo::where('meta_field', 'enable_address')->first();
-        $enable_data_nasc = SystemInfo::where('meta_field', 'enable_data_nasc')->first();
+        $enable_password = SystemInfo::firstOrNew(['meta_field' => 'enable_password']);
+        $enable_cpf = SystemInfo::firstOrNew(['meta_field' => 'enable_cpf']);
+        $enable_email = SystemInfo::firstOrNew(['meta_field' => 'enable_email']);
+        $enable_address = SystemInfo::firstOrNew(['meta_field' => 'enable_address']);
+        $enable_data_nasc = SystemInfo::firstOrNew(['meta_field' => 'enable_data_nasc']);
 
 
         $formConfig = [
@@ -185,8 +189,9 @@ class SystemInfoRepository implements SystemInfoInterface
 
     public function RodapeConfig()
     {
-        $enable_footer = SystemInfo::where('meta_field', 'enable_footer')->first();
-        $text_footer = SystemInfo::where('meta_field', 'text_footer')->first();
+        $enable_footer = SystemInfo::firstOrNew(['meta_field' => 'enable_footer']);
+        $text_footer = SystemInfo::firstOrNew(['meta_field' => 'text_footer']);
+
 
         $rodapeConfig = [
             'enable_footer' => $enable_footer->meta_value,
@@ -211,10 +216,11 @@ class SystemInfoRepository implements SystemInfoInterface
 
     public function PixelConfig()
     {
-        $enable_pixel = SystemInfo::where('meta_field', 'enable_pixel')->first();
-        $facebook_access_token = SystemInfo::where('meta_field', 'facebook_access_token')->first();
-        $facebook_pixel_id = SystemInfo::where('meta_field', 'facebook_pixel_id')->first();
-        $pixel_test_events = SystemInfo::where('meta_field', 'pixel_test_events')->first();
+        $enable_pixel = SystemInfo::firstOrNew(['meta_field' => 'enable_pixel']);
+        $facebook_access_token = SystemInfo::firstOrNew(['meta_field' => 'facebook_access_token']);
+        $facebook_pixel_id = SystemInfo::firstOrNew(['meta_field' => 'facebook_pixel_id']);
+        $pixel_test_events = SystemInfo::firstOrNew(['meta_field' => 'pixel_test_events']);
+
 
         $pixelConfig = [
             'enable_pixel' => $enable_pixel->meta_value,
@@ -245,19 +251,20 @@ class SystemInfoRepository implements SystemInfoInterface
 
     public function RedeSocialConfig()
     {
-        $enable_share = SystemInfo::where('meta_field', 'enable_share')->first();
-        $enable_groups = SystemInfo::where('meta_field', 'enable_groups')->first();
-        $enable_social_footer = SystemInfo::where('meta_field', 'enable_social_footer')->first();
-        $link_gratis_url = SystemInfo::where('meta_field', 'link_gratis_url')->first();
-        $telegram_group_url = SystemInfo::where('meta_field', 'telegram_group_url')->first();
-        $whatsapp_group_url = SystemInfo::where('meta_field', 'whatsapp_group_url')->first();
-        $instagram_group_url = SystemInfo::where('meta_field', 'instagram_group_url')->first();
-        $whatsapp_footer = SystemInfo::where('meta_field', 'whatsapp_footer')->first();
-        $instagram_footer = SystemInfo::where('meta_field', 'instagram_footer')->first();
-        $facebook_footer = SystemInfo::where('meta_field', 'facebook_footer')->first();
-        $twitter_footer = SystemInfo::where('meta_field', 'twitter_footer')->first();
-        $youtube_footer = SystemInfo::where('meta_field', 'youtube_footer')->first();
-        $tag_google_analytics = SystemInfo::where('meta_field', 'tag_google_analytics')->first();
+        $enable_share = SystemInfo::firstOrNew(['meta_field' => 'enable_share']);
+        $enable_groups = SystemInfo::firstOrNew(['meta_field' => 'enable_groups']);
+        $enable_social_footer = SystemInfo::firstOrNew(['meta_field' => 'enable_social_footer']);
+        $link_gratis_url = SystemInfo::firstOrNew(['meta_field' => 'link_gratis_url']);
+        $telegram_group_url = SystemInfo::firstOrNew(['meta_field' => 'telegram_group_url']);
+        $whatsapp_group_url = SystemInfo::firstOrNew(['meta_field' => 'whatsapp_group_url']);
+        $instagram_group_url = SystemInfo::firstOrNew(['meta_field' => 'instagram_group_url']);
+        $whatsapp_footer = SystemInfo::firstOrNew(['meta_field' => 'whatsapp_footer']);
+        $instagram_footer = SystemInfo::firstOrNew(['meta_field' => 'instagram_footer']);
+        $facebook_footer = SystemInfo::firstOrNew(['meta_field' => 'facebook_footer']);
+        $twitter_footer = SystemInfo::firstOrNew(['meta_field' => 'twitter_footer']);
+        $youtube_footer = SystemInfo::firstOrNew(['meta_field' => 'youtube_footer']);
+        $tag_google_analytics = SystemInfo::firstOrNew(['meta_field' => 'tag_google_analytics']);
+
 
         $redeSocialConfig =
             [
@@ -319,20 +326,21 @@ class SystemInfoRepository implements SystemInfoInterface
 
     public function DadosConfig()
     {
-        $enable_modulo_whatsapp = SystemInfo::where('meta_field', 'enable_modulo_whatsapp')->first();
-        $token_whatsapp = SystemInfo::where('meta_field', 'token_whatsapp')->first();
-        $texto_otp_whatsapp_senha = SystemInfo::where('meta_field', 'texto_otp_whatsapp_senha')->first();
-        $texto_otp_whatsapp_completar = SystemInfo::where('meta_field', 'texto_otp_whatsapp_completar')->first();
-        $texto_otp_whatsapp_consultar = SystemInfo::where('meta_field', 'texto_otp_whatsapp_consultar')->first();
-        $texto_enviar_cotas_whatsapp = SystemInfo::where('meta_field', 'texto_enviar_cotas_whatsapp')->first();
-        $enable_modulo_email = SystemInfo::where('meta_field', 'enable_modulo_email')->first();
-        $email_envio = SystemInfo::where('meta_field', 'email_envio')->first();
-        $servidor_smtp = SystemInfo::where('meta_field', 'servidor_smtp')->first();
-        $porta_smtp = SystemInfo::where('meta_field', 'porta_smtp')->first();
-        $email_envio = SystemInfo::where('meta_field', 'email_envio')->first();
-        $senha_email_envio = SystemInfo::where('meta_field', 'senha_email_envio')->first();
-        $enable_send_data_sell = SystemInfo::where('meta_field', 'enable_send_data_sell')->first();
-        // $texto_enviar_cotas_email = SystemInfo::where('meta_field', 'texto_enviar_cotas_email')->first();
+        $enable_modulo_whatsapp = SystemInfo::firstOrNew(['meta_field' => 'enable_modulo_whatsapp']);
+        $token_whatsapp = SystemInfo::firstOrNew(['meta_field' => 'token_whatsapp']);
+        $texto_otp_whatsapp_senha = SystemInfo::firstOrNew(['meta_field' => 'texto_otp_whatsapp_senha']);
+        $texto_otp_whatsapp_completar = SystemInfo::firstOrNew(['meta_field' => 'texto_otp_whatsapp_completar']);
+        $texto_otp_whatsapp_consultar = SystemInfo::firstOrNew(['meta_field' => 'texto_otp_whatsapp_consultar']);
+        $texto_enviar_cotas_whatsapp = SystemInfo::firstOrNew(['meta_field' => 'texto_enviar_cotas_whatsapp']);
+        $enable_modulo_email = SystemInfo::firstOrNew(['meta_field' => 'enable_modulo_email']);
+        $email_envio = SystemInfo::firstOrNew(['meta_field' => 'email_envio']);
+        $servidor_smtp = SystemInfo::firstOrNew(['meta_field' => 'servidor_smtp']);
+        $porta_smtp = SystemInfo::firstOrNew(['meta_field' => 'porta_smtp']);
+        $email_envio = SystemInfo::firstOrNew(['meta_field' => 'email_envio']);
+        $senha_email_envio = SystemInfo::firstOrNew(['meta_field' => 'senha_email_envio']);
+        $enable_send_data_sell = SystemInfo::firstOrNew(['meta_field' => 'enable_send_data_sell']);
+        $texto_enviar_cotas_email = SystemInfo::firstOrNew(['meta_field' => 'texto_enviar_cotas_email']);
+
 
         $getDados = [
             'enable_modulo_whatsapp' => $enable_modulo_whatsapp->meta_value,
@@ -389,8 +397,9 @@ class SystemInfoRepository implements SystemInfoInterface
 
     public function CotasConfig()
     {
-        $enable_cotas_premiada_auto = SystemInfo::where('meta_field', 'enable_cotas_premiada_auto')->first();
-        $enable_bloqueio_automatico = SystemInfo::where('meta_field', 'enable_bloqueio_automatico')->first();
+        $enable_cotas_premiada_auto = SystemInfo::firstOrNew(['meta_field' => 'enable_cotas_premiada_auto']);
+        $enable_bloqueio_automatico = SystemInfo::firstOrNew(['meta_field' => 'enable_bloqueio_automatico']);
+
 
         $cotasConfig = [
             'enable_cotas_premiada_auto' => $enable_cotas_premiada_auto->meta_value,

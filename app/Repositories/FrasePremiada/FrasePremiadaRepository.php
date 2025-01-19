@@ -36,7 +36,7 @@ class FrasePremiadaRepository implements FrasePremiadaInterface
     public function create(Request $request)
     {
         $frasePremiada = new FrasePremiada();
-        $frasePremiada->date_created = $request->date_created;
+        $frasePremiada->date_created = now();
         $frasePremiada->frase = $request->frase;
         $frasePremiada->product_id = $request->product_id;
         $frasePremiada->status = $request->status;
@@ -56,7 +56,7 @@ class FrasePremiadaRepository implements FrasePremiadaInterface
     public function update(Request $request, $id)
     {
         $frasePremiada = $this->find($id);
-        $frasePremiada->date_created = $request->date_created;
+        $frasePremiada->date_created = now();
         $frasePremiada->frase = $request->frase;
         $frasePremiada->product_id = $request->product_id;
         $frasePremiada->status = $request->status;
