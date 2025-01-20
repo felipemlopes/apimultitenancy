@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Tenant;
 use App\Models\User;
+use App\Models\UserList;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,7 +15,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = UserList::all();
         $sites = Tenant::all();
         $recentSites = Tenant::OrderBy('created_at', 'desc')->take(5)->get();
         return view('dashboard.dashboard', compact('users', 'sites', 'recentSites'));
@@ -23,9 +24,11 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+
+
     public function accounts()
     {
         return view('dashboard.accounts');
     }
-
 }

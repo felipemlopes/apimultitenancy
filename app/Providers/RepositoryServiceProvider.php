@@ -137,6 +137,11 @@ class RepositoryServiceProvider extends ServiceProvider
             'App\Repositories\Tenant\TenantInterface',
             'App\Repositories\Tenant\TenantRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\UserList\UserListInterface',
+            'App\Repositories\UserList\UserListRepository'
+        );
     }
 
     /**

@@ -21,7 +21,7 @@
                         </a>
                     </div>
 
-                    @include("partials.messages")
+                    @include('partials.messages')
 
                     <!-- Search and Table -->
                     <div class="bg-white rounded-lg shadow">
@@ -82,6 +82,16 @@
                                                             </svg>
                                                         </button>
                                                     </form>
+                                                    <a onclick="confirmKey(event)"
+                                                        href="{{ route('dashboard.site.api', $site->id) }}"
+                                                        class="text-orange-500 hover:text-orange-600">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                            class="w-4 h-5">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M18 10.5V7.5a6 6 0 00-12 0v3a3 3 0 00-3 3v7.5a3 3 0 003 3h12a3 3 0 003-3V13.5a3 3 0 00-3-3zm-3 0H9v-3a3 3 0 016 0v3z" />
+                                                        </svg>
+                                                    </a>
                                                     <a href="{{ route('dashboard.site.edit', $site->id) }}"
                                                         class="text-orange-500 hover:text-orange-600">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -117,6 +127,33 @@
 
 
     <script>
+        function confirmKey(event) {
+
+            event.preventDefault(); // Previne o envio automático do formulário
+            var urlToRedirect = event.currentTarget.getAttribute('href');
+
+            Swal.fire({
+                title: "Você tem certeza?",
+                text: "uma nova chave da api será gerada, você não poderá reverter isso!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sim!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = urlToRedirect;
+
+
+                    Swal.fire({
+                        title: "Nova chave foi gerada!",
+                        text: "",
+                        icon: "success"
+                    });
+                }
+            });
+        }
+
         function confirmDelete(event) {
             event.preventDefault(); // Previne o envio automático do formulário
 

@@ -75,6 +75,16 @@ class SiteController extends Controller
         return view('dashboard.site.view', compact('site'));
     }
 
+    public function key(string $id)
+    {
+        $site = $this->repository->find($id);
+        $site->tokens()->delete();
+        $token = $site->createToken('api')->plainTextToken;
+
+
+        return redirect()->route('dashboard.site.index')->withSuccess('Criado com sucesso! Api key: ' . $token);
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

@@ -7,15 +7,15 @@ use App\Http\Requests\Dashboard\User\UserStoreRequest;
 use App\Http\Requests\Dashboard\User\UserUpdateRequest;
 use App\Http\Requests\User\PasswordRequest;
 use App\Models\User;
-use App\Repositories\User\UserInterface;
-use Illuminate\Http\Request;
+use App\Models\UserList;
+use App\Repositories\UserList\UserListInterface;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     private $repository;
 
-    public function __construct(UserInterface $repository)
+    public function __construct(UserListInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -100,15 +100,16 @@ class UserController extends Controller
 
     public function showChangePasswordForm($id)
     {
-        $user = User::findOrFail($id);
-        return view('dashboard.site.changePassword.changePassword', compact('user'));
+        $user = UserList::findOrFail($id);
+
+        return view('dashboard.user.changePassword', compact('user'));
     }
 
     public function changePassword(PasswordRequest $request, $id)
     {
 
 
-        $user = User::findOrFail($id);
+        $user = UserList::findOrFail($id);
 
 
         if (!Hash::check($request->current_password, $user->password)) {

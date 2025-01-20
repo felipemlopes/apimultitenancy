@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Dashboard\ProfileController as FrontProfileController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,16 +25,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/sites', [\App\Http\Controllers\Dashboard\SiteController::class, 'index'])->name('site.index');
         Route::get('/sites/criar', [\App\Http\Controllers\Dashboard\SiteController::class, 'create'])->name('site.create');
         Route::post('/sites/criar', [\App\Http\Controllers\Dashboard\SiteController::class, 'store'])->name('site.store');
+        Route::get('/sites/{id}/api', [\App\Http\Controllers\Dashboard\SiteController::class, 'key'])->name('site.api');
         Route::get('/sites/{id}/editar', [\App\Http\Controllers\Dashboard\SiteController::class, 'edit'])->name('site.edit');
         Route::post('/sites/{id}/editar', [\App\Http\Controllers\Dashboard\SiteController::class, 'update'])->name('site.update');
         Route::delete('/sites/{id}/excluir', [\App\Http\Controllers\Dashboard\SiteController::class, 'destroy'])->name('site.destroy');
 
 
 
-        Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::post('/perfil', [ProfileController::class, 'update'])->name('profile.update');
-        Route::get('/perfil/senha', [ProfileController::class, 'showChangePasswordForm'])->name('profile.showChangePasswordForm');
-        Route::patch('/perfil/senha', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
+        Route::get('/perfil', [FrontProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/perfil', [FrontProfileController::class, 'update'])->name('profile.update');
+        Route::get('/perfil/senha', [FrontProfileController::class, 'showChangePasswordForm'])->name('profile.showChangePasswordForm');
+        Route::put('/perfil/senha', [FrontProfileController::class, 'changePassword'])->name('profile.changePassword');
     });
 });
 
