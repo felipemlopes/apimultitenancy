@@ -7,14 +7,19 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Gateway\GatewayController;
 use App\Http\Controllers\Log\LogController;
 use App\Http\Controllers\Login\LoginController;
+use App\Http\Controllers\queue\OrdersController as OrdersQueueController;
 use App\Http\Controllers\Order\OrdersController;
 use App\Http\Controllers\Phrase\PhraseController;
 use App\Http\Controllers\ProductList\ProductListController;
 use App\Http\Controllers\Profile\ProfileController;
+use App\Http\Controllers\queue\CotasController;
+use App\Http\Controllers\queue\HealthCheckController;
+use App\Http\Controllers\queue\NumbersController;
 use App\Http\Controllers\Ranking\RankingsController;
 use App\Http\Controllers\Security\SecurityController;
 use App\Http\Controllers\Settings\SettingsController;
 use App\Http\Controllers\User\UserController;
+use App\Models\CotasPremiada;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 
@@ -129,4 +134,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/perfil/{id}', [ProfileController::class, 'update']);
     Route::get('/perfil/{id}', [ProfileController::class, 'show']);
     Route::delete('/perfil/{id}', [ProfileController::class, 'destroy']);
+
+    //novo site
+
+
+    Route::get('/healthcheck', [HealthCheckController::class, 'healthcheck']);
+    Route::post('/generate_numbers', [NumbersController::class, 'generateNumbers']);
+    Route::post('/back_numbers', [NumbersController::class, 'backNumbers']);
+    Route::post('/place_order', [OrdersQueueController::class, 'placeOrder']);
+    Route::get('/free_numbers', [NumbersController::class, 'freeNumbers']);
+    Route::post('/approve_payment', [OrdersQueueController::class, 'approvePayment']);
+    Route::post('/register_cota_premiada', [CotasController::class, 'registerCotaPremiada']);
+    Route::post('/delete_cota_premiada', [CotasController::class, 'deleteCotaPremiada']);
+    Route::post('/update_cota_premiada', [CotasController::class, 'updateCotaPremiada']);
+    Route::post('/random_cotas_premiadas', [CotasController::class, 'randomCotasPremiadas']);
 });
