@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Exception;
+use Illuminate\Support\Facades\Redis;
 
 class DistributeNumbersService
 {
@@ -34,7 +35,7 @@ class DistributeNumbersService
 
     public function save(): void
     {
-        Storage::put("products/{$this->productId}.json", json_encode($this->distributeNumbers));
+        //Storage::put("products/{$this->productId}.json", json_encode($this->distributeNumbers));
     }
 
     public function load(): void
@@ -57,6 +58,8 @@ class DistributeNumbersService
     {
         if (!empty($numbers)) {
             $this->distributeNumbers = array_merge($this->distributeNumbers, $numbers);
+            $key = $this->product_id."numeros";
+            Redis::sadd($key, ...$numbers);
         }
     }
 

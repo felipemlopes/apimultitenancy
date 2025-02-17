@@ -9,6 +9,7 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 class BackNumbers implements ShouldQueue
 {
@@ -50,7 +51,7 @@ class BackNumbers implements ShouldQueue
                 $distributeNumbersService->refundNumbers($numbers);
 
                 // Salva as alterações
-                $distributeNumbersService->save();
+                //$distributeNumbersService->save();
             } catch (\Exception $e) {
                 Log::error("An error has occurred: " . $e->getMessage());
                 Log::error($e->getTraceAsString());
