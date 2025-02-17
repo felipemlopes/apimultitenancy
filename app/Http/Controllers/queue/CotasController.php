@@ -30,7 +30,8 @@ class CotasController extends Controller
         }
 
         try {
-            RegisterCotas::dispatch($request->product_id, $numbers, $request->active);
+            $connection = getTenantConnection();
+            RegisterCotas::dispatch($connection, $request->product_id, $numbers, $request->active);
             return response()->json(['message' => "Job 'register_cota_premiada' has started successfully"], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => "An error occurred while starting 'register_cota_premiada"], 500);
@@ -58,7 +59,8 @@ class CotasController extends Controller
         }
 
         try {
-            DeleteCotas::dispatch($request->product_id, $numbers);
+            $connection = getTenantConnection();
+            DeleteCotas::dispatch($connection,$request->product_id, $numbers);
             return response()->json(['message' => "Job 'delete_cota_premiada' has started successfully"], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => "An error occurred while starting 'delete_cota_premiada"], 500);
@@ -77,7 +79,8 @@ class CotasController extends Controller
         }
 
         try {
-            UpdateCotas::dispatch($request->product_id, $request->cota_number, $request->cota_limit, $request->active);
+            $connection = getTenantConnection();
+            UpdateCotas::dispatch($connection, $request->product_id, $request->cota_number, $request->cota_limit, $request->active);
             return response()->json(['message' => "Job 'update_cota_premiada' has started successfully"], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => "An error occurred while starting 'update_cota_premiada"], 500);
@@ -91,7 +94,8 @@ class CotasController extends Controller
         }
 
         try {
-            RandomCotas::dispatch($request->product_id, $request->quantity);
+            $connection = getTenantConnection();
+            RandomCotas::dispatch($connection,$request->product_id, $request->quantity);
             return response()->json(['message' => "Job 'random_cotas_premiadas' has started successfully"], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => "An error occurred while starting 'random_cotas_premiadas"], 500);

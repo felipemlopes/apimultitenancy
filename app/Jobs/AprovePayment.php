@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Services\ProductListService;
+use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
@@ -14,11 +16,13 @@ class AprovePayment implements ShouldQueue
 
     private $product_id;
     private $quantity;
+    private $connectiondb;
 
-    public function __construct($product_id, $quantity)
+    public function __construct($connectiondb, $product_id, $quantity)
     {
         $this->product_id = $product_id;
         $this->quantity = $quantity;
+        $this->connectiondb = $connectiondb;
     }
 
     /**
@@ -26,6 +30,10 @@ class AprovePayment implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        $productListService = new ProductListService($this->connectiondb);
+
+        // Atualizando números pendentes e pagos
+        $productListService->updatePendingNumbers($this->product_id);
+        $productListService->updatePaidNumbers($this->product_id);
     }
 }

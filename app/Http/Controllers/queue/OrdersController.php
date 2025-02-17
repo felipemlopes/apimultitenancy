@@ -20,7 +20,8 @@ class OrdersController extends Controller
         }
 
         try {
-            PlaceOrder::dispatch($request->customer_id, $request->product_id, $request->order_id, $request->code, $request->upersell);
+            $connection = getTenantConnection();
+            PlaceOrder::dispatch($connection, $request->customer_id, $request->product_id, $request->order_id, $request->code, $request->upersell);
             return response()->json(['message' => 'Place order job started successfully'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Something went wrong'], 500);
@@ -35,7 +36,8 @@ class OrdersController extends Controller
             return response()->json(['message' => 'Please pass correct params'], 400);
         }
         try {
-            AprovePayment::dispatch($request->product_id, $request->quantity);
+            $connection = getTenantConnection();
+            AprovePayment::dispatch($connection, $request->product_id, $request->quantity);
             return response()->json(['message' => 'Place order job started successfully'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Something went wrong'], 500);

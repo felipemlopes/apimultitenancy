@@ -13,10 +13,6 @@ class NumbersController extends Controller
 
     public function generateNumbers(Request $request)
     {
-
-
-
-
         if (!isset($request->product_id) || !isset($request->max_numbers)) {
             return response()->json(['message' => 'Please pass correct params'], 400);
         }
@@ -33,7 +29,6 @@ class NumbersController extends Controller
 
     public function backNumbers(Request $request)
     {
-
         if (!$request->product_id  || !$request->numbers_list) {
             return response()->json(['message' => 'Please pass correct params'], 400);
         }
@@ -49,7 +44,6 @@ class NumbersController extends Controller
 
     public function freeNumbers()
     {
-
         try {
             FreeNumbers::dispatch();
 

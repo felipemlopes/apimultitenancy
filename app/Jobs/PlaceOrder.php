@@ -2,11 +2,15 @@
 
 namespace App\Jobs;
 
+use App\Models\OrderList;
+use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class PlaceOrder implements ShouldQueue
 {
@@ -17,15 +21,17 @@ class PlaceOrder implements ShouldQueue
     private $order_id;
     private $code;
     private $upersell;
+    private $connectiondb;
 
 
-    public function __construct($customer_id, $product_id, $order_id, $code, $upersell)
+    public function __construct($connectiondb, $customer_id, $product_id, $order_id, $code, $upersell)
     {
         $this->customer_id = $customer_id;
         $this->product_id = $product_id;
         $this->order_id = $order_id;
         $this->code = $code;
         $this->upersell = $upersell;
+        $this->connectiondb = $connectiondb;
     }
 
     /**
@@ -33,6 +39,36 @@ class PlaceOrder implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        $url = env('CORE_API_URL') . "/classes/Master.php?f=place_order";
+
+        $response = Http::post($url, [
+            'customer_id' => $this->customer_id,
+            'product_id' => $this->product_id,
+            'order_id' => $this->order_id,
+            'code' => $this->code
+        ]);
+
+        $result = $response->json();
+
+        if ($result['status'] !== 'success') {
+            Log::error("Erro ao criar place order: " . $result['error']);
+            $this->markOrderAsError($this->order_id);
+        } else {
+            Log::info("Place order criado com sucesso.");
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function markOrderAsError($order_id)
+    {
+        $recordsAffected = OrderList::on($this->connectiondb)
+            ->where('id', $order_id)
+            ->update(['status' => 4]);
+
+        if ($recordsAffected === 0) {
+            throw new Exception("Updating DB when marking order as error did not work.");
+        }
     }
 }

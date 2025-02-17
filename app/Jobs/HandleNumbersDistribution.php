@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\CotasPremiada;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
@@ -12,11 +13,11 @@ class HandleNumbersDistribution implements ShouldQueue
 {
     use Queueable;
     private   $product_id;
-    private   $numbers_lis;
-    public function __construct($product_id, $numbers_lis)
+    private   $numbers_list;
+    public function __construct($product_id, $numbers_list)
     {
         $this->product_id = $product_id;
-        $this->numbers_lis = $numbers_lis;
+        $this->numbers_list = $numbers_list;
     }
 
     /**
@@ -24,6 +25,8 @@ class HandleNumbersDistribution implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+
+
+
     }
 }
