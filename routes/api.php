@@ -140,6 +140,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/generate_numbers', [NumbersController::class, 'generateNumbers']);
     Route::post('/back_numbers', [NumbersController::class, 'backNumbers']);
     Route::get('/free_numbers', [NumbersController::class, 'freeNumbers']);
+    Route::post('/distribute_numbers', [NumbersController::class, 'distributeNumbers']);
 
     Route::post('/place_order', [OrdersQueueController::class, 'placeOrder']);
     Route::post('/approve_payment', [OrdersQueueController::class, 'approvePayment']);

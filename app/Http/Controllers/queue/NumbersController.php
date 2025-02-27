@@ -26,7 +26,6 @@ class NumbersController extends Controller
         }
     }
 
-
     public function backNumbers(Request $request)
     {
         if (!$request->product_id  || !$request->numbers_list) {
@@ -46,6 +45,21 @@ class NumbersController extends Controller
     {
         try {
             FreeNumbers::dispatch();
+
+            return response()->json(['message' => 'Free numbers job started successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Something went wrong'], 500);
+        }
+    }
+
+    public function distributeNumbers(Request $request)
+    {
+        if (!isset($request->product_id) || !isset($request->order_code) || !isset($request->total_required_numbers) || !isset($request->num_digits)) {
+            return response()->json(['message' => 'Please pass correct params'], 400);
+        }
+
+        try {
+            HandleNumbersDistribution::dispatch();
 
             return response()->json(['message' => 'Free numbers job started successfully'], 200);
         } catch (\Exception $e) {
