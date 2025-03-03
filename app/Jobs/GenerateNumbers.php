@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class GenerateNumbers implements ShouldQueue
@@ -28,6 +29,8 @@ class GenerateNumbers implements ShouldQueue
      */
     public function handle(): void
     {
+        Log::info("product_id: ".$this->product_id);
+        Log::info("max_numbers: ".$this->max_numbers);
         /*$path = "./data/numbers_for_product_{$this->productId}.data";
 
         if (file_exists($path)) {
@@ -41,11 +44,13 @@ class GenerateNumbers implements ShouldQueue
     private function generateArray($maxNumbers) {
         $array = range(0, $maxNumbers - 1);
         shuffle($array);
+        Log::info(json_encode($array));
         return $array;
     }
 
     private function saveArray($array) {
         $key = $this->product_id."numeros";
+        Log::info("key:" . $key);
         Redis::sadd($key, ...$array);
     }
 }
