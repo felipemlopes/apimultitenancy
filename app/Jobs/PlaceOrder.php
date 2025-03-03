@@ -51,7 +51,7 @@ class PlaceOrder implements ShouldQueue
         ]);
 
         $result = $response->json();
-
+        $this->markOrderAsError($this->order_id);
         if ($response->failed()) {
             //Log::error("Erro ao criar place order: " . $result['error']);
             Log::error("Erro ao criar place order: ");
