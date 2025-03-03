@@ -51,7 +51,7 @@ class GenerateNumbers implements ShouldQueue
     }
 
     private function saveArray($array) {
-        $key = $this->product_id."numeros".$this->tenant_id;
+        $key = $this->product_id."-numeros-".$this->tenant_id;
         Log::info("key:" . $key);
         Redis::sadd($key, ...$array);
     }

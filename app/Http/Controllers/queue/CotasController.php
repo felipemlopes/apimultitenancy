@@ -8,10 +8,10 @@ use App\Jobs\RandomCotas;
 use App\Jobs\RegisterCotas;
 use App\Jobs\UpdateCotas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CotasController extends Controller
 {
-
 
     public function registerCotaPremiada(Request $request)
     {
@@ -31,7 +31,9 @@ class CotasController extends Controller
 
         try {
             $connection = getTenantConnection();
-            RegisterCotas::dispatch($connection, $request->product_id, $numbers, $request->active);
+            $tenant_id = Auth::User()->id;
+            $token = request()->bearerToken();
+            RegisterCotas::dispatch($connection, $request->product_id, $numbers, $request->active,$tenant_id,$token);
             return response()->json(['message' => "Job 'register_cota_premiada' has started successfully"], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => "An error occurred while starting 'register_cota_premiada"], 500);
@@ -60,7 +62,9 @@ class CotasController extends Controller
 
         try {
             $connection = getTenantConnection();
-            DeleteCotas::dispatch($connection,$request->product_id, $numbers);
+            $tenant_id = Auth::User()->id;
+            $token = request()->bearerToken();
+            DeleteCotas::dispatch($connection,$request->product_id, $numbers,$tenant_id,$token);
             return response()->json(['message' => "Job 'delete_cota_premiada' has started successfully"], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => "An error occurred while starting 'delete_cota_premiada"], 500);
@@ -80,7 +84,9 @@ class CotasController extends Controller
 
         try {
             $connection = getTenantConnection();
-            UpdateCotas::dispatch($connection, $request->product_id, $request->cota_number, $request->cota_limit, $request->active);
+            $tenant_id = Auth::User()->id;
+            $token = request()->bearerToken();
+            UpdateCotas::dispatch($connection, $request->product_id, $request->cota_number, $request->cota_limit, $request->active,$tenant_id,$token);
             return response()->json(['message' => "Job 'update_cota_premiada' has started successfully"], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => "An error occurred while starting 'update_cota_premiada"], 500);
@@ -95,7 +101,9 @@ class CotasController extends Controller
 
         try {
             $connection = getTenantConnection();
-            RandomCotas::dispatch($connection,$request->product_id, $request->quantity);
+            $tenant_id = Auth::User()->id;
+            $token = request()->bearerToken();
+            RandomCotas::dispatch($connection,$request->product_id, $request->quantity,$tenant_id,$token);
             return response()->json(['message' => "Job 'random_cotas_premiadas' has started successfully"], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => "An error occurred while starting 'random_cotas_premiadas"], 500);

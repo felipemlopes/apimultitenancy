@@ -46,10 +46,9 @@ class NumbersController extends Controller
     public function freeNumbers()
     {
         try {
-
-            $connection = getTenantConnection();
-            FreeNumbers::dispatch($connection);
-
+            $token = request()->bearerToken();
+            $tenant_id = Auth::User()->id;
+            FreeNumbers::dispatch($token,$tenant_id);
             return response()->json(['message' => 'Free numbers job started successfully'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Something went wrong'], 500);
