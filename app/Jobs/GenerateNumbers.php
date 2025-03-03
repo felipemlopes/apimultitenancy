@@ -34,7 +34,7 @@ class GenerateNumbers implements ShouldQueue
             throw new Exception('Tried to generate numbers for a product that already generated it.');
         }*/
 
-        $array = $this->generateArray($this->maxNumbers);
+        $array = $this->generateArray($this->max_numbers);
         $this->saveArray($array);
     }
 
