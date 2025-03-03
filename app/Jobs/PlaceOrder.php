@@ -67,7 +67,7 @@ class PlaceOrder implements ShouldQueue
      */
     private function markOrderAsError($order_id)
     {
-        $recordsAffected = DB::table("order_list")
+        $recordsAffected = DB::connection($this->connectiondb)->table("order_list")
             ->where('id', $order_id)
             ->update(['status' => 4]);
         /* = OrderList::on($this->connectiondb)
