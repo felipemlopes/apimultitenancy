@@ -20,8 +20,9 @@ class OrdersController extends Controller
         }
 
         try {
+            $endpoint = Auth::User()->name;
             $connection = getTenantConnection();
-            PlaceOrder::dispatch($connection, $request->customer_id, $request->product_id, $request->order_id, $request->code, $request->upersell);
+            PlaceOrder::dispatch($connection, $request->customer_id, $request->product_id, $request->order_id, $request->code, $request->upersell,$endpoint);
             return response()->json(['message' => 'Place order job started successfully'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Something went wrong'], 500);

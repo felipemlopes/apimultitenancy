@@ -16,11 +16,13 @@ class GenerateNumbers implements ShouldQueue
     use Queueable;
     private $product_id;
     private $max_numbers;
+    private $tenant_id;
 
-    public function __construct($product_id, $max_numbers)
+    public function __construct($product_id, $max_numbers,$tenant_id)
     {
         $this->product_id = $product_id;
         $this->max_numbers = $max_numbers;
+        $this->tenant_id = $tenant_id;
     }
 
     /**
@@ -49,7 +51,7 @@ class GenerateNumbers implements ShouldQueue
     }
 
     private function saveArray($array) {
-        $key = $this->product_id."numeros";
+        $key = $this->product_id."numeros".$this->tenant_id;
         Log::info("key:" . $key);
         Redis::sadd($key, ...$array);
     }

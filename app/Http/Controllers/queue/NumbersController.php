@@ -7,6 +7,7 @@ use App\Jobs\FreeNumbers;
 use App\Jobs\GenerateNumbers;
 use App\Jobs\HandleNumbersDistribution;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NumbersController extends Controller
 {
@@ -18,7 +19,8 @@ class NumbersController extends Controller
         }
 
         try {
-            GenerateNumbers::dispatch($request->product_id, $request->max_numbers);
+            $tenant_id = Auth::User()->id;
+            GenerateNumbers::dispatch($request->product_id, $request->max_numbers,$tenant_id);
 
             return response()->json(['message' => 'Generate numbers job started successfully'], 200);
         } catch (\Exception $e) {
@@ -44,7 +46,8 @@ class NumbersController extends Controller
     public function freeNumbers()
     {
         try {
-            FreeNumbers::dispatch();
+            $connection = getTenantConnection();
+            FreeNumbers::dispatch($connection);
 
             return response()->json(['message' => 'Free numbers job started successfully'], 200);
         } catch (\Exception $e) {

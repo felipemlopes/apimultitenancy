@@ -22,9 +22,10 @@ class PlaceOrder implements ShouldQueue
     private $code;
     private $upersell;
     private $connectiondb;
+    private $endpoint;
 
 
-    public function __construct($connectiondb, $customer_id, $product_id, $order_id, $code, $upersell)
+    public function __construct($connectiondb, $customer_id, $product_id, $order_id, $code, $upersell,$endpoint)
     {
         $this->customer_id = $customer_id;
         $this->product_id = $product_id;
@@ -32,6 +33,7 @@ class PlaceOrder implements ShouldQueue
         $this->code = $code;
         $this->upersell = $upersell;
         $this->connectiondb = $connectiondb;
+        $this->endpoint = $endpoint;
     }
 
     /**
@@ -39,7 +41,7 @@ class PlaceOrder implements ShouldQueue
      */
     public function handle(): void
     {
-        $url = env('CORE_API_URL') . "/classes/Master.php?f=place_order";
+        $url =  $this->endpoint. "/classes/Master.php?f=place_order";
 
         $response = Http::post($url, [
             'customer_id' => $this->customer_id,
