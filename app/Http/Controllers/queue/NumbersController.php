@@ -46,6 +46,7 @@ class NumbersController extends Controller
     public function freeNumbers()
     {
         try {
+
             $connection = getTenantConnection();
             FreeNumbers::dispatch($connection);
 
