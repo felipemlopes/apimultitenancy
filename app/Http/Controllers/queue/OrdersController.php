@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\AprovePayment;
 use App\Jobs\PlaceOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
