@@ -24,7 +24,7 @@ class TenancyServiceProvider extends ServiceProvider
             // Tenant events
             Events\CreatingTenant::class => [],
             Events\TenantCreated::class => [
-                JobPipeline::make([
+                /*JobPipeline::make([
                     //Jobs\CreateDatabase::class,
                     //Jobs\MigrateDatabase::class,
                     // Jobs\SeedDatabase::class,
@@ -34,7 +34,7 @@ class TenancyServiceProvider extends ServiceProvider
 
                 ])->send(function (Events\TenantCreated $event) {
                     return $event->tenant;
-                })->shouldBeQueued(false), // `false` by default, but you probably want to make this `true` for production.
+                })->shouldBeQueued(false), // `false` by default, but you probably want to make this `true` for production.*/
             ],
             Events\SavingTenant::class => [],
             Events\TenantSaved::class => [],
@@ -42,11 +42,11 @@ class TenancyServiceProvider extends ServiceProvider
             Events\TenantUpdated::class => [],
             Events\DeletingTenant::class => [],
             Events\TenantDeleted::class => [
-                JobPipeline::make([
+                /*JobPipeline::make([
                     //Jobs\DeleteDatabase::class,
                 ])->send(function (Events\TenantDeleted $event) {
                     return $event->tenant;
-                })->shouldBeQueued(false), // `false` by default, but you probably want to make this `true` for production.
+                })->shouldBeQueued(false), // `false` by default, but you probably want to make this `true` for production.*/
             ],
 
             // Domain events
