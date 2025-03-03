@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -66,9 +67,12 @@ class PlaceOrder implements ShouldQueue
      */
     private function markOrderAsError($order_id)
     {
-        $recordsAffected = OrderList::on($this->connectiondb)
+        $recordsAffected = DB::table("order_list")
             ->where('id', $order_id)
             ->update(['status' => 4]);
+        /* = OrderList::on($this->connectiondb)
+            ->where('id', $order_id)
+            ->update(['status' => 4]);*/
 
         if ($recordsAffected === 0) {
             throw new Exception("Updating DB when marking order as error did not work.");
