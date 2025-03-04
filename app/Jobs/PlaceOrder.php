@@ -22,18 +22,18 @@ class PlaceOrder implements ShouldQueue
     private $order_id;
     private $code;
     private $upersell;
-    private $connectiondb;
+    private $token;
     private $endpoint;
 
 
-    public function __construct($connectiondb, $customer_id, $product_id, $order_id, $code, $upersell,$endpoint)
+    public function __construct($token, $customer_id, $product_id, $order_id, $code, $upersell,$endpoint)
     {
         $this->customer_id = $customer_id;
         $this->product_id = $product_id;
         $this->order_id = $order_id;
         $this->code = $code;
         $this->upersell = $upersell;
-        $this->connectiondb = $connectiondb;
+        $this->token = $token;
         $this->endpoint = $endpoint;
     }
 
@@ -73,7 +73,9 @@ class PlaceOrder implements ShouldQueue
      */
     private function markOrderAsError($order_id)
     {
-        $recordsAffected = DB::connection($this->connectiondb)->table("order_list")
+        $connectiondb = setupTenantConnectionByToken($this->token);
+
+        $recordsAffected = DB::connection($connectiondb)->table("order_list")
             ->where('id', $order_id)
             ->update(['status' => 4]);
         /* = OrderList::on($this->connectiondb)
