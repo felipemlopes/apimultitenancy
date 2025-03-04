@@ -50,8 +50,32 @@ if (! function_exists('getTenantConnection')) {
         $tenant = Tenant::find($accessToken->tokenable_id);
         $dbconnection = Str::slug($tenant->name);
 
-        if (! config("database.connections.$dbconnection")) {
+        if (!config("database.connections.$dbconnection")) {
             return setupTenantConnection();
+        }
+
+        return $dbconnection;
+    }
+}
+
+if (! function_exists('setupTenantConnectionByToken')) {
+
+    function setupTenantConnectionByToken($token)
+    {
+        $accessToken = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
+        $tenant = Tenant::find($accessToken->tokenable_id);
+        $dbconnection = Str::slug($tenant->name);
+
+        if (!config("database.connections.$dbconnection")) {
+            $dbconnection = Str::slug($tenant->name);
+            config(['database.connections.'.$dbconnection.'.driver' => "mysql"]);
+            config(['database.connections.'.$dbconnection.'.host' => $tenant->db_host]);
+            config(['database.connections.'.$dbconnection.'.port' => $tenant->db_port]);
+            config(['database.connections.'.$dbconnection.'.database' => (string)$tenant->db_name]);
+            config(['database.connections.'.$dbconnection.'.username' => $tenant->db_user]);
+            config(['database.connections.'.$dbconnection.'.password' => $tenant->db_password]);
+
+            return $dbconnection;
         }
 
         return $dbconnection;
