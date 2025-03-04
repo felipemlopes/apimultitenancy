@@ -22,6 +22,7 @@ class RandomCotas implements ShouldQueue
     private $distributeNumbers = [];
     private $tenant_id;
     private $token;
+    private $invalidCotasPremiadas;
 
     public function __construct($connectiondb, $product_id, $quantity, $tenant_id, $token)
     {
@@ -32,6 +33,7 @@ class RandomCotas implements ShouldQueue
         $this->tenant_id = $tenant_id;
         $this->token = $token;
         $this->distributeNumbers = $this->loadDistributeNumbers();
+
     }
 
     /**
@@ -68,13 +70,14 @@ class RandomCotas implements ShouldQueue
 
     private function removeInvalidCotasPremiadas(): void
     {
-        $this->invalidCotasPremiadas = $this->cotaPremiadaService->getInvalid($this->productId, $this->getRemainingNumbers());
+        $this->invalidCotasPremiadas = $this->getInvalid($this->product_id, $this->getRemainingNumbers());
         $this->removeNumbers($this->invalidCotasPremiadas);
     }
 
     private function loadDistributeNumbers()
     {
-        $this->distributeNumbers = Redis::smembers($this->product_id.'-numeros-'.$this->tenant_id);
+        $this->distributeNumbers = (Array) Redis::smembers($this->product_id.'-numeros-'.$this->tenant_id);
+        dd($this->distributeNumbers);
     }
 
     public function getInvalid(int $productId, int $remainingNumbers): array
