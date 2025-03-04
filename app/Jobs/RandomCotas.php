@@ -32,7 +32,7 @@ class RandomCotas implements ShouldQueue
         //$this->distributeNumbersService = new DistributeNumbersService($this->connectiondb, $this->product_id);
         $this->tenant_id = $tenant_id;
         $this->token = $token;
-        $this->distributeNumbers = $this->loadDistributeNumbers();
+        //$this->distributeNumbers = $this->loadDistributeNumbers();
 
     }
 
@@ -60,10 +60,11 @@ class RandomCotas implements ShouldQueue
 
     private function checkAvailability(int $quantity): void
     {
-        if (empty($this->distributeNumbers)) {
+        $available = (int) Redis::scard($this->product_id.'-numeros-'.$this->tenant_id);
+        if (!isset($available) or $available<=0) {
             throw new Exception("There are no available numbers in the database");
         }
-        if (count($this->distributeNumbers) < $quantity) {
+        if ($available < $quantity) {
             throw new Exception("Trying to consume more data than available");
         }
     }
@@ -71,13 +72,13 @@ class RandomCotas implements ShouldQueue
     private function removeInvalidCotasPremiadas(): void
     {
         $this->invalidCotasPremiadas = $this->getInvalid($this->product_id, $this->getRemainingNumbers());
-        $this->removeNumbers($this->invalidCotasPremiadas);
+        //$this->removeNumbers($this->invalidCotasPremiadas);
     }
 
     private function loadDistributeNumbers()
     {
         $this->distributeNumbers = (Array) Redis::smembers($this->product_id.'-numeros-'.$this->tenant_id);
-        dd($this->distributeNumbers);
+        //dd($this->distributeNumbers);
     }
 
     public function getInvalid(int $productId, int $remainingNumbers): array
@@ -96,7 +97,8 @@ class RandomCotas implements ShouldQueue
 
     public function getRemainingNumbers(): int
     {
-        return count($this->distributeNumbers);
+        $available = (int) Redis::scard($this->product_id.'-numeros-'.$this->tenant_id);
+        return $available;
     }
 
     private function removeNumbers(array $numbers): void
@@ -106,8 +108,25 @@ class RandomCotas implements ShouldQueue
 
     private function takeNumbers(int $quantity): array
     {
-        $this->shuffle();
-        $numbers = array_splice($this->distributeNumbers, 0, $quantity);
+        $key = $this->product_id.'-numeros-'.$this->tenant_id;
+        $cont = $quantity;
+
+        $numbers = [];
+
+        while (count($numbers) < $quantity) {
+            $numero = Redis::spop($key); // Pega e remove um número
+
+            if ($numero === null) {
+                break; // Sai do loop se não houver mais números na lista
+            }
+
+            if (!in_array($numero, $this->invalidCotasPremiadas)) {
+                $numbers[] = $numero; // Adiciona o número válido na lista
+            }else{
+                Redis::sadd($key, ...$numero);
+            }
+        }
+
         return $numbers;
     }
 

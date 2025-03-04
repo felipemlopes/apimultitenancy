@@ -46,7 +46,7 @@ class OrderListService
         $result = DB::connection($this->connectiondb)->update("UPDATE order_list SET status = ? WHERE id = ?", [$status, $orderId]);
     }
 
-    public function getOrderNumbers(int $productId, int $orderId): string
+    public function getOrderNumbers(int $productId, int $orderId)
     {
         $result = DB::connection($this->connectiondb)->select(
             "SELECT order_numbers FROM order_list WHERE product_id = ? AND id = ?",
@@ -56,7 +56,7 @@ class OrderListService
         return $result ? $result[0]->order_numbers : "";
     }
 
-    public function getExpiredIds(int $productId): array
+    public function getExpiredIds(int $productId)
     {
         $result = DB::connection($this->connectiondb)->select(
             "SELECT id FROM order_list

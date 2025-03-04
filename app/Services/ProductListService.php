@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\OrderList;
 use App\Models\ProductList;
+use Illuminate\Support\Facades\DB;
 
 class ProductListService
 {
@@ -19,15 +20,24 @@ class ProductListService
         return ProductList::on($this->connectiondb)->where('id', $productId)->value('qty_numbers') ?? 0;
     }
 
-    public function getAllIds(): array
+    public function getAllIds($token): array
     {
-        return ProductList::on($this->connectiondb)->where('status', 1)
+        $connectiondb = setupTenantConnectionByToken($token);
+
+        return DB::connection($connectiondb)->table("product_list")->where('status', 1)
             ->orWhere(function ($query) {
                 $query->where('status', 3)
                     ->whereRaw('NOW() < DATE_ADD(date_updated, INTERVAL 24 HOUR)');
             })
             ->pluck('id')
             ->toArray();
+        /*return ProductList::on($connectiondb)->where('status', 1)
+            ->orWhere(function ($query) {
+                $query->where('status', 3)
+                    ->whereRaw('NOW() < DATE_ADD(date_updated, INTERVAL 24 HOUR)');
+            })
+            ->pluck('id')
+            ->toArray();*/
     }
 
     public function getTotalPendingNumbers(int $productId): int
