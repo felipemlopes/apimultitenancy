@@ -61,10 +61,10 @@ class PlaceOrder implements ShouldQueue
         $this->markOrderAsError($this->order_id);
         if ($response->failed()) {
             //Log::error("Erro ao criar place order: " . $result['error']);
-            Log::error("Erro ao criar place order: ");
+            //Log::error("Erro ao criar place order: ");
             $this->markOrderAsError($this->order_id);
         } else {
-            Log::info("Place order criado com sucesso.");
+            //Log::info("Place order criado com sucesso.");
         }
     }
 
