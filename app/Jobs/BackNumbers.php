@@ -20,16 +20,18 @@ class BackNumbers implements ShouldQueue
     private $productId;
     private $numbers;
     private $tenant_id;
+    private $token;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($token, $productId, $numbers,$tenant_id)
+    public function __construct($token, $productId, $numbers,$tenant_id,$token)
     {
         $this->token = $token;
         $this->productId = $productId;
         $this->numbers = $numbers;
         $this->tenant_id = $tenant_id;
+        $this->token = $token;
     }
 
     /**

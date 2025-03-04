@@ -60,7 +60,7 @@ class FreeNumbers implements ShouldQueue
                 $numbers = $result ? $result[0]->order_numbers : "";
 
                 // Processa os números da ordem
-                dispatch(new BackNumbers($connectiondb, $productId, $numbers,$this->tenant_id));
+                dispatch(new BackNumbers($connectiondb, $productId, $numbers,$this->tenant_id,$this->token));
 
                 // Atualiza o status da ordem para cancelado
                 $status = 3;
