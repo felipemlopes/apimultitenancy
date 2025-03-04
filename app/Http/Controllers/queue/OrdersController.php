@@ -15,8 +15,7 @@ class OrdersController extends Controller
      */
     public function placeOrder(Request $request)
     {
-
-        if (!$request->customer_id  or !$request->product_id  or !$request->order_id  or !$request->code  or !$request->upersell) {
+        if (!$request->customer_id  or !$request->product_id  or !$request->order_id  or !$request->code  or $request->upersell=="") {
             return response()->json(['message' => 'Please pass correct params'], 400);
         }
 
