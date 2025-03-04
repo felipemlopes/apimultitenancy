@@ -28,7 +28,7 @@ class RandomCotas implements ShouldQueue
         $this->product_id = $product_id;
         $this->quantity = $quantity;
         $this->connectiondb = $connectiondb;
-        $this->distributeNumbersService = new DistributeNumbersService($this->connectiondb, $this->product_id);
+        //$this->distributeNumbersService = new DistributeNumbersService($this->connectiondb, $this->product_id);
         $this->tenant_id = $tenant_id;
         $this->token = $token;
         $this->distributeNumbers = $this->loadDistributeNumbers();

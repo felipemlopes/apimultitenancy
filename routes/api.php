@@ -145,8 +145,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/place_order', [OrdersQueueController::class, 'placeOrder']);
     Route::post('/approve_payment', [OrdersQueueController::class, 'approvePayment']);
 
-    Route::post('/queue/register_cota_premiada', [CotasController::class, 'registerCotaPremiada']);
-    Route::post('/queue/delete_cota_premiada', [CotasController::class, 'deleteCotaPremiada']);
-    Route::post('/queue/update_cota_premiada', [CotasController::class, 'updateCotaPremiada']);
-    Route::post('/queue/random_cotas_premiadas', [CotasController::class, 'randomCotasPremiadas']);
+    Route::post('/register_cota_premiada', [CotasController::class, 'registerCotaPremiada']);
+    Route::post('/delete_cota_premiada', [CotasController::class, 'deleteCotaPremiada']);
+    Route::post('/update_cota_premiada', [CotasController::class, 'updateCotaPremiada']);
+    Route::post('/random_cotas_premiadas', [CotasController::class, 'randomCotasPremiadas']);
 });
