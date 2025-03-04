@@ -46,7 +46,7 @@ class RandomCotas implements ShouldQueue
         $numbers = $this->getNumbers($this->quantity);
 
         $active = true;
-            RegisterCotas::dispatch($connectiondb, $this->product_id, $numbers, $active, $tis->tenant_id, $this->token);
+            RegisterCotas::dispatch($connectiondb, $this->product_id, $numbers, $active, $this->tenant_id, $this->token);
     }
 
     public function getNumbers(int $quantity): array
