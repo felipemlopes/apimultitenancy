@@ -9,6 +9,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class RandomCotas implements ShouldQueue
 {
@@ -17,7 +19,7 @@ class RandomCotas implements ShouldQueue
     private $product_id;
     private $quantity;
     private $connectiondb;
-    private $distributeNumbers;
+    private $distributeNumbers = [];
     private $tenant_id;
     private $token;
 
@@ -29,7 +31,7 @@ class RandomCotas implements ShouldQueue
         $this->distributeNumbersService = new DistributeNumbersService($this->connectiondb, $this->product_id);
         $this->tenant_id = $tenant_id;
         $this->token = $token;
-        $this->distributeNumbers = $this->loadDistributeNumbers($this->token,$this->tenant_id);
+        $this->distributeNumbers = $this->loadDistributeNumbers();
     }
 
     /**
@@ -39,7 +41,7 @@ class RandomCotas implements ShouldQueue
     {
         $connectiondb = setupTenantConnectionByToken($this->token);
 
-        $numbers = $this->distributeNumbersService->getNumbers($this->quantity);
+        $numbers = $this->getNumbers($this->quantity);
 
         $active = true;
         RegisterCotas::dispatch($connectiondb, $this->product_id, $numbers, $active, $this->token);
@@ -70,9 +72,54 @@ class RandomCotas implements ShouldQueue
         $this->removeNumbers($this->invalidCotasPremiadas);
     }
 
-    private function loadDistributeNumbers(): void
+    private function loadDistributeNumbers()
     {
-        $this->distributeNumbers = json_decode(Storage::get($path), true);
+        $this->distributeNumbers = Redis::smembers($this->product_id.'-numeros-'.$this->tenant_id);
+    }
+
+    public function getInvalid(int $productId, int $remainingNumbers): array
+    {
+        $cotas = DB::table('cotas_premiadas')
+            ->where('available', true)
+            ->where('product_id', $productId)
+            ->where(function ($query) use ($remainingNumbers) {
+                $query->where('active', false)
+                    ->where('cota_limit', '<', $remainingNumbers);
+            })
+            ->get();
+
+        return array_map(fn($cota) => $cota->cota_number, $cotas);
+    }
+
+    public function getRemainingNumbers(): int
+    {
+        return count($this->distributeNumbers);
+    }
+
+    private function removeNumbers(array $numbers): void
+    {
+        $this->distributeNumbers = array_values(array_diff($this->distributeNumbers, $numbers));
+    }
+
+    private function takeNumbers(int $quantity): array
+    {
+        $this->shuffle();
+        $numbers = array_splice($this->distributeNumbers, 0, $quantity);
+        return $numbers;
+    }
+
+    private function reinsertInvalidCotasPremiadas(): void
+    {
+        $this->addNumbers($this->invalidCotasPremiadas);
+    }
+
+    private function addNumbers(array $numbers): void
+    {
+        if (!empty($numbers)) {
+            $this->distributeNumbers = array_merge($this->distributeNumbers, $numbers);
+            $key = $this->product_id.'-numeros-'.$this->tenant_id;
+            Redis::sadd($key, ...$numbers);
+        }
     }
 
 }
