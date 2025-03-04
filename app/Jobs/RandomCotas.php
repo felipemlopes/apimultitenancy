@@ -94,7 +94,7 @@ class RandomCotas implements ShouldQueue
             })
             ->get();
 
-        return array_map(fn($cota) => $cota->cota_number, $cotas);
+        return $cotas->pluck('cota_number')->toArray(); //array_map(fn($cota) => $cota->cota_number, $cotas);
     }
 
     public function getRemainingNumbers(): int
