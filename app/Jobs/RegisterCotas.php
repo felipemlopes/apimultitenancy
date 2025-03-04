@@ -42,7 +42,7 @@ class RegisterCotas implements ShouldQueue
 
         foreach ($this->numbers as $number) {
             DB::connection($connectiondb)->table("cotas_premiadas")->insert([
-                'product_id' => $this->productId,
+                'product_id' => $this->product_id,
                 'cota_number' => $number,
                 'cota_limit' => 10000,
                 'active' => $this->active,
