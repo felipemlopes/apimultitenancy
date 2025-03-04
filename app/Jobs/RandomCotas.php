@@ -83,7 +83,9 @@ class RandomCotas implements ShouldQueue
 
     public function getInvalid(int $productId, int $remainingNumbers): array
     {
-        $cotas = DB::table('cotas_premiadas')
+        $connectiondb = setupTenantConnectionByToken($this->token);
+
+        $cotas = DB::connection($connectiondb)->table('cotas_premiadas')
             ->where('available', true)
             ->where('product_id', $productId)
             ->where(function ($query) use ($remainingNumbers) {
