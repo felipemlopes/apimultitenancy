@@ -44,6 +44,7 @@ class PlaceOrder implements ShouldQueue
     {
         $url =  $this->endpoint. "/classes/Master.php?f=place_order";
 
+        Log::info($url);
         $response = Http::post($url, [
             'customer_id' => $this->customer_id,
             'product_id' => $this->product_id,

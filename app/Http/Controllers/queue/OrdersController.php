@@ -7,6 +7,7 @@ use App\Jobs\AprovePayment;
 use App\Jobs\PlaceOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class OrdersController extends Controller
 {
@@ -21,6 +22,7 @@ class OrdersController extends Controller
 
         try {
             $endpoint = Auth::User()->name;
+            Log::info($endpoint);
             $connection = getTenantConnection();
             PlaceOrder::dispatch($connection, $request->customer_id, $request->product_id, $request->order_id, $request->code, $request->upersell,$endpoint);
             return response()->json(['message' => 'Place order job started successfully'], 200);
