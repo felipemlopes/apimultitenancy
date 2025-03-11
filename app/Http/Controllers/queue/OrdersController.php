@@ -7,6 +7,7 @@ use App\Jobs\AprovePayment;
 use App\Jobs\PlaceOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class OrdersController extends Controller
@@ -20,7 +21,7 @@ class OrdersController extends Controller
             return response()->json(['message' => 'Please pass correct params'], 400);
         }
 
-        try {
+        //try {
             $endpoint = Auth::User()->name;
             Log::info($endpoint);
             Log::info($request->customer_id);
@@ -29,12 +30,21 @@ class OrdersController extends Controller
             Log::info($request->code);
             Log::info($request->upersell);
             $tenant_id = Auth::User()->id;
-            $token = request()->bearerToken();
-            PlaceOrder::dispatch($token, $request->customer_id, $request->product_id, $request->order_id, $request->code, $request->upersell,$endpoint);
+
+            $response = Http::post($endpoint."/classes/Master.php?f=place_order", [
+                'customer_id' => $request->customer_id,
+                'product_id' => $request->product_id,
+                'order_id' => $request->order_id,
+                'code' => $request->code
+            ]);
+            dd($response->status(),$response->json());
+
+            //$token = request()->bearerToken();
+            //PlaceOrder::dispatch($token, $request->customer_id, $request->product_id, $request->order_id, $request->code, $request->upersell,$endpoint);
             return response()->json(['message' => 'Place order job started successfully'], 200);
-        } catch (\Exception $e) {
+        /*} catch (\Exception $e) {
             return response()->json(['message' => 'Something went wrong'], 500);
-        }
+        }*/
     }
 
 
