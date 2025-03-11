@@ -37,7 +37,7 @@ class OrdersController extends Controller
                 'order_id' => $request->order_id,
                 'code' => $request->code
             ]);
-            dd($response->status(),$response->json());
+            //dd($response->status(),$response->json());
 
             //$token = request()->bearerToken();
             //PlaceOrder::dispatch($token, $request->customer_id, $request->product_id, $request->order_id, $request->code, $request->upersell,$endpoint);
