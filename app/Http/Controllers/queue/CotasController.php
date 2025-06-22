@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\DeleteCotas;
 use App\Jobs\RandomCotas;
 use App\Jobs\RegisterCotas;
+use App\Jobs\SetCotaPremiadaInOrder;
 use App\Jobs\UpdateCotas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,6 @@ class CotasController extends Controller
         }
     }
 
-
     public function deleteCotaPremiada(Request $request)
     {
         if (!$request->product_id || !$request->numbers) {
@@ -56,7 +56,7 @@ class CotasController extends Controller
                 'message' => "The 'numbers' parameter should be an integer or a List of integers"
             ], 400);
         }
-        if (count($request->numbers) == 0) {
+        if (count($numbers) == 0) {
             return response()->json(['message' => "The 'numbers' parameter should have at least one item"], 400);
         }
 
@@ -107,6 +107,23 @@ class CotasController extends Controller
             return response()->json(['message' => "Job 'random_cotas_premiadas' has started successfully"], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => "An error occurred while starting 'random_cotas_premiadas"], 500);
+        }
+    }
+
+    public function setCotaPremiadaInOrder(Request $request)
+    {
+        if (!$request->product_id or !$request->order_code) {
+            return response()->json(['message' => 'The following parameters are required: product_id,order_code'], 400);
+        }
+
+        try {
+            $connection = getTenantConnection();
+            $tenant_id = Auth::User()->id;
+            $token = request()->bearerToken();
+            SetCotaPremiadaInOrder::dispatch($connection,$request->product_id, $request->order_code,$tenant_id,$token);
+            return response()->json(['message' => "Job 'set_cota_premiada_in_order' has started successfully"], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => "An error occurred while starting 'set_cota_premiada_in_order"], 500);
         }
     }
 }

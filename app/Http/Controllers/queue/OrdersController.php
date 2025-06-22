@@ -21,30 +21,22 @@ class OrdersController extends Controller
             return response()->json(['message' => 'Please pass correct params'], 400);
         }
 
-        //try {
+        try {
             $endpoint = Auth::User()->name;
-            Log::info($endpoint);
-            Log::info($request->customer_id);
-            Log::info($request->product_id);
-            Log::info($request->order_id);
-            Log::info($request->code);
-            Log::info($request->upersell);
+            Log::info("endpoint ".$endpoint);
+            Log::info("customer_id ".$request->customer_id);
+            Log::info("product_id ".$request->product_id);
+            Log::info("order_id ".$request->order_id);
+            Log::info("code ".$request->code);
+            Log::info("upersell ".$request->upersell);
             $tenant_id = Auth::User()->id;
 
-            $response = Http::post($endpoint."/classes/Master.php?f=place_order", [
-                'customer_id' => $request->customer_id,
-                'product_id' => $request->product_id,
-                'order_id' => $request->order_id,
-                'code' => $request->code
-            ]);
-            //dd($response->status(),$response->json());
-
-            //$token = request()->bearerToken();
-            //PlaceOrder::dispatch($token, $request->customer_id, $request->product_id, $request->order_id, $request->code, $request->upersell,$endpoint);
+            $token = request()->bearerToken();
+            PlaceOrder::dispatch($token, $request->customer_id, $request->product_id, $request->order_id, $request->code, $request->upersell,$endpoint);
             return response()->json(['message' => 'Place order job started successfully'], 200);
-        /*} catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json(['message' => 'Something went wrong'], 500);
-        }*/
+        }
     }
 
 
@@ -56,8 +48,9 @@ class OrdersController extends Controller
         }
         try {
             $connection = getTenantConnection();
-            AprovePayment::dispatch($connection, $request->product_id, $request->quantity);
-            return response()->json(['message' => 'Place order job started successfully'], 200);
+            $token = request()->bearerToken();
+            AprovePayment::dispatch($connection, $request->product_id, $request->quantity,$token);
+            return response()->json(['message' => 'approve_payment job started successfully'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Something went wrong'], 500);
         }

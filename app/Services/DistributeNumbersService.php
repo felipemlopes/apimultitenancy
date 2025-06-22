@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Tenant;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class DistributeNumbersService
@@ -15,16 +17,22 @@ class DistributeNumbersService
     private ProductListService $productListService;
     private CustomerListService $customerListRepository;
 
+    private $token;
     private $connectiondb;
+    private $tenant;
 
-    public function __construct($connectiondb,int $productId)
+    public function __construct($connectiondb, $token,int $productId)
     {
+        $accessToken = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
+        $tenant = $accessToken->tokenable_id;
         $this->connectiondb = $connectiondb;
+        $this->token = $token;
+        $this->tenant = $tenant;
         $this->productId = $productId;
         $this->cotaPremiadaService = new CotaPremiadaService($this->connectiondb, $productId);
         $this->productListService = new ProductListService($this->connectiondb);
         $this->customerListRepository = new CustomerListService($this->connectiondb);
-        $this->loadDistributeNumbers();
+        //$this->loadDistributeNumbers();
     }
 
     public function refundNumbers(array $numbers): void
@@ -40,7 +48,7 @@ class DistributeNumbersService
 
     public function load(): void
     {
-        $this->loadDistributeNumbers();
+        //$this->loadDistributeNumbers();
     }
 
     private function removeCotasPremiadas(array $cotasPremiadas): void
@@ -58,7 +66,7 @@ class DistributeNumbersService
     {
         if (!empty($numbers)) {
             $this->distributeNumbers = array_merge($this->distributeNumbers, $numbers);
-            $key = $this->product_id."numeros";
+            $key = $this->productId."numeros";
             Redis::sadd($key, ...$numbers);
         }
     }
@@ -81,11 +89,8 @@ class DistributeNumbersService
 
     private function loadDistributeNumbers(): void
     {
-        $path = "products/{$this->productId}.json";
-        if (!Storage::exists($path)) {
-            throw new Exception('File does not exist.');
-        }
-        $this->distributeNumbers = json_decode(Storage::get($path), true);
+        //$key = "{$this->productId}-numeros-{$this->tenant}";
+        //$this->distributeNumbers = Redis::lrange($key, 0, -1); // Recupera todos os números da lista
     }
 
     private function takeNumbers(int $quantity): array
@@ -123,7 +128,9 @@ class DistributeNumbersService
 
     public function getRemainingNumbers(): int
     {
-        return count($this->distributeNumbers);
+        $key = $this->productId."-numeros-".$this->tenant;
+        $count = Redis::llen($key);
+        return $count;
     }
 
     public function getNumbers(int $quantity): array

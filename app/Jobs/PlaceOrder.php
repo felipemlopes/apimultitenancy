@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\OrderList;
+use App\Services\OrderService;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -42,30 +43,25 @@ class PlaceOrder implements ShouldQueue
      */
     public function handle(): void
     {
-        $url =  $this->endpoint. "/classes/Master.php?f=place_order";
+        $orderService = new OrderService($this->token);
+        $orderService->checkAvailability($this->customer_id, $this->product_id, $this->order_id, $this->code, $this->upersell);
 
-        Log::info($url);
-        Log::info($this->customer_id);
-        Log::info($this->product_id);
-        Log::info($this->order_id);
-        Log::info($this->code);
-
+        /*$url = $this->endpoint. "/classes/Master.php?f=place_order";
         $response = Http::post($url, [
             'customer_id' => $this->customer_id,
             'product_id' => $this->product_id,
             'order_id' => $this->order_id,
             'code' => $this->code
         ]);
-
         $result = $response->json();
+        Log::info("Response from place order: " . $result);
         $this->markOrderAsError($this->order_id);
         if ($response->failed()) {
-            //Log::error("Erro ao criar place order: " . $result['error']);
-            //Log::error("Erro ao criar place order: ");
+            Log::error("Erro ao criar place order: ");
             $this->markOrderAsError($this->order_id);
         } else {
-            //Log::info("Place order criado com sucesso.");
-        }
+            Log::info("Place order criado com sucesso.");
+        }*/
     }
 
     /**
@@ -78,9 +74,6 @@ class PlaceOrder implements ShouldQueue
         $recordsAffected = DB::connection($connectiondb)->table("order_list")
             ->where('id', $order_id)
             ->update(['status' => 4]);
-        /* = OrderList::on($this->connectiondb)
-            ->where('id', $order_id)
-            ->update(['status' => 4]);*/
 
         if ($recordsAffected === 0) {
             throw new Exception("Updating DB when marking order as error did not work.");

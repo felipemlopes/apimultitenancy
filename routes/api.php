@@ -140,13 +140,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/generate_numbers', [NumbersController::class, 'generateNumbers']);
     Route::post('/back_numbers', [NumbersController::class, 'backNumbers']);
     Route::get('/free_numbers', [NumbersController::class, 'freeNumbers']);
-    Route::post('/distribute_numbers', [NumbersController::class, 'distributeNumbers']);
+    //Route::post('/distribute_numbers', [NumbersController::class, 'distributeNumbers']);
+    //Route::post('/recuperarNumerosNaoGerados', [NumbersController::class, 'recuperarNumerosNaoGerados']);
 
     Route::post('/place_order', [OrdersQueueController::class, 'placeOrder']);
+    //Route::post('/place_order_step_2', [OrdersQueueController::class, 'placeOrderStep2']);
+
     Route::post('/approve_payment', [OrdersQueueController::class, 'approvePayment']);
 
     Route::post('/register_cota_premiada', [CotasController::class, 'registerCotaPremiada']);
     Route::post('/delete_cota_premiada', [CotasController::class, 'deleteCotaPremiada']);
     Route::post('/update_cota_premiada', [CotasController::class, 'updateCotaPremiada']);
     Route::post('/random_cotas_premiadas', [CotasController::class, 'randomCotasPremiadas']);
+    Route::post('/set_cota_premiada_in_order', [CotasController::class, 'setCotaPremiadaInOrder']);
+
 });

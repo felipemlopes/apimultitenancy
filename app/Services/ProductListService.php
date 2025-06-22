@@ -17,7 +17,10 @@ class ProductListService
 
     public function getProductQuantity(int $productId): int
     {
-        return ProductList::on($this->connectiondb)->where('id', $productId)->value('qty_numbers') ?? 0;
+        return DB::connection($this->connectiondb)
+            ->table('product_list')
+            ->where('id', $productId)
+            ->value('qty_numbers') ?? 0;
     }
 
     public function getAllIds($token): array
@@ -42,7 +45,9 @@ class ProductListService
 
     public function getTotalPendingNumbers(int $productId): int
     {
-        return OrderList::on($this->connectiondb)->where('product_id', $productId)
+        return DB::connection($this->connectiondb)
+            ->table('order_list')
+            ->where('product_id', $productId)
             ->whereIn('status', [0, 1])
             ->whereNotNull('order_numbers')
             ->sum('quantity') ?? 0;
@@ -50,7 +55,9 @@ class ProductListService
 
     public function getTotalPaidNumbers(int $productId): int
     {
-        return OrderList::on($this->connectiondb)->where('product_id', $productId)
+        return DB::connection($this->connectiondb)
+            ->table('order_list')
+            ->where('product_id', $productId)
             ->where('status', 2)
             ->sum('quantity') ?? 0;
     }
@@ -58,12 +65,20 @@ class ProductListService
     public function updatePendingNumbers(int $productId): void
     {
         $pendingNumbers = $this->getTotalPendingNumbers($productId);
-        ProductList::on($this->connectiondb)->where('id', $productId)->update(['pending_numbers' => $pendingNumbers]);
+
+        DB::connection($this->connectiondb)
+            ->table('product_list')
+            ->where('id', $productId)
+            ->update(['pending_numbers' => $pendingNumbers]);
     }
 
     public function updatePaidNumbers(int $productId): void
     {
         $paidNumbers = $this->getTotalPaidNumbers($productId);
-        ProductList::on($this->connectiondb)->where('id', $productId)->update(['paid_numbers' => $paidNumbers]);
+
+        DB::connection($this->connectiondb)
+            ->table('product_list')
+            ->where('id', $productId)
+            ->update(['paid_numbers' => $paidNumbers]);
     }
 }

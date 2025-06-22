@@ -33,26 +33,31 @@ class GenerateNumbers implements ShouldQueue
     {
         Log::info("product_id: ".$this->product_id);
         Log::info("max_numbers: ".$this->max_numbers);
-        /*$path = "./data/numbers_for_product_{$this->productId}.data";
 
-        if (file_exists($path)) {
-            throw new Exception('Tried to generate numbers for a product that already generated it.');
-        }*/
-
-        $array = $this->generateArray($this->max_numbers);
-        $this->saveArray($array);
+        //$array = $this->generateArray($this->max_numbers);
+        //$this->saveArray($array);
+        $batchSize = 100000;
+        for ($i = 0; $i < $this->max_numbers; $i += $batchSize) {
+            $array = $this->generateArray(min($batchSize, $this->max_numbers - $i));
+            $this->saveArray($array);
+        }
     }
 
     private function generateArray($maxNumbers) {
         $array = range(0, $maxNumbers - 1);
         shuffle($array);
-        Log::info(json_encode($array));
+        //Log::info(json_encode($array));
         return $array;
     }
 
     private function saveArray($array) {
         $key = $this->product_id."-numeros-".$this->tenant_id;
-        Log::info("key:" . $key);
-        Redis::sadd($key, ...$array);
+        //Log::info("key:" . $key);
+        //Redis::sadd($key, ...$array);
+        Redis::pipeline(function ($pipe) use ($array, $key) {
+            foreach ($array as $number) {
+                $pipe->rpush($key, $number);
+            }
+        });
     }
 }
