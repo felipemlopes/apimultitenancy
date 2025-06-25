@@ -40,6 +40,9 @@ class AprovePayment implements ShouldQueue
 
         $this->updatePendingNumbers($this->product_id,$connectiondb);
         $this->updatePaidNumbers($this->product_id,$connectiondb);
+
+
+
     }
 
     public function getTotalPendingNumbers(int $productId,$connectiondb)

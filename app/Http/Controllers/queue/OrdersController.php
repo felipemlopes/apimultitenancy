@@ -21,14 +21,10 @@ class OrdersController extends Controller
             return response()->json(['message' => 'Please pass correct params'], 400);
         }
 
+        Log::info(json_encode($request->all()));
+        Log::info("Place order job started successfully");
         try {
             $endpoint = Auth::User()->name;
-            Log::info("endpoint ".$endpoint);
-            Log::info("customer_id ".$request->customer_id);
-            Log::info("product_id ".$request->product_id);
-            Log::info("order_id ".$request->order_id);
-            Log::info("code ".$request->code);
-            Log::info("upersell ".$request->upersell);
             $tenant_id = Auth::User()->id;
 
             $token = request()->bearerToken();
